@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="js/jquery-1.11.1.js"></script>
+    <script src="datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="js/dataTables.bootstrap.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+
+    <script >
+        $(document).ready(function() {
+            $('#loadFornecedor').dataTable();
+        } );
+    </script>
+    
+
+    <script>
+        $( document ).ready(function() {
+            $('#datepicker').datepicker();
+            $('#datepicker2').datepicker();
+        });
+    </script>
+    
+    <script>
+        $( document ).ready(function() {
+            $('#header2').load('header.html');
+
+        });
+    </script>
+
+    <script>
+
+        $( document ).ready(function() {
+            $( "#unidadeProduto" ).change(function () {
+                var aux = $('input[name=unidadeProduto]:checked', '#unidadeProduto').val();
+                if(aux == "litros"){
+                    $('#unidadeAddon').text('l');
+                } else {
+                    $('#unidadeAddon').text('kg')
+                }
+
+
+            })
+        });
+    </script>
+    
+
+    <title>Entrada de Lote - ArrayEnterprises</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="datepicker/css/datepicker.css" rel="stylesheet">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/meucss.css" rel="stylesheet">
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="css/plugins/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+
+
+        <div id="wrapper">
+            <!-- Chamada para Menu topo -->
+            <div id="header2"></div> 
+            <!-- Fim de Menu topo -->
+
+            <!--Início Menu lateral -->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <!-- Barra de Pesquisa -->
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" name="pesquisaLateral" placeholder="Pesquisar...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Painel de Controle</a>
+                        </li>
+
+                        <li>
+                            <a href="novousuario.html"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> Cadastro<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="produto.html">Cadastro de Produto</a>
+                                </li>
+                                <li>
+                                    <a href="cliente.html">Cadastro de Cliente</a>
+                                </li>
+                                <li>
+                                    <a href="fornecedor.html">Cadastro de Fornecedor</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <a class="active" href="lote.html"><i class="glyphicon glyphicon-check fa-fw"></i>Entrada de lote</a>
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a class="acrtive" href="venda.html">Efetuar Venda</a>
+                                </li>
+                                <li>
+                                    <a href="cliente.html">Vendas 2</a>
+                                </li>
+                                <li>
+                                    <a href="fornecedor.html">Vendas 3</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+    </div>
+    <!-- Fim do menu lateral -->
+
+
+    <div id="page-wrapper">
+
+       <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Entrada de lote</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i>  <a href="index.html">Painel de Controle</a>
+                </li>
+                <li class="active">
+                    <i class="glyphicon glyphicon-check"></i> Entrada de lote
+                </li>
+            </ol>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <!-- Conteúdo do Form -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Produto
+                </div>
+                <div class="panel-body">
+                    <!-- Form de Produto -->
+                    <form role="formProduto">
+                        <div class="row">
+                            <div class="col-lg-6 yes">
+                                <!-- Campos do Formulário -->
+
+                                <div class="form-group">
+                                    <label>Código do Lote</label>
+                                    <input class="form-control" id="codigoLote" name="codigoLote" placeholder="Insira o código do lote">
+                                    <p class="help-block">Deixe em branco para auto-gerar código</p>
+                                </div>
+
+                                <div class="col-lg-6 yes">
+                                    <label>Data de Fabricação</label>
+                                    <div class="form-group input-group"  data-date-format="dd-mm-yyyy">
+                                        <input class="form-control" id="dataFabricacao" name="dataFabricacao" data-date-format="dd/mm/yyyy" placeholder="Clique e selecione">
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6    yes">
+
+                                    <label>Data de Validade</label>
+                                    <div class="form-group input-group" data-date-format="dd-mm-yyyy">
+                                        <input class="form-control" id="dataValidade" name="dataValidade"  data-date-format="dd/mm/yyyy" placeholder="Clique e selecione">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                            <div class="col-lg-6">
+
+                                <div class="form-group">
+                                    <label>Unidades de Produto</label>
+                                    <input class="form-control" id="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto no lote">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Observações</label>
+                                    <textarea class="form-control" id="observacoes" name="observacoes" rows="2"></textarea>
+                                </div>
+
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+
+                        </div>
+
+                        <div class="col-lg-16">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+
+                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecionarProduto">Selecionar Produto</button>
+                                 <button type="button" class="btn btn-warning"  data-toggle="modal" data-target="#inserirProduto">Inserir Produto</button>
+
+                             </div>
+                             <div class="panel-body">
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="selecionarProduto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">Selecionar Produto</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+
+                                                    <div class="col-lg-12 yes">
+                                                        <label class="control-label" for="inputWarning">Pesquise pelo nome do produto</label>
+                                                        <div class="form-group input-group">
+                                                            <input type="text" class="form-control" id="pesquisaNomeProduto" name="pesquisaNomeProduto" placeholder="Pesquise pelo nome de produto">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-default" id="buttonPesquisaNomeProduto" type="button"><i class="fa fa-search"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <hr width="65%">
+                                                    <div class="col-lg-6 yes">
+                                                        <!-- Campos do Formulário -->
+                                                        <div class="form-group">
+                                                            <label>Nome do Produto</label>
+                                                            <input class="form-control" id="nomeProduto" name="nomeProduto" placeholder="Insira o nome do produto" disabled>
+                                                        </div>
+
+                                                        <div class="form-group" id="tipoProduto">
+                                                            <label>Tipo de Produto: </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="tipoProduto" id="tipoAlimenticio" value="Alimentício"  disabled>Alimentício
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="tipoProduto" id="tipoFarmaceutico" value="Farmacêutico" disabled>Farmacêutico
+                                                            </label>
+                                                        </div>
+
+                                                        <label>Quantidade</label>
+                                                        <div class="form-group input-group">
+                                                            <input class="form-control" id="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto em kg ou litros" disabled>
+                                                            <span class="input-group-addon" id="unidadeAddon"></span>
+                                                        </div>
+
+                                                        <div class="form-group" id="unidadeProduto">
+                                                            <label>Unidade de Medida: </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="unidadeProduto" id="unidadeLitros" value="litros" disabled>Litros
+                                                            </label>
+                                                            <label class="radio-inline" >
+                                                                <input type="radio" name="unidadeProduto" id="unidadeKg" value="kg" disabled>Kg
+                                                            </label>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-lg-6 yes">
+                                                        <div class="form-group">
+                                                            <label>Código do Produto</label>
+                                                            <input class="form-control" id="codigoProduto" name="codigoProduto" placeholder="Insira o código do produto" disabled>
+                                                            <p class="help-block">Deixe em branco para auto-gerar código</p>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Descrição do Produto</label>
+                                                            <textarea class="form-control" id="descricaoProduto" name="descricaoProduto" rows="2" disabled></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-primary">Selecionar Produto</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="inserirProduto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">Cadastrar Produto</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form role="produto">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 yes">
+
+                                                            <div class="form-group">
+                                                                <label>Nome do Produto</label>
+                                                                <input class="form-control" id="nomeProduto" name="nomeProduto" placeholder="Insira o nome do produto">
+                                                            </div>
+
+                                                            <div class="form-group" id="tipoProduto">
+                                                                <label>Tipo de Produto: </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="tipoProduto" id="tipoAlimenticio" value="Alimentício" >Alimentício
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="tipoProduto" id="tipoFarmaceutico" value="Farmacêutico">Farmacêutico
+                                                                </label>
+                                                            </div>
+
+                                                            <label>Quantidade</label>
+                                                            <div class="form-group input-group">
+                                                                <input class="form-control" id="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto em kg ou litros">
+                                                                <span class="input-group-addon" id="unidadeAddon"></span>
+                                                            </div>
+
+                                                            <div class="form-group" id="unidadeProduto">
+                                                                <label>Unidade de Medida: </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="unidadeProduto" id="unidadeLitros" value="litros">Litros
+                                                                </label>
+                                                                <label class="radio-inline" >
+                                                                    <input type="radio" name="unidadeProduto" id="unidadeKg" value="kg">Kg
+                                                                </label>
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.col-lg-6 (nested) -->
+                                                        <div class="col-lg-6">
+
+                                                            <div class="form-group">
+                                                                <label>Código do Produto</label>
+                                                                <input class="form-control" id="codigoProduto" name="codigoProduto" placeholder="Insira o código do produto">
+                                                                <p class="help-block">Deixe em branco para auto-gerar código</p>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Descrição do Produto</label>
+                                                                <textarea class="form-control" id="descricaoProduto" name="descricaoProduto" rows="2"></textarea>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                        <!-- /.col-lg-6 (nested) -->
+
+                                                    </div>
+                                                    <!-- /.row (nested) -->
+
+
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-primary">Inserir Produto</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+                                <div class="row">
+                                    <div class="col-lg-6 yes">
+                                        <div class="form-group">
+                                            <label>Nome do Produto</label>
+                                            <input class="form-control" placeholder="Insira o Nome do Produto" disabled>
+                                        </div>
+
+                                        <div class="form-group" >
+                                            <label>Tipo de Produto: </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="tipoProduto" id="optionsRadiosInline2" value="option1"   disabled>Alimentício
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="tipoProduto" id="optionsRadiosInline2" value="option2"  disabled>Farmacêutico
+                                            </label>
+                                        </div>
+
+
+
+                                        <label>Quantidade</label>
+                                        <div class="form-group input-group">
+
+                                            <input class="form-control" placeholder="Insira a quantidade do produto em kg ou litros" disabled>
+                                            <span class="input-group-addon" id="unidadeAddon"></span>
+                                        </div>
+
+                                        <div class="form-group" id="unidadeProduto">
+                                            <label>Unidade de Medida: </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="unidadeProduto" value="litros" disabled>Litros
+                                            </label>
+                                            <label class="radio-inline" >
+                                                <input type="radio" name="unidadeProduto" value="kg" disabled>Kg
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-6 yes">
+                                        <div class="form-group">
+                                            <label>Código do Produto</label>
+                                            <input class="form-control" id="codigoProduto" name="codigoProduto" placeholder="Insira o código do produto" disabled>
+                                            <p class="help-block">Deixe em branco para auto-gerar código</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Descrição do Produto</label>
+                                            <textarea class="form-control" id="descricaoProduto" name="descricaoProduto" rows="2" disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-16">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+
+                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecionarFornecedor">Selecionar Fornecedor</button>
+                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#inserirFornecedor">Inserir Fornecedor</button>
+
+                         </div>
+                         <div class="panel-body">
+
+                            <!-- Modal Selecionar -->
+                            <div class="modal fade" id="selecionarFornecedor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Selecionar Fornecedor</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table id="loadFornecedor" class="hover table table-striped table-bordered" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nome</th>
+                                                        <th>CNPJ</th>
+
+                                                    </tr>
+                                                </thead>
+
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Nome</th>
+                                                        <th>CNPJ</th>
+
+                                                    </tr>
+                                                </tfoot>
+
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Tiger Nixon</td>
+                                                        <td>System Architect</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Garrett Winters</td>
+                                                        <td>Accountant</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ashton Cox</td>
+                                                        <td>Junior Technical Author</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cedric Kelly</td>
+                                                        <td>Senior Javascript Developer</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Airi Satou</td>
+                                                        <td>Accountant</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Brielle Williamson</td>
+                                                        <td>Integration Specialist</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Herrod Chandler</td>
+                                                        <td>Sales Assistant</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Rhona Davidson</td>
+                                                        <td>Integration Specialist</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Colleen Hurst</td>
+                                                        <td>Javascript Developer</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sonya Frost</td>
+                                                        <td>Software Engineer</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jena Gaines</td>
+                                                        <td>Office Manager</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Quinn Flynn</td>
+                                                        <td>Support Lead</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Charde Marshall</td>
+                                                        <td>Regional Director</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Haley Kennedy</td>
+                                                        <td>Senior Marketing Designer</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Tatyana Fitzpatrick</td>
+                                                        <td>Regional Director</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Michael Silva</td>
+                                                        <td>Marketing Designer</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Paul Byrd</td>
+                                                        <td>Chief Financial Officer (CFO)</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Gloria Little</td>
+                                                        <td>Systems Administrator</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Bradley Greer</td>
+                                                        <td>Software Engineer</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Dai Rios</td>
+                                                        <td>Personnel Lead</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jenette Caldwell</td>
+                                                        <td>Development Lead</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Yuri Berry</td>
+                                                        <td>Chief Marketing Officer (CMO)</td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                            
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                            <!-- Modal Inserir -->
+                            <div class="modal fade" id="inserirFornecedor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Cadastrar Fornecedor</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form role="Fornecedor">
+                                                <div class="row">
+                                                    <div class="col-lg-6 yes">
+
+                                                        <div class="form-group">
+                                                            <label>Nome do Fornecedor</label>
+                                                            <input class="form-control" placeholder="Insira o Nome do Fornecedor">
+                                                        </div>
+
+
+                                                    </div>
+                                                    <!-- /.col-lg-6 (nested) -->
+                                                    <div class="col-lg-6">
+
+                                                        <div class="form-group">
+                                                            <label>CNPJ/código do Fornecedor</label>
+                                                            <input class="form-control" placeholder="Insira o código do fornecedor">
+                                                        </div>
+
+
+
+                                                    </div>
+                                                    <!-- /.col-lg-6 (nested) -->
+
+                                                </div>
+                                                <!-- /.row (nested) -->
+
+
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                            <div class="row">
+                                <div class="col-lg-6 yes">
+                                    <div class="form-group">
+                                        <label>Nome do Fornecedor</label>
+                                        <input class="form-control" placeholder="Insira o Nome do Fornecedor" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 yes">
+                                    <div class="form-group">
+                                        <label>CNPJ/código do Fornecedor</label>
+                                        <input class="form-control" placeholder="Insira o código do fornecedor" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row (nested) -->
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4 text-center">
+
+                </div>
+                <div class="col-lg-4">
+                </div>
+
+
+
+            </div>
+            <!-- /.panel-body -->
+            <div class="panel-footer text-center">
+
+                <button id="button-produto" type="submit" class="btn btn-outline btn-success">Enviar</button>
+                <button type="reset" class="btn btn-outline btn-danger">Cancelar</button>
+            </form>
+
+        </div>
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<!-- /.row -->
+</div>
+<!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="js/plugins/metisMenu/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="js/sb-admin-2.js"></script>
+
+</body>
+
+</html>
