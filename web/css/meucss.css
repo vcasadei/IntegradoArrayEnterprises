@@ -1,0 +1,18 @@
+/*!
+ * Start Bootstrap - SB Admin 2 Bootstrap Admin Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+#button-produto {
+    margin: 0px 26px;
+}
+
+#ruaFormClient {
+	width: 100%;
+}
+
+.req {
+	color:red;
+	font-weight: bold;
+}
