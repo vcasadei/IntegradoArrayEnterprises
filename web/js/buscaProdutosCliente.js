@@ -9,7 +9,7 @@ $(document).ready(
                 console.log("ahoy");
                 $.ajax({
                     type: "GET",
-                    url: "CadastrarVenda",
+                    url: "BuscarTodosClientes",
                     dataType: "html",
                     data: {uf: "x"}
                 }).done(function(data) {
