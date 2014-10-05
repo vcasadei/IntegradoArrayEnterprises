@@ -20,11 +20,11 @@ public class BuscaClientesDAO {
     private Connection bdConn;
     
     public BuscaClientesDAO() throws BdDAOException, SQLException {
-        
+
         this.bdConn = ConnectionBanco.getConnection();
     }
     
-    public ArrayList<Cliente> BuscaClientes() throws SQLException, BdDAOException{
+    public ArrayList<Cliente> BuscaTodosClientes() throws SQLException, BdDAOException{
         
         Statement stat = bdConn.createStatement();
         ResultSet rs;
@@ -32,7 +32,7 @@ public class BuscaClientesDAO {
         Cliente aux;
         String CNPJ;
         
-        rs = stat.executeQuery("SELECT codCliente, nome, CNPJ, ramo FROM Cliente");
+        rs = stat.executeQuery("SELECT codCliente, nome, CNPJ, ramo FROM Cliente;");
         
        while (rs.next()){
            
@@ -46,7 +46,6 @@ public class BuscaClientesDAO {
            aux.setCNPJ(CNPJ.substring(0, 2) + "." + CNPJ.substring(2, 5) + "." + CNPJ.substring(5, 8) +
                    "/" + CNPJ.substring(8, 12) + "-" + CNPJ.substring(12));
            
-           System.out.println(aux.getCNPJ());
            clientes.add(aux);
        }
         

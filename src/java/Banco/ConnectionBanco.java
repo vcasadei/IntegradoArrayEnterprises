@@ -21,10 +21,10 @@ public class ConnectionBanco {
     public static Connection getConnection() throws BdDAOException, SQLException {
 
         try {
-            Class.forName("org.postgresql.Driver").newInstance();
+            String nomeDriver = "org.postgresql.Driver";
+            Class.forName(nomeDriver);
+            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/ERP?user=postgres&password=foreveralones");
             
-            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/ICSahudy?user=postgres&password=foreveralones");
-
         } catch (SQLException e) {
             throw new SQLException("", "", e.getErrorCode());
         } catch (Exception e) {

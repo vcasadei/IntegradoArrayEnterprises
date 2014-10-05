@@ -1,5 +1,6 @@
 <%@page import="java.util.List"%>
 <%@page import="Bean.Cliente"%>
+<%@page import="Bean.Produto"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -29,6 +30,7 @@
                 $('#loadCliente tbody').on('click', 'tr', function() {
                     if ($(this).hasClass('selected')) {
                         $(this).removeClass('selected');
+                        auxSplit = "none";
                     }
                     else {
                         table.$('tr.selected').removeClass('selected');
@@ -43,7 +45,11 @@
                 });
 
                 $('#selectClient').click(function() {
-                    // console.log(table.row('.selected'));
+                
+                    if ($('#loadCliente tbody tr').hasClass('selected')) {
+                        $('#loadCliente tbody tr').removeClass('selected');
+                    }
+                
                     if (auxSplit === "none") {
                         console.log("Nada foi Selecionado");
                     } else {
@@ -59,37 +65,65 @@
                         aux2 = "";
                         auxNomeCliente = "";
                         auxCNPJ = "";
-
                     }
-
-
                 });
-
-
             });
         </script>
 
         <script >
             $(document).ready(function() {
 
+                var table = $('#loadProduto').dataTable();
+                var aux2 = "";
+                var auxSplit = "none";
 
-                $('#button').click(function() {
-                    table.row('.selected').remove().draw(false);
+                $('#loadProduto tbody').on('click', 'tr', function() {
+                    if ($(this).hasClass('selected')) {
+                        $(this).removeClass('selected');
+                        auxSplit = "none";
+                    }
+                    else {
+                        table.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+
+                        $(this).find("td").each(function() {
+                            aux2 = aux2 + "#/" + $(this).text();
+                        });
+
+                        auxSplit = aux2.split("#/");
+                    }
                 });
 
-                $('#loadProduto').dataTable();
+                // Camila - buguei o bang de produtos aqui
+                $('#selectProduct').click(function() {
+
+                    if ($('#loadProduto tbody tr').hasClass('selected')) {
+                        $('#loadProduto tbody tr').removeClass('selected');
+                    }
+
+                    if (auxSplit === "none") {
+                        console.log("Nada foi Selecionado");
+                    } else {
+                        console.log("ALGO FOI SELECIONADO");
+                        var auxCodProd = auxSplit[1];
+                        var auxNomeProd = auxSplit[2];
+                        var auxTipoProd = auxSplit[3];
+                        var auxValorUnitario = auxSplit[4];
+                        $('#hid').removeClass('hidden');
+                        $('#nomeProduto').val(auxNomeProd);
+                        $('#codigoProduto').val(auxCodProd);
+                        $('#valorUnitario').val(auxValorUnitario);
+                        if (auxTipoProd === "medicamento") {
+                            console.log("medicamento");
+                        } else {
+                            console.log("Alimento");
+                        }
+                        auxSplit === "none";
+                        aux2 = "";
+                    }
+                });
 
                 $('#loadLote').dataTable();
-
-                // $('#selectClient').click(function() {
-                //     $('#nomeClienteHidden').removeClass('hidden');
-
-                // });
-
-                $('#selectProduct').click(function() {
-                    $('#hid').removeClass('hidden');
-
-                });
 
                 $('#selectLote').click(function() {
                     $('#loteHidden').removeClass('hidden');
@@ -237,10 +271,11 @@
     </head>
 
     <body>
-        
+
         <!-- Pega o que veio do request-->
-        <% 
+        <%
             List<Cliente> clientes = (List<Cliente>) request.getAttribute("listaClientes");
+            List<Produto> produtos = (List<Produto>) request.getAttribute("listaProdutos");
         %>
 
 
@@ -272,41 +307,11 @@
                             <a href="novousuario.html"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
                         </li>
 
-
-
-
-                        <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> Cadastro<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="produto.html">Cadastro de Produto</a>
-                                </li>
-                                <li>
-                                    <a href="cliente.html">Cadastro de Cliente</a>
-                                </li>
-                                <li>
-                                    <a href="fornecedor.html">Cadastro de Fornecedor</a>
-                                </li>
-
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-
-                        <li>
-                            <a href="lote.html"><i class="glyphicon glyphicon-check fa-fw"></i>Entrada de lote</a>
-                        </li>
-
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse in">
                                 <li>
-                                    <a class="active" href="venda.html">Efetuar Venda</a>
-                                </li>
-                                <li>
-                                    <a href="cliente.html">Vendas 2</a>
-                                </li>
-                                <li>
-                                    <a href="fornecedor.html">Vendas 3</a>
+                                    <a class="active" href="http://localhost:8084/ArrayEnterprises/BuscaClientesProdutos">Efetuar Venda</a>
                                 </li>
 
                             </ul>
@@ -440,16 +445,16 @@
                                                 <div class="col-lg-6 yes">
                                                     <div class="form-group">
                                                         <label>Nome do Produto</label>
-                                                        <input class="form-control" placeholder="Insira o Nome do Produto" disabled>
+                                                        <input class="form-control" id="nomeProduto" placeholder="Insira o Nome do Produto" disabled>
                                                     </div>
 
                                                     <div class="form-group" >
                                                         <label>Tipo de Produto: </label>
                                                         <label class="radio-inline">
-                                                            <input type="radio" name="tipoProduto" id="optionsRadiosInline2" value="option1"   disabled>Alimentício
+                                                            <input type="radio" name="tipoProduto" id="optionsAlimento" value="alimento"  disabled>Alimentício
                                                         </label>
                                                         <label class="radio-inline">
-                                                            <input type="radio" name="tipoProduto" id="optionsRadiosInline2" value="option2"  disabled>Farmacêutico
+                                                            <input type="radio" name="tipoProduto" id="optionsMedicamento" value="medicamento"  disabled>Farmacêutico
                                                         </label>
                                                     </div>
 
@@ -469,7 +474,6 @@
                                                     <div class="form-group">
                                                         <label>Código do Produto</label>
                                                         <input class="form-control" id="codigoProduto" name="codigoProduto" placeholder="Insira o código do produto" disabled>
-                                                        <p class="help-block">Deixe em branco para auto-gerar código</p>
                                                     </div>
                                                     <label>Valor Unitário</label>
                                                     <div class="form-group input-group">
@@ -649,14 +653,14 @@
                         </tfoot>
 
                         <tbody>
-                            <% for (int i = 0; i < clientes.size(); i++){
+                            <% for (int i = 0; i < clientes.size(); i++) {
                             %>
                             <tr>
-                                <td> <%=clientes.get(i).getNome() %> </td>
-                                <td> <%=clientes.get(i).getCNPJ() %> </td>
+                                <td> <%=clientes.get(i).getNome()%> </td>
+                                <td> <%=clientes.get(i).getCNPJ()%> </td>
                             </tr>
                             <%
-                            }
+                                }
                             %>
                         </tbody>
                     </table>
@@ -688,6 +692,7 @@
                                 <th>Código</th>
                                 <th>Nome do Produto</th>
                                 <th>Tipo</th>
+                                <th hidden="">Valor Unitário</th>
 
                             </tr>
                         </thead>
@@ -697,144 +702,25 @@
                                 <th>Código</th>
                                 <th>Nome do Produto</th>
                                 <th>Tipo</th>
+                                <th hidden="">Valor Unitário</th>
 
                             </tr>
                         </tfoot>
 
                         <tbody>
+                            <%
+                                for (int i = 0; i < produtos.size(); i++) {
+                            %>
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>System Architect</td>
+                                <td><%= produtos.get(i).getCodProd()%></td>
+                                <td><%= produtos.get(i).getNome()%></td>
+                                <td><%= produtos.get(i).getRamo()%></td>
+                                <td hidden=""><%= produtos.get(i).getValorUnitario()%></td>
 
                             </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Brielle Williamson</td>
-                                <td>Integration Specialist</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Herrod Chandler</td>
-                                <td>Sales Assistant</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Rhona Davidson</td>
-                                <td>Integration Specialist</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Colleen Hurst</td>
-                                <td>Javascript Developer</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Sonya Frost</td>
-                                <td>Software Engineer</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Jena Gaines</td>
-                                <td>Office Manager</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Quinn Flynn</td>
-                                <td>Support Lead</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Charde Marshall</td>
-                                <td>Regional Director</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Haley Kennedy</td>
-                                <td>Senior Marketing Designer</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Tatyana Fitzpatrick</td>
-                                <td>Regional Director</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Michael Silva</td>
-                                <td>Marketing Designer</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Paul Byrd</td>
-                                <td>Chief Financial Officer (CFO)</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Gloria Little</td>
-                                <td>Systems Administrator</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Bradley Greer</td>
-                                <td>Software Engineer</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Dai Rios</td>
-                                <td>Personnel Lead</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Jenette Caldwell</td>
-                                <td>Development Lead</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Yuri Berry</td>
-                                <td>Chief Marketing Officer (CMO)</td>
-                                <td>System Architect</td>
-
-                            </tr>
-
+                            <%
+                                }
+                            %>
                         </tbody>
                     </table>
 

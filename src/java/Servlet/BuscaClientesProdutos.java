@@ -6,7 +6,9 @@ package Servlet;
 
 import Banco.BdDAOException;
 import Banco.BuscaClientesDAO;
+import Banco.BuscaProdutosDAO;
 import Bean.Cliente;
+import Bean.Produto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -23,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Caah
  */
-public class BuscarTodosClientes extends HttpServlet {
+public class BuscaClientesProdutos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -71,35 +73,36 @@ public class BuscarTodosClientes extends HttpServlet {
         
         response.setCharacterEncoding("UTF-8");
 
-        String cliente = "";
+        /*Variáveis para buscar e armazenar os clientes*/
         ArrayList<Cliente> clientes = new ArrayList<Cliente>();
         BuscaClientesDAO clientesDAO;
+        
+        /*Variáveis para buscar e armazenar os produtos*/
+        ArrayList<Produto> produtos = new ArrayList<Produto>();
+        BuscaProdutosDAO produtosDAO;
 
         try {
-
-            System.out.println("Aqui");
             
+            /*Faz a busca dos clientes*/
             clientesDAO = new BuscaClientesDAO();
-            clientes = clientesDAO.BuscaClientes();
+            clientes = clientesDAO.BuscaTodosClientes();
             
-            /*request.setAttribute("listaClientes", clientes);
+            /*Faz a busca dos produtos*/
+            produtosDAO = new BuscaProdutosDAO();
+            produtos = produtosDAO.BuscaTodosProdutos();
+
+            /*Seta os atributos no request*/
+            request.setAttribute("listaClientes", clientes);
+            request.setAttribute("listaProdutos", produtos);
             
             RequestDispatcher rd = null;
-            rd = request.getRequestDispatcher("/SelecionaCliente.jsp");
-            rd.forward(request, response);*/
-
-            for (Cliente cl : clientes) {
-                cliente += "<tr>\n<td>" + cl.getNome() + "</td>\n<td>" + cl.getCNPJ() + "</td>\n</tr>\n";
-            }
-
-            PrintWriter writer = response.getWriter();
-            writer.print(cliente);
-            writer.close();
+            rd = request.getRequestDispatcher("/venda.jsp");
+            rd.forward(request, response);
 
         } catch (BdDAOException ex) {
-            Logger.getLogger(BuscarTodosClientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarTodosClientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -127,7 +130,7 @@ public class BuscarTodosClientes extends HttpServlet {
             System.out.println("Aqui");
             
             clientesDAO = new BuscaClientesDAO();
-            clientes = clientesDAO.BuscaClientes();
+            clientes = clientesDAO.BuscaTodosClientes();
             
             request.setAttribute("listaClientes", clientes);
             
@@ -144,9 +147,9 @@ public class BuscarTodosClientes extends HttpServlet {
             writer.close();*/
 
         } catch (BdDAOException ex) {
-            Logger.getLogger(BuscarTodosClientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(BuscarTodosClientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

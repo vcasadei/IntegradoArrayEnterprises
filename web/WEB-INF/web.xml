@@ -5,16 +5,16 @@
         <servlet-class>Servlet.CadastrarVenda</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BuscarTodosClientes</servlet-name>
-        <servlet-class>Servlet.BuscarTodosClientes</servlet-class>
+        <servlet-name>BuscaClientesProdutos</servlet-name>
+        <servlet-class>Servlet.BuscaClientesProdutos</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CadastrarVenda</servlet-name>
         <url-pattern>/CadastrarVenda</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BuscarTodosClientes</servlet-name>
-        <url-pattern>/BuscarTodosClientes</url-pattern>
+        <servlet-name>BuscaClientesProdutos</servlet-name>
+        <url-pattern>/BuscaClientesProdutos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
