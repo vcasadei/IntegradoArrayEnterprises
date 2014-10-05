@@ -47,7 +47,7 @@
                 $('#selectClient').click(function() {
                 
                     if ($('#loadCliente tbody tr').hasClass('selected')) {
-                        $('#loadCliente tbody tr').removeClass('selected');
+                        $('#load tbody tr').removeClass('selected');
                     }
                 
                     if (auxSplit === "none") {
@@ -382,7 +382,7 @@
                                         <div class="row" style="margin-bottom: -16px;">
                                             <div class="col-lg-9" >
                                                 <div class="form-group input-group">
-                                                    <input type="text" class="form-control" id="pesquisaCNPJCliente" name="pesquisaCNPJCliente" placeholder="Pesquise pelo CNPJ do Cliente">
+                                                    <input type="text" class="form-control" id="pesquisaCNPJCliente" name="pesquisaCNPJCliente" placeholder="Pesquise pelo CNPJ do Cliente (apenas números)">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default" id="buttonpesquisaCNPJCliente" type="button"><i class="fa fa-search"></i>
                                                         </button>
