@@ -21,6 +21,14 @@
         <script src="js/jasny-bootstrap.js"></script>
 
 
+        <script>
+            $(document).ready(function() {
+                $("#loteAutomatico").click(function(){
+                    //Selecionar Lote automaticamente
+                });
+            });
+        </script>
+
 
         <script>
             $(document).ready(function() {
@@ -514,7 +522,7 @@
                                                     </div>
 
                                                     <div class="form-group" >
-                                                        <label>Tipo de Produto: </label>
+                                                        <label>Tipo de Produto: </label><br>
                                                         <label class="radio-inline">
                                                             <input type="radio" name="tipoProduto" id="optionsAlimento" value="alimento"  disabled>Alimentício
                                                         </label>
@@ -530,8 +538,9 @@
 
                                                         <input class="form-control" id="quantidadeProduto" class="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto" >
                                                         <span class="input-group-addon" id="unidadeAddon">unidades</span>
-                                                    </div>
 
+                                                    </div>
+                                                    
 
                                                 </div>
 
@@ -544,6 +553,20 @@
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">R$</span>
                                                         <input  class="form-control" id="valorUnitario" name="valorUnitario" placeholder="Insira o valor unitário do produto" disabled></textarea>
+                                                    </div>
+
+                                                    <div class="form-group input-group" style="margin-top: 6%;">
+
+                                                        <div class="col-lg-6 yes">
+                                                            <button type="button" id="loteAutomatico" class="btn btn-primary">Lote Automático</button>
+                                                        </div>
+                                                        <div class="col-lg-4 yes">
+                                                            <button type="button" class="btn btn-primary" disabled>Lote Manual</button>
+                                                        </div>
+                                                        
+                                                        
+
+
                                                     </div>
                                                 </div>
 
