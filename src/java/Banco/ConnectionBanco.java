@@ -23,7 +23,7 @@ public class ConnectionBanco {
         try {
             String nomeDriver = "org.postgresql.Driver";
             Class.forName(nomeDriver);
-            return DriverManager.getConnection("jdbc:postgresql://localhost:5434/ERP?user=postgres&password=1234");
+            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/ERP?user=postgres&password=foreveralones");
             
         } catch (SQLException e) {
             throw new SQLException("", "", e.getErrorCode());

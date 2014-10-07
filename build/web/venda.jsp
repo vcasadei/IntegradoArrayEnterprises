@@ -340,7 +340,7 @@
                             <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse in">
                                 <li>
-                                    <a class="active" href="http://localhost:8080/ArrayEnterprises/BuscaClientesProdutos">Efetuar Venda</a>
+                                    <a class="active" href="BuscaClientesProdutos">Efetuar Venda</a>
                                 </li>
 
                             </ul>
