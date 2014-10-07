@@ -32,6 +32,6 @@ public class CadastrarUsuarioDAO {
                 u.getTipo()  + "');";
        
         stat.executeUpdate(SQL);
-        ConnectionBanco.close(bdConn, stat);
+        ConnectionBanco.close(bdConn, stat, null);
     }
 }
