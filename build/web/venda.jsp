@@ -112,6 +112,7 @@
 
                     if ($('#loadProduto tbody tr').hasClass('selected')) {
                         $('#loadProduto tbody tr').removeClass('selected');
+
                     }
 
                     if (auxSplit === "none") {
@@ -136,7 +137,7 @@
                         }
                         auxSplit === "none";
                         aux2 = "";
-
+                        $('#quantidadeProduto').addClass("focusedInput");
                     }
                 });
 
@@ -144,7 +145,6 @@
 
                 $('#selectLote').click(function() {
                     $('#loteHidden').removeClass('hidden');
-                    $('#quantidadeProduto').focus();
                 });
 
 
@@ -188,6 +188,19 @@
                         return false;
                     }
                 });
+
+
+                $("#quantidadeProduto").keyup(function(e) {
+                    //if the letter is not digit then display error and don't type anything
+                    
+                        var value = document.getElementById('quantidadeProduto').value;
+                        var valueUnity = document.getElementById('valorUnitario').value;
+                        var total = value*valueUnity;
+                        document.getElementById('valorTotal').value=total;
+
+                    
+                });
+
 
                 //Pesquisa pelo código do Prod que só aceita números
                 $("#pesquisaNomeProduto").keypress(function(e) {
