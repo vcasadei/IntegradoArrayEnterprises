@@ -57,8 +57,8 @@
                             },
                             stringLength: {
                                 min: 6,
-                                max: 10,
-                                message: 'O nome do usuário deve ter entre 6 e 30 caracteres'
+                                max: 20,
+                                message: 'O nome do usuário deve ter entre 6 e 20 caracteres'
                             },
                             regexp: {
                                 regexp: /[a-zA-Z]+$/,
@@ -77,8 +77,8 @@
                             },
                             stringLength: {
                                 min: 6,
-                                max: 10,
-                                message: 'A senha deve ter entre 6 e 16 caracteres'
+                                max: 15,
+                                message: 'A senha deve ter entre 6 e 15 caracteres'
                             },
                             regexp: {
                                 regexp: /[\S]+$/,
@@ -212,17 +212,7 @@ $(document).ready(function () {
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <!-- Barra de Pesquisa -->
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" name="pesquisaLateral" placeholder="Pesquisar...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </li>
+
                         <li>
                             <a  href="index.html"><i class="fa fa-dashboard fa-fw"></i> Painel de Controle</a>
                         </li>
@@ -235,7 +225,7 @@ $(document).ready(function () {
                             <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a class="acrtive" href="http://localhost:8084/ArrayEnterprises/BuscaClientesProdutos">Efetuar Venda</a>
+                                    <a class="acrtive" href="http://localhost:8080/ArrayEnterprises/BuscaClientesProdutos">Efetuar Venda</a>
                                 </li>
                                 
                             </ul>
@@ -275,7 +265,7 @@ $(document).ready(function () {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <b>Items obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk req"></span>
+                    <b>Itens obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk req"></span>
                 </div>
                 <div class="panel-body">
                     <!-- Form de Cliente -->
@@ -324,16 +314,23 @@ $(document).ready(function () {
 
                             </div>
                             <!-- /.col-lg-6 (nested) -->
-
+                            <hr width="85%">
                         </div>
                         <!-- /.row (nested) -->
+                        
 
-                        <div class="form-group text-center">
                             <!-- Button Submit -->
-                            <button  type="submit" id="enviarUser" name="enviarUser" class="btn btn-success">Enviar</button>
-
+                        <div class="row">
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-5">
+                            </div>
+                            <div class="col-lg-3">
                             <!-- Button Limpar Campos -->
-                            <button type="reset" id="resetCliente" class="btn btn-danger">Limpar Campos</button>
+                                <button type="reset" id="resetCliente" class="btn btn-danger">Limpar Campos</button>
+
+                                <button  type="submit" id="enviarUser" name="enviarUser" class="btn btn-success">Enviar</button>
+                            </div>
                         </div>
                     </form>
 

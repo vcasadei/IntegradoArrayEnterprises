@@ -17,11 +17,20 @@
         <script src="js/jquery.dataTables.min.js"></script>
         <script src="js/example.js"></script>
 
+        <link rel="stylesheet" href="css/jasny-bootstrap.css">
+        <script src="js/jasny-bootstrap.js"></script>
+
+
 
         <script>
             $(document).ready(function() {
 
-                var table = $('#loadCliente').DataTable();
+                var table = $('#loadCliente').DataTable( {
+                    language: {
+                        url: 'localisation/Portuguese-Brasil.json'
+                    }
+                } );
+
                 var aux2 = "";
                 var auxSplit = "none";
 
@@ -73,7 +82,11 @@
         <script >
             $(document).ready(function() {
 
-                var table = $('#loadProduto').dataTable();
+                var table = $('#loadProduto').dataTable( {
+                    language: {
+                        url: 'localisation/Portuguese-Brasil.json'
+                    }
+                } );
                 var aux2 = "";
                 var auxSplit = "none";
 
@@ -113,13 +126,17 @@
                         $('#nomeProduto').val(auxNomeProd);
                         $('#codigoProduto').val(auxCodProd);
                         $('#valorUnitario').val(auxValorUnitario);
+                        var osRaio = $('input:radio[name=tipoProduto]');
                         if (auxTipoProd === "medicamento") {
+                            osRaio.filter('[value=medicamento]').attr('checked', true);
                             console.log("medicamento");
                         } else {
+                            osRaio.filter('[value=alimento]').attr('checked', true);
                             console.log("Alimento");
                         }
                         auxSplit === "none";
                         aux2 = "";
+
                     }
                 });
 
@@ -127,7 +144,7 @@
 
                 $('#selectLote').click(function() {
                     $('#loteHidden').removeClass('hidden');
-
+                    $('#quantidadeProduto').focus();
                 });
 
 
@@ -164,6 +181,16 @@
                 });
 
                 $("#valorUnitario").keypress(function(e) {
+                    //if the letter is not digit then display error and don't type anything
+                    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                        //display error message
+                        //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+                        return false;
+                    }
+                });
+
+                //Pesquisa pelo código do Prod que só aceita números
+                $("#pesquisaNomeProduto").keypress(function(e) {
                     //if the letter is not digit then display error and don't type anything
                     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                         //display error message
@@ -288,17 +315,6 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <!-- Barra de Pesquisa -->
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" name="pesquisaLateral" placeholder="Pesquisar...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </li>
                         <li>
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Painel de Controle</a>
                         </li>
@@ -311,7 +327,7 @@
                             <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse in">
                                 <li>
-                                    <a class="active" href="http://localhost:8084/ArrayEnterprises/BuscaClientesProdutos">Efetuar Venda</a>
+                                    <a class="active" href="http://localhost:8080/ArrayEnterprises/BuscaClientesProdutos">Efetuar Venda</a>
                                 </li>
 
                             </ul>
@@ -353,7 +369,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <b>Items obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk req"></span>
+                        <b>Itens obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk req"></span>
                     </div>
                     <div class="panel-body">
                         <!-- Form de Venda -->
@@ -382,7 +398,7 @@
                                         <div class="row" style="margin-bottom: -16px;">
                                             <div class="col-lg-9" >
                                                 <div class="form-group input-group">
-                                                    <input type="text" class="form-control" id="pesquisaCNPJCliente" name="pesquisaCNPJCliente" placeholder="Pesquise pelo CNPJ do Cliente (apenas números)">
+                                                    <input type="text" class="form-control" id="pesquisaCNPJCliente" name="pesquisaCNPJCliente" data-mask="99.999.999/9999-99" placeholder="Pesquise pelo CNPJ do Cliente (apenas números)">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default" id="buttonpesquisaCNPJCliente" type="button"><i class="fa fa-search"></i>
                                                         </button>
@@ -425,7 +441,7 @@
                                         <div class="row" style="margin-bottom: -16px;">
                                             <div class="col-lg-9" >
                                                 <div class="form-group input-group">
-                                                    <input type="text" class="form-control" id="pesquisaNomeProduto" name="pesquisaNomeProduto" placeholder="Pesquise pelo código do Produto">
+                                                    <input type="text" class="form-control" id="pesquisaNomeProduto" name="pesquisaNomeProduto" placeholder="Pesquise pelo código do Produto (apenas números)">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default" id="buttonPesquisaNomeProduto" type="button"><i class="fa fa-search"></i>
                                                         </button>
@@ -463,7 +479,7 @@
                                                     <label>Quantidade</label>&nbsp;<span class="glyphicon glyphicon-asterisk req"></span>
                                                     <div class="form-group input-group">
 
-                                                        <input class="form-control" id="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto" >
+                                                        <input class="form-control" id="quantidadeProduto" class="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto" >
                                                         <span class="input-group-addon" id="unidadeAddon">unidades</span>
                                                     </div>
 
@@ -503,7 +519,7 @@
                                             <!-- ACCORDION -->
 
 
-                                            <div class="panel-group" id="accordion">
+                                            <div class="hidden panel-group" id="accordion">
                                                 <div class="panel panel-default template">
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">
@@ -571,7 +587,7 @@
 
                                             </div>
                                             <br />
-                                            <button  type="button" class="btn btn btn-primary btn-add-panel">
+                                            <button  type="button" class=" hidden btn btn btn-primary btn-add-panel">
                                                 <i class="glyphicon glyphicon-plus white" style="color:white"></i> Adicionar novo lote
                                             </button>
                                         </div>
@@ -584,6 +600,8 @@
 
 
                                 </div>
+                                
+
                             </div>
 
 
@@ -603,15 +621,23 @@
                                     </div>
 
                                 </div>
+                                <hr width="85%">
                             </div>
                             <!-- /.panel-body -->
-                            <div class="panel-footer text-center">
 
-                                <button id="inserirVenda" type="submit" class="btn btn-success">Efetuar Venda</button>
-                                <button type="reset" id="resetVenda" class="btn btn-danger">Limpar Campos</button>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                </div>
+                                <div class="col-lg-4">
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- Button Limp3r Campos -->
+                                    <button type="reset" id="resetVenda" class="btn btn-danger">Limpar Campos</button>
 
-
+                                    <button id="inserirVenda" type="submit" class="btn btn-success">Efetuar Venda</button>
+                                </div>
                             </div>
+
                         </form>
                     </div>
                     <!-- /.panel -->
@@ -686,7 +712,9 @@
                     <h4 class="modal-title" id="myModalLabel">Selecionar Produto</h4>
                 </div>
                 <div class="modal-body">
-                    <table id="loadProduto" class="hover table table-striped table-bordered" cellspacing="0" width="100%" style="cursor: pointer;">
+                    <table id="loadProduto" class="display table-bordered" cellspacing="0" width="100%" style="cursor: pointer;">
+
+
                         <thead>
                             <tr>
                                 <th>Código</th>
@@ -746,7 +774,7 @@
                     <h4 class="modal-title" id="myModalLabel">Selecionar Lote</h4>
                 </div>
                 <div class="modal-body">
-                    <table id="loadLote" class="hover table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="loadLote" class="hover table table-striped table-bordered" cellspacing="0" width="100%" style="cursor: pointer;">
                         <thead>
                             <tr>
                                 <th>Código</th>
