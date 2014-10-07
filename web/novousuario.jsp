@@ -235,7 +235,7 @@ $(document).ready(function () {
                             <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a class="acrtive" href="BuscaClientesProdutos">Efetuar Venda</a>
+                                    <a class="acrtive" href="http://localhost:8084/ArrayEnterprises/BuscaClientesProdutos">Efetuar Venda</a>
                                 </li>
                                 
                             </ul>
