@@ -82,6 +82,42 @@
         <script >
             $(document).ready(function() {
 
+                $('#gerarRelatorio').click(function() {
+
+                    var dataVenda = $('#dataVenda').val();
+                    var nomeCliente = $('#nomeCliente').val();
+                    var cnpjCliente = $('#cnpjCliente').val();
+                    var nomeProduto = $('#nomeProduto').val();
+                    var tipoProduto;
+                    var auxTipoProd2;
+                    var osRaio2 = $('input:radio[name=tipoProduto]');
+                    if (auxTipoProd2 === "medicamento") {
+                        osRaio2.filter('[value=medicamento]').attr('checked', true);
+                        tipoProduto = 'Farmacêutico';
+                    } else {
+                        osRaio2.filter('[value=alimento]').attr('checked', true);
+                        tipoProduto = 'Alimentício';
+                    }
+
+
+                    var quantidadeProduto = $('#quantidadeProduto').val();
+                    var codigoProduto = $('#codigoProduto').val();
+                    var valorUnitario = $('#valorUnitario').val();
+                    var valorTotal = $('#valorTotal').val();
+
+                    $('#dataVendaModal').val(dataVenda);
+                    $('#nomeClienteModal').val(nomeCliente);
+                    $('#cnpjClienteModal').val(cnpjCliente);
+                    $('#nomeProdutoModal').val(nomeProduto);
+                    $('#codProdutoModal').val(codigoProduto);
+                    $('#tipoProdutoModal').val(tipoProduto);
+                    $('#quantidadeModal').val(quantidadeProduto);
+                    $('#valorUnitarioModal').val(dataVenda);
+                    $('#valorTotalModal').val(valorTotal);
+
+
+                });
+
                 var table = $('#loadProduto').dataTable( {
                     language: {
                         url: 'localisation/Portuguese-Brasil.json'
@@ -634,6 +670,7 @@
                                     </div>
 
                                 </div>
+                                <button id="gerarRelatorio" type="button" class="btn btn-success" data-toggle="modal" data-target="#relatorioVenda">Relatorio</button>
                                 <hr width="85%">
                             </div>
                             <!-- /.panel-body -->
@@ -647,7 +684,7 @@
                                     <!-- Button Limp3r Campos -->
                                     <button type="reset" id="resetVenda" class="btn btn-danger">Limpar Campos</button>
 
-                                    <button id="inserirVenda" type="submit" class="btn btn-success">Efetuar Venda</button>
+                                    <button id="inserirVenda" type="submit" class="btn btn-success" >Efetuar Venda</button>
                                 </div>
                             </div>
 
@@ -978,6 +1015,108 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+
+
+    <!-- Modal Relatorio Venda-->
+<div class="modal fade" id="relatorioVenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="relatorioTitle">Relatório de Vendas</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-4 yes">
+                <div class="input-group">
+                  <span class="input-group-addon"><b>Data da venda</b></span>
+                  <input type="text" id="dataVendaModal" class="form-control" value="" readonly>
+                </div>
+            </div>
+        </div>
+        <hr width="90%">
+
+        <span><b>Cliente</b></span>
+
+        <div class="row">
+            <div class="col-lg-6 yes">
+                <div class="input-group">
+                    <span class="input-group-addon"><b>Nome</b></span>
+                    <input type="text" id="nomeClienteModal" class="form-control" value="" readonly>
+                </div>
+            </div>
+
+            <div class="col-lg-1 yes">
+                
+            </div>
+
+            <div class="col-lg-6 yes">
+                <div class="input-group">
+                    <span class="input-group-addon"><b>CNPJ</b></span>
+                    <input type="text" id="cnpjClienteModal" class="form-control" value="" readonly>
+                </div>
+            </div>
+        </div>
+
+        <hr width="60%">
+            
+        <span><b>Produto</b></span>
+        <div class="row">
+            <div class="col-lg-6 yes">
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Produto</b></span>
+                    <input type="text" id="nomeProdutoModal" class="form-control" value="" readonly>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Tipo do produto</b></span>
+                    <input type="text" id="tipoProdutoModal" class="form-control" value="" readonly>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Valor unitátio</b></span>
+                    <input type="text" id="valorUnitarioModal" class="form-control" value="" readonly>
+                </div>
+            </div>
+
+            <div class="col-lg-1 yes">
+                
+            </div>
+
+            <div class="col-lg-6 yes">
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Código do produto</b></span>
+                    <input type="text" id="codProdutoModal" class="form-control" value="" readonly>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Quantidade unitária</b></span>
+                    <input type="text" id="quantidadeModal" class="form-control" value="" readonly>
+                </div>
+            </div>
+        </div>
+
+        <hr width="60%">
+
+        <div class="row">
+            <div class="col-lg-6 yes">
+            </div>
+            <div class="col-lg-1 yes">
+            </div>
+            <div class="col-lg-5 yes">
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Valor total da venda</b></span>
+                    <input type="text" id="valorTotalModal" class="form-control" value="" readonly>
+                </div>
+            </div>
+        </div>
+              
+              
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <!-- /#wrapper -->
