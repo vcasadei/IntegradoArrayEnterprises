@@ -1,12 +1,7 @@
 
 package Banco;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
+import java.sql.*;
 /*
  * 
  * To change this template, choose Tools | Templates
@@ -21,9 +16,12 @@ public class ConnectionBanco {
     public static Connection getConnection() throws BdDAOException, SQLException {
 
         try {
-            String nomeDriver = "org.postgresql.Driver";
-            Class.forName(nomeDriver);
-            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/ERP?user=postgres&password=foreveralones");
+            Class.forName("org.postgresql.Driver").newInstance();
+            String conexao = "jdbc:postgresql://localhost:5432/ERP";
+            String usuario = "postgres";
+            String senha = "postgres";
+            Connection conn = DriverManager.getConnection(conexao, usuario, senha);
+            return conn;
             
         } catch (SQLException e) {
             throw new SQLException("", "", e.getErrorCode());
@@ -37,6 +35,19 @@ public class ConnectionBanco {
             if (rs != null) {
                 rs.close();
             }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (Exception e) {
+            throw new BdDAOException(e.getMessage());
+        }
+    }
+     
+          public static void close(Connection conn, Statement ps) throws BdDAOException {
+        try {
             if (ps != null) {
                 ps.close();
             }
