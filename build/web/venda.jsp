@@ -191,7 +191,7 @@
 
 
                 $("#quantidadeProduto").keyup(function(e) {
-                   
+                    //if the letter is not digit then display error and don't type anything
                     
                         var value = document.getElementById('quantidadeProduto').value;
                         var valueUnity = document.getElementById('valorUnitario').value;
