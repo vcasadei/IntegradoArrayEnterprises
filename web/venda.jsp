@@ -162,11 +162,11 @@
                     if (auxSplit === "none") {
                         console.log("Nada foi Selecionado");
                     } else {
-                        console.log("ALGO FOI SELECIONADO");
                         var auxCodProd = auxSplit[1];
                         var auxNomeProd = auxSplit[2];
                         var auxTipoProd = auxSplit[3];
                         var auxValorUnitario = auxSplit[4];
+                        $('#produtoHidden').removeClass('hidden');
                         $('#hid').removeClass('hidden');
                         $('#nomeProduto').val(auxNomeProd);
                         $('#codigoProduto').val(auxCodProd);

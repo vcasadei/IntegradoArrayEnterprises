@@ -6,13 +6,14 @@ package Servlet;
 
 import Banco.BdDAOException;
 import Banco.BuscaClientesDAO;
+import Banco.BuscaProdutosDAO;
 import Bean.Cliente;
+import Bean.Produto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +68,35 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        response.setCharacterEncoding("UTF-8");
+
+        Produto produto;
+        BuscaProdutosDAO produtosDAO;
+        String codigo;
+
+        try {
+
+            produtosDAO = new BuscaProdutosDAO();
+            
+            codigo = request.getParameter("cod");
+            
+            produto = produtosDAO.BuscaProdutoCod(Integer.parseInt(codigo));
+
+            PrintWriter writer = response.getWriter();
+            if (produto == null){
+                writer.print("null");
+            } else {
+                writer.print(produto.getNome() + ";" + produto.getCodProd() + ";" + produto.getRamo() + ";"
+                        + produto.getValorUnitario());
+            }
+            writer.close();
+
+        } catch (BdDAOException ex) {
+            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

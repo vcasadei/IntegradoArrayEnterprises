@@ -76,4 +76,27 @@ public class BuscaProdutosDAO {
         ConnectionBanco.close(bdConn, stat, rs);
         return produtos;
     }
+    
+    /*Busca um produto através do seu código*/
+    public Produto BuscaProdutoCod(int cod) throws SQLException, BdDAOException{
+        
+        Statement stat = bdConn.createStatement();
+        ResultSet rs;
+        Produto retorno = null;
+        
+        rs = stat.executeQuery("SELECT nomeProd, ramo, valorUnitario FROM Produto WHERE codProd = " + cod + ";");
+        
+        while (rs.next()){
+            retorno = new Produto();
+            retorno.setCodProd(cod);
+            retorno.setNome(rs.getString(1));
+            retorno.setRamo(rs.getString(2));
+            retorno.setValorUnitario(rs.getFloat(3));
+        }
+        
+        /*Fecha a conexão com o banco*/
+        ConnectionBanco.close(bdConn, stat, rs);
+        
+        return retorno;
+    }
 }
