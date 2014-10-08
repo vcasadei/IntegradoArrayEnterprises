@@ -1189,6 +1189,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
+    
+    <!-- Busca cliente / produto -->
+    <script src="js/PesquisaCNPJProduto.js"></script>
 
 </body>
 

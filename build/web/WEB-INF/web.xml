@@ -8,6 +8,10 @@
         <servlet-name>BuscaClientesProdutos</servlet-name>
         <servlet-class>Servlet.BuscaClientesProdutos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BuscaClienteCNPJ</servlet-name>
+        <servlet-class>Servlet.BuscaClienteCNPJ</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CadastrarVenda</servlet-name>
         <url-pattern>/CadastrarVenda</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>BuscaClientesProdutos</servlet-name>
         <url-pattern>/BuscaClientesProdutos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BuscaClienteCNPJ</servlet-name>
+        <url-pattern>/BuscaClienteCNPJ</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

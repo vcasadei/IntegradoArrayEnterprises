@@ -126,8 +126,6 @@ public class BuscaClientesProdutos extends HttpServlet {
         BuscaClientesDAO clientesDAO;
 
         try {
-
-            System.out.println("Aqui");
             
             clientesDAO = new BuscaClientesDAO();
             clientes = clientesDAO.BuscaTodosClientes();

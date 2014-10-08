@@ -8,13 +8,19 @@ $(document).ready(function() {
         dataType: "html",
         data: {CNPJ: $('#pesquisaCNPJCliente').val() }
       }).done(function(data){
-          
-         var aux = "";
-         aux = data.toString();
-         
-          
-        $('#nomeCliente').val();
-        $('#cnpjCliente').val();
+        
+        if (data === "null"){
+            /*Exibe mensagem de cliente não encontrado*/
+        } else {
+            
+            var vetorDados = "";
+            vetorDados = data.split(";");
+            
+            $('#nomeClienteHidden').removeClass('hidden');
+            $('#cnpjCliente').val(vetorDados[1]);
+            $('#nomeCliente').val(vetorDados[0]);
+        }
+        
       }); 
     });
 
