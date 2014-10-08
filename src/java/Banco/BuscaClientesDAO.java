@@ -35,7 +35,6 @@ public class BuscaClientesDAO {
         rs = stat.executeQuery("SELECT codCliente, nome, CNPJ, ramo FROM Cliente;");
         
        while (rs.next()){
-           
            aux = new Cliente();
            aux.setCodCliente(rs.getInt(1));
            aux.setNome(rs.getString(2));
@@ -51,6 +50,24 @@ public class BuscaClientesDAO {
         
         ConnectionBanco.close(bdConn, stat, rs);
         return clientes;
+    }
+    
+    public Cliente BuscaClienteCNPJ(String cnpj) throws SQLException, BdDAOException{
+
+        Statement stat = bdConn.createStatement();
+        ResultSet rs;
+        Cliente retorno;
+        
+        rs = stat.executeQuery("SELECT nome FROM Cliente WHERE CNPJ = '" + cnpj + "';");
+        
+        while (rs.next()){
+            retorno = new Cliente();
+            retorno.setNome(rs.getString(1));
+            retorno.setCNPJ(cnpj);
+            return retorno;
+        }
+        
+        return null;
     }
     
 }
