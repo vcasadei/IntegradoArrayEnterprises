@@ -591,7 +591,7 @@
                                             <!-- ACCORDION -->
 
 
-                                            <div class="hidden panel-group" id="accordion">
+                                            <div class=" panel-group" id="accordion">
                                                 <div class="panel panel-default template">
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">
@@ -1112,6 +1112,44 @@
                 <div class="form-group input-group">
                     <span class="input-group-addon"><b>Quantidade unitária</b></span>
                     <input type="text" id="quantidadeModal" class="form-control" value="" readonly>
+                </div>
+            </div>
+        </div>
+
+
+
+        <hr width="60%">
+
+
+        <span><b>Lote</b></span>
+        <div class="row">
+            <div class="col-lg-6 yes">
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Código</b></span>
+                    <input type="text" id="codigoLoteModal" class="form-control" value="" readonly>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Fabricação</b></span>
+                    <input type="text" id="dataFabricacaoModal" class="form-control" value="" readonly>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Observações</b></span>
+                    <input type="text" id="observacoesModal" class="form-control" value="" readonly>
+                </div>
+            </div>
+
+            <div class="col-lg-1 yes">
+                
+            </div>
+
+            <div class="col-lg-6 yes">
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Quantidade</b></span>
+                    <input type="text" id="quantidadeProdutoModal" class="form-control" value="" readonly>
+                </div>
+                <div class="form-group input-group">
+                    <span class="input-group-addon"><b>Validade</b></span>
+                    <input type="text" id="dataValidadeModal" class="form-control" value="" readonly>
                 </div>
             </div>
         </div>
