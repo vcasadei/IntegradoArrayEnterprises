@@ -2,7 +2,7 @@
 <%@page import="Bean.Cliente"%>
 <%@page import="Bean.Produto"%>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en" class="wf-sourcecodepro-n4-active wf-sourcecodepro-n7-active wf-active">
 
     <head>
 
@@ -16,6 +16,15 @@
         <script src="js/dataTables.bootstrap.js"></script>
         <script src="js/jquery.dataTables.min.js"></script>
         <script src="js/example.js"></script>
+        
+        <script type="text/javascript" src="js/jsPDF/FileSaver.js"></script> 
+        
+        
+        <script src="js/jsPDF/jspdf.min.js"></script>
+
+
+        <script src="js/generatePDF.js"></script>
+
 
         <link rel="stylesheet" href="css/jasny-bootstrap.css">
         <script src="js/jasny-bootstrap.js"></script>
@@ -120,7 +129,7 @@
                     $('#codProdutoModal').val(codigoProduto);
                     $('#tipoProdutoModal').val(tipoProduto);
                     $('#quantidadeModal').val(quantidadeProduto);
-                    $('#valorUnitarioModal').val(dataVenda);
+                    $('#valorUnitarioModal').val(valorUnitario);
                     $('#valorTotalModal').val(valorTotal);
 
 
@@ -166,7 +175,12 @@
                         var auxNomeProd = auxSplit[2];
                         var auxTipoProd = auxSplit[3];
                         var auxValorUnitario = auxSplit[4];
+<<<<<<< Updated upstream
                         $('#produtoHidden').removeClass('hidden');
+=======
+                        auxValorUnitario = auxValorUnitario.replace(/\,/g, '.');
+                        auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
+>>>>>>> Stashed changes
                         $('#hid').removeClass('hidden');
                         $('#nomeProduto').val(auxNomeProd);
                         $('#codigoProduto').val(auxCodProd);
@@ -239,7 +253,13 @@
                     
                         var value = document.getElementById('quantidadeProduto').value;
                         var valueUnity = document.getElementById('valorUnitario').value;
+                        valueUnity = valueUnity.replace(/\./g, ',');
+                        valueUnity = valueUnity.replace(/\,/g, '.');
+                        valueUnity = parseFloat(valueUnity);
                         var total = value*valueUnity;
+                        total = total.toString();
+                        total = total.replace(/\,/g, '.');
+                        total = total + ",00";
                         document.getElementById('valorTotal').value=total;
 
                     
@@ -591,7 +611,7 @@
                                             <!-- ACCORDION -->
 
 
-                                            <div class=" panel-group" id="accordion">
+                                            <div class="hidden panel-group" id="accordion">
                                                 <div class="panel panel-default template">
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">
@@ -1173,6 +1193,7 @@
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="salvarRelatorio" class="btn btn-primary">Salvar Relatório</button>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
