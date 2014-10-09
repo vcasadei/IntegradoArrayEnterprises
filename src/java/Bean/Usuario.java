@@ -23,6 +23,11 @@ public class Usuario {
         this.tipo = tipo;
     }
 
+    public Usuario(String email, String senha) {
+        this.senha = senha;
+        this.email = email;
+    }
+
     public String getNome() {
         return nome;
     }
