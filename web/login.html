@@ -59,17 +59,49 @@
                     }
                 },
                 submitHandler: function(validator, form, submitButton) {
-                    var fullName = validator.getFieldElements('username').val();
-                    alert('Hello ' + fullName);
+                    
+
+                    // $.ajax({
+                    //     type: "POST",
+                    //     url: "FazerLogin",
+                    //     dataType: "html",
+                    //     data: {username: $('#username').val(), password: $('#password').val()}
+                    // }).done(function(data) {
+                    //     console.log(data);
+
+                    //     if (data === "null") {
+                    //         //Caso sucesso
+                    //         window.location.href="/ArrayEnterprises/index.html"
+
+                            
+                    //     } else {
+                    //         //Caso dê merda
+                    //         $('#erroLogin').fadeIn("slow");
+
+                    //         window.location.href="/ArrayEnterprises/login.html"
+
+                    //         // $('#erroLogin').fadeIn("slow");
+                            
+                    //     }
+
+                    // });
+
+
+
                 }
                
             });
+
+
+
 });    
   });
 })(jQuery);
 
         
 </script>
+
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -90,7 +122,7 @@
                         <h3 class="panel-title" style="text-align:center;">Acesso ao sistema</h3>
                     </div>
                     <div class="panel-body">
-                        <form  method="POST" action="EfetuarLogin" id="loginForm">
+                        <form  method="POST" action="FazerLogin" id="loginForm">
                                  <!-- Erro de login -->
                                     <div class="alert alert-danger" id="erroLogin" style="display:none;">
                                         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -109,7 +141,7 @@
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <p><button type="submit" class="btn btn-lg btn-success btn-block">Acessar o sistema</button>
+                                <p><button type="submit" id="acessoSistema" class="btn btn-lg btn-success btn-block">Acessar o sistema</button>
                             
                         </form>
                     </div>

@@ -36,8 +36,30 @@
                     //Alguma chamada do BD para pegar os lotes
 
                     //Variavel que deve ter a quantidade de lotes selecionada do banco
-                    var quantidadeLotes = 0;
-                    console.log($('#accordion').html());
+                    // var quantidadeLotes = 2;
+                    // var $template = $(".template");
+
+                    // var hash = 2;
+                    // while(quantidadeLotes > 0){
+                    //     var $newPanel = $template.clone();
+                    //     $newPanel.find(".collapse").removeClass("in");
+                    //     $newPanel.find(".accordion-toggle").attr("href", "#" + (++hash))
+                    //             .text("Dynamic panel #" + hash);
+                    //     $newPanel.find(".panel-collapse").attr("id", hash).addClass("collapse").removeClass("in");
+                    //     $("#accordion").append($newPanel.fadeIn());
+                    //     quantidadeLotes--;
+                    // }
+
+
+                    
+                    // $(".btn-add-panel").on("click", function() {
+                    //     var $newPanel = $template.clone();
+                    //     $newPanel.find(".collapse").removeClass("in");
+                    //     $newPanel.find(".accordion-toggle").attr("href", "#" + (++hash))
+                    //             .text("Dynamic panel #" + hash);
+                    //     $newPanel.find(".panel-collapse").attr("id", hash).addClass("collapse").removeClass("in");
+                    //     $("#accordion").append($newPanel.fadeIn());
+                    // });
 
                 });
             });

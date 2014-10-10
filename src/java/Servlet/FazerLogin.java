@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlet;
 
 import Banco.BdDAOException;
@@ -16,17 +15,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Bruna
+ * @author casadei
  */
-
-public class EfetuarLogin extends HttpServlet {
+public class FazerLogin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +43,10 @@ public class EfetuarLogin extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerificarLogin</title>");            
+            out.println("<title>Servlet FazerLogin</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet VerificarLogin at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FazerLogin at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {
@@ -83,6 +80,7 @@ public class EfetuarLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setCharacterEncoding("UTF-8");
        
         try { 
             String username = request.getParameter("username");
@@ -90,14 +88,17 @@ public class EfetuarLogin extends HttpServlet {
 
             Usuario user = new Usuario(username, senha);
         
-        
             UsuarioDAO usuario = new UsuarioDAO();
-//            usuario.BuscaUsuario(user);
             if(usuario.BuscaUsuario(user)){
-               RequestDispatcher rd = null;
+              RequestDispatcher rd = null;
               rd = request.getRequestDispatcher("/index.html");
               rd.forward(request, response);
-            }  
+            }  else {
+              RequestDispatcher rd = null;
+              rd = request.getRequestDispatcher("/loginError.html");
+              rd.forward(request, response);
+            }
+//            writer.close();
         } catch (BdDAOException ex) {
             Logger.getLogger(EfetuarLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

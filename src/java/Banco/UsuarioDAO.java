@@ -25,15 +25,23 @@ public class UsuarioDAO {
     }
 
     public boolean BuscaUsuario(Usuario user) throws SQLException, BdDAOException {
-
-        Statement stat = bdConn.createStatement();
-        ResultSet rs;
+        try{
+            Statement stat = bdConn.createStatement();
+        ResultSet rs = null;
+        boolean exist = false;
 
         rs = stat.executeQuery("SELECT username, senha FROM usuario WHERE username = '"
                 + user.getNome() + "' and senha = '" + user.getSenha() + "';");
 
+        
+        exist =  rs.next();
         ConnectionBanco.close(bdConn, stat, rs);
-        return rs.next();
+        return exist;
+            
+        } finally {
+            
+        }
+        
         
 
  
