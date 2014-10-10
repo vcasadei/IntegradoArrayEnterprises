@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Acesso ao sistema - ArrayEnterprises</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -22,6 +22,54 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Chamadas de Scripts -->
+    <script src="js/jquery-1.11.1.js"></script>
+    <!-- /#wrapper -->
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/jasny-bootstrap.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrapValidator.min.css"/>
+    <script  src="js/bootstrapValidator.js"></script>
+
+    <script>
+
+    (function( $ ) {
+  $(function() {
+    $(document).ready(function() {
+            $('#loginForm').bootstrapValidator({
+
+                fields: {
+                    username: {
+                        message: 'O nome do usuário Não válido',
+                        validators: {
+                            notEmpty: {
+                                message: 'Por favor, insira o nome do usuário'
+                            }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Por favor, insira a senha do usuário'
+                            }
+                        }
+                    }
+                },
+                submitHandler: function(validator, form, submitButton) {
+                    var fullName = validator.getFieldElements('username').val();
+                    alert('Hello ' + fullName);
+                }
+               
+            });
+});    
+  });
+})(jQuery);
+
+        
+</script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,25 +87,30 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Entre com o seu email</h3>
+                        <h3 class="panel-title" style="text-align:center;">Acesso ao sistema</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" method="post" action="EfetuarLogin">
-                            <fieldset>
+                        <form  method="POST" action="EfetuarLogin" id="loginForm">
+                                 <!-- Erro de login -->
+                                    <div class="alert alert-danger" id="erroLogin" style="display:none;">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <span><b>Erro:</b> Nome de usuário ou senha inválidos.</span>
+                                    </div>
+                            
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    <input class="form-control" placeholder="nome de usuário" name="username" id="username"autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="senha" name="password" id="password" type="password" value="">
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        <input name="remember" type="checkbox" value="Remember Me">Lembrar-me
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <p><input type="submit" class="btn btn-lg btn-success btn-block">Login</p>
-                            </fieldset>
+                                <p><button type="submit" class="btn btn-lg btn-success btn-block">Acessar o sistema</button>
+                            
                         </form>
                     </div>
                 </div>
