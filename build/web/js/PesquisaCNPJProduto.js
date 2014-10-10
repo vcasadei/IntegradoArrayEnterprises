@@ -15,6 +15,7 @@ $(document).ready(function() {
                 //Criar mensagem que diz que o cliente com esse cnpj não existe
 
                 $('#pesquisaCNPJCliente').val("");
+                $('#erroPesquisaCNPJ').fadeIn("slow");
             } else {
 
                 var aux = "";
@@ -40,7 +41,7 @@ $(document).ready(function() {
 
             if (data === "null") {
                 //Criar mensagem que diz que o o produto com esse código não existe
-
+                $('#erroPesquisaCodigo').fadeIn("slow");
                 $('#pesquisaNomeProduto').val("");
             } else {
 

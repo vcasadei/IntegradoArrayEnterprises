@@ -2,7 +2,7 @@
 <%@page import="Bean.Cliente"%>
 <%@page import="Bean.Produto"%>
 <!DOCTYPE html>
-<html lang="en" class="wf-sourcecodepro-n4-active wf-sourcecodepro-n7-active wf-active">
+<html lang="pt-br" class="wf-sourcecodepro-n4-active wf-sourcecodepro-n7-active wf-active">
 
     <head>
 
@@ -33,7 +33,12 @@
         <script>
             $(document).ready(function() {
                 $("#loteAutomatico").click(function(){
-                    //Selecionar Lote automaticamente
+                    //Alguma chamada do BD para pegar os lotes
+
+                    //Variavel que deve ter a quantidade de lotes selecionada do banco
+                    var quantidadeLotes = 0;
+                    console.log($('#accordion').html());
+
                 });
             });
         </script>
@@ -98,6 +103,12 @@
 
         <script >
             $(document).ready(function() {
+
+                $('#quantidadeProduto').tooltip({
+                    title : 'Insira a quantidade e clique em Lote Automático',
+                    placement : 'left'
+                });
+
 
                 $('#gerarRelatorio').click(function() {
 
@@ -175,12 +186,11 @@
                         var auxNomeProd = auxSplit[2];
                         var auxTipoProd = auxSplit[3];
                         var auxValorUnitario = auxSplit[4];
-<<<<<<< Updated upstream
                         $('#produtoHidden').removeClass('hidden');
-=======
+
                         auxValorUnitario = auxValorUnitario.replace(/\,/g, '.');
                         auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
->>>>>>> Stashed changes
+
                         $('#hid').removeClass('hidden');
                         $('#nomeProduto').val(auxNomeProd);
                         $('#codigoProduto').val(auxCodProd);
@@ -195,7 +205,8 @@
                         }
                         auxSplit === "none";
                         aux2 = "";
-                        $('#quantidadeProduto').addClass("focusedInput");
+                        
+
                     }
                 });
 
@@ -489,6 +500,11 @@
 
 
                                     </div>
+                                     <!-- Erro se não houver clientes cadastrados com o cnpj -->
+                                    <div class="alert alert-danger" id="erroPesquisaCNPJ" style="display:none;">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <span><b>Erro:</b> Não existem clientes cadastrados com esse CNPJ.</span>
+                                    </div>
                                     <div class="panel-body">
 
                                         <div id="nomeClienteHidden" class="hidden row">
@@ -530,11 +546,19 @@
                                             </div>
                                         </div>
 
+
                                     </div>
+                                    <!-- Erro se não houver produtos cadastrados com o código -->
+                                    <div class="alert alert-danger" id="erroPesquisaCodigo" style="display:none;">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <span><b>Erro:</b> Não existem produtos cadastrados com esse código.</span>
+                                    </div>
+                                    
                                     <div class="panel-body">
                                         <div id="hid" class="hidden">
 
                                             <div id="produtoHidden" class=" row">
+
                                                 <div class="col-lg-6 yes">
                                                     <div class="form-group">
                                                         <label>Nome do Produto</label>
