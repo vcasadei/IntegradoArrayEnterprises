@@ -32,34 +32,26 @@
 
         <script>
             $(document).ready(function() {
+                //Insere as caixas de lote Automaticamente
                 $("#loteAutomatico").click(function(){
-                    //Alguma chamada do BD para pegar os lotes
+                    var quantidadeLotes = 2;
+                    var $template = $(".template");
+                       
+                    var hash = 0;
+                    while(quantidadeLotes > 0){
+                        var $newPanel = $template.clone();
+                        
+                        $newPanel.find(".collapse").removeClass("in");
+                        $newPanel.find(".accordion-toggle").attr("href", "#" + (++hash))
+                                .text("Lote " + hash + " - " + "Codigo Lote" );
+                        $newPanel.find(".panel-collapse").attr("id", hash).addClass("collapse").removeClass("in");
+                        $newPanel.removeClass("hidden");
+                        $("#accordion").append($newPanel.fadeIn());
+                        
+                        quantidadeLotes--;
+                        console.log(quantidadeLotes);
+                    }
 
-                    //Variavel que deve ter a quantidade de lotes selecionada do banco
-                    // var quantidadeLotes = 2;
-                    // var $template = $(".template");
-
-                    // var hash = 2;
-                    // while(quantidadeLotes > 0){
-                    //     var $newPanel = $template.clone();
-                    //     $newPanel.find(".collapse").removeClass("in");
-                    //     $newPanel.find(".accordion-toggle").attr("href", "#" + (++hash))
-                    //             .text("Dynamic panel #" + hash);
-                    //     $newPanel.find(".panel-collapse").attr("id", hash).addClass("collapse").removeClass("in");
-                    //     $("#accordion").append($newPanel.fadeIn());
-                    //     quantidadeLotes--;
-                    // }
-
-
-                    
-                    // $(".btn-add-panel").on("click", function() {
-                    //     var $newPanel = $template.clone();
-                    //     $newPanel.find(".collapse").removeClass("in");
-                    //     $newPanel.find(".accordion-toggle").attr("href", "#" + (++hash))
-                    //             .text("Dynamic panel #" + hash);
-                    //     $newPanel.find(".panel-collapse").attr("id", hash).addClass("collapse").removeClass("in");
-                    //     $("#accordion").append($newPanel.fadeIn());
-                    // });
 
                 });
             });
@@ -657,8 +649,8 @@
                                             <!-- ACCORDION -->
 
 
-                                            <div class="hidden panel-group" id="accordion">
-                                                <div class="panel panel-default template">
+                                            <div class="panel-group" id="accordion">
+                                                <div class="hidden panel panel-default template">
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">
                                                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
