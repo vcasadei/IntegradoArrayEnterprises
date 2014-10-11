@@ -93,6 +93,29 @@ $(document).ready(function() {
         });
     }
 
+     function pesquisarLotesAutomatico() {
+         $.ajax({
+            type: "POST",
+            url: "BuscarLotesAutomatico",
+            dataType: "html",
+            data: {codigo:     $('#codigoProduto').val(),
+                   quantidade: $('#quantidadeProduto').val() }
+        }).done(function(data) {
+
+            if (data === "null") {
+                //Criar mensagem que diz que o cliente com esse cnpj não existe
+                
+            } else {
+
+                var aux = data.split(";");
+
+                
+            }
+
+        });
+    }
+
+
         $('#pesquisaCNPJCliente').keypress(function(e) {
             if(e.which == 13) {
                 pesquisarCNPJ();
@@ -113,5 +136,10 @@ $(document).ready(function() {
     //Pesquisa um produto pelo código
     $('#buttonPesquisaNomeProduto').click(function() {
         pesquisarCodigo();
+    });
+
+    //Pesquisa um produto pelo código
+    $('#loteAutomatico').click(function() {
+        pesquisarLotesAutomatico();
     });
 });
