@@ -1,7 +1,7 @@
 
 $(document).ready(function() {
-    $('#salvarRelatorioNome').click(function(){
-    	console.log($('#nomeRelatorio').val());
+    $('#printRelatorioNome').click(function(){
+    	console.log('mandou imprimir');
     	if( $('#nomeRelatorio').val() != "" ){
     		console.log('é diferente de vazio');
     		var doc = new jsPDF();
@@ -126,8 +126,8 @@ $(document).ready(function() {
 			doc.line(114, 272, 114, 284);
 			doc.line(202, 272, 202, 284);
 
+			doc.output('dataurlnewwindow');
 
-			doc.save($('#nomeRelatorio').val() + '.pdf');
 			$('#salvarRelatorioComo').modal('hide');
     	} else {
     		$('#erroNomeVazio').fadeIn(200);

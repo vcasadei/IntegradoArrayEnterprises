@@ -19,6 +19,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 /**
  *
  * @author casadei
@@ -85,20 +89,28 @@ public class FazerLogin extends HttpServlet {
         try { 
             String username = request.getParameter("username");
             String senha = request.getParameter("password");
+            
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson(); 
+            JsonObject myObj = new JsonObject();
 
             Usuario user = new Usuario(username, senha);
         
             UsuarioDAO usuario = new UsuarioDAO();
             if(usuario.BuscaUsuario(user)){
-              RequestDispatcher rd = null;
-              rd = request.getRequestDispatcher("/index.html");
-              rd.forward(request, response);
+                myObj.addProperty("success", true);
+//              RequestDispatcher rd = null;
+//              rd = request.getRequestDispatcher("/index.html");
+//              rd.forward(request, response);
             }  else {
-              RequestDispatcher rd = null;
-              rd = request.getRequestDispatcher("/loginError.html");
-              rd.forward(request, response);
+                myObj.addProperty("success", false);
+//              RequestDispatcher rd = null;
+//              rd = request.getRequestDispatcher("/loginError.html");
+//              rd.forward(request, response);
             }
-//            writer.close();
+            out.println(myObj.toString());
+            out.close();
+            
         } catch (BdDAOException ex) {
             Logger.getLogger(EfetuarLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

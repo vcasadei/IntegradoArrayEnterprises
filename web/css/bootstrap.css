@@ -2387,15 +2387,15 @@ output {
 .form-control[disabled],
 fieldset[disabled] .form-control {
   cursor: not-allowed;
-  background-color: ##F2F2F2;
+  background-color: #F1F1F1;
   opacity: 1;
 }
 
-.form-control[readonly] .form-control {
-  cursor: not-allowed;
-  background-color: #fff;
+.form-control[readonly] {
+  background-color: #FFF;
   opacity: 1;
 }
+
 
 textarea.form-control {
   height: auto;
