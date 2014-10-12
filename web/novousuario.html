@@ -42,6 +42,34 @@
 
     <script>
         $(document).ready(function() {
+
+            $('#usuarioForm').bind("keyup keypress", function(e) {
+                  var code = e.keyCode || e.which; 
+                  if (code  == 13) {               
+                    e.preventDefault();
+                    return false;
+                  }
+                });
+
+            $( "#resetCliente" ).click(function() {
+                limparCampos();
+            });
+
+            function limparCampos(){
+                $('#usuarioForm').each (function(){
+                  this.reset();
+                });
+                $('#usuarioForm').bootstrapValidator('resetForm', true);
+            }
+
+        $("#enviarUser").click(function(e){
+            $('#usuarioForm').bootstrapValidator('validate');
+            
+            
+        });
+
+
+
             $('#usuarioForm').bootstrapValidator({
                 feedbackIcons: {
                     valid: 'glyphicon glyphicon-ok',
@@ -50,7 +78,7 @@
                 },
                 fields: {
                     nomeUsuario: {
-                        message: 'O nome do usuário não é válido',
+                        message: 'O nome do usuário Não válido',
                         validators: {
                             notEmpty: {
                                 message: 'Por favor, insira o nome do usuário'
@@ -92,10 +120,10 @@
                                 message: 'Por favor, insira o email do usuário'
                             },
                             emailUser: {
-                                message: 'O email inserido não é válido'
+                                message: 'O email inserido não válido'
                             },
                             emailAddress: {
-                                message: 'O email inserido não é válido'
+                                message: 'O email inserido não válido'
                             }
                         }
                     },
@@ -108,15 +136,54 @@
                     }
                 },
                 submitHandler: function(validator, form, submitButton) {
-                    var fullName = validator.getFieldElements('nomeUsuario').val();
-                    alert('Hello ' + fullName);
+                    
                 }
-            });
+            }).on('success.form.bv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
+
+                var varUsername =  $('#nomeUsuario').val();
+                var varPassword = $('#senhaUser').val();
+                var varEmail = $('#emailUser').val();
+                var varTipoUser = $('input[name=tipoUsuario]:checked', '#usuarioForm').val();
+
+                    var dataString;
+                    dataString = "nomeUsuario=" + varUsername + "&senhaUser=" + varPassword + "&emailUser=" + varEmail + "&tipoUsuario=" + varTipoUser;
+                    $.ajax({
+                        type: "POST",
+                        url: "CadastrarUsuario",
+                        dataType: "json",
+                        data: dataString,
+                        //if received a response from the server
+                        success: function( data) {
+                             if(data.success){
+                                $('#userInserted').val(varUsername);
+                                $('#sucessoInserção').modal('show');
+                                limparCampos();
+                                 
+
+
+                             } 
+                             else {
+                                    limparCampos();
+                                    $('#erroInserção').modal('show');
+                                        
+                             }
+                        },
+                        
+                        //If there was no resonse from the server
+                        error: function(){
+                            limparCampos();
+                            $('#erroInserção').modal('show');
+                              
+                        }
+                            });
+        });
 });
 </script>
 
 
-<!-- Funcao para validaçao e captação de dados de form -->
+<!-- Funcao para validaÃ§ao e captaÃ§Ã£o de dados de form -->
 <script>
 $( document ).ready(function() {
         // $( "#enviarUser" ).click(function() {
@@ -135,33 +202,7 @@ $( document ).ready(function() {
 });
 </script>
 
-<!-- Funcao para limpar campos de form -->
-<script>
-$( document ).ready(function() {
-    $( "#resetCliente" ).click(function() {
 
-        $('#usuarioForm').each (function(){
-          this.reset();
-        });
-        $('#usuarioForm').bootstrapValidator('resetForm', true);
-    });
-});
-</script>
-
-<!-- Input somente de numeros -->
-<script>
-$(document).ready(function () {
-            //called when key is pressed in textbox
-            $("#numeroRua").keypress(function (e) {
-                //if the letter is not digit then display error and don't type anything
-                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                    //display error message
-                    //$("#errmsg").html("Digits Only").show().fadeOut("slow");
-                    return false;
-                }
-            });
-        });
-</script>
 
 
 <title>Cadastro de Cliente - ArrayEnterprises</title>
@@ -208,24 +249,23 @@ $(document).ready(function () {
             <div id="header2"></div> 
             <!-- Fim de Menu topo -->
 
-            <!--Início Menu lateral -->
+            <!--InÃ­cio Menu lateral -->
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-
                         <li>
                             <a  href="index.html"><i class="fa fa-dashboard fa-fw"></i> Painel de Controle</a>
                         </li>
 
                         <li>
-                            <a href="novousuario.html" class="active"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
+                            <a href="novousuario.jsp" class="active"><i class="fa fa-edit fa-fw"></i> Cadastro de usuário</a>
                         </li>
 
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a class="acrtive" href="http://localhost:8080/ArrayEnterprises/BuscaClientesProdutos">Efetuar Venda</a>
+                                    <a class="acrtive" href="BuscaClientesProdutos">Efetuar Venda</a>
                                 </li>
                                 
                             </ul>
@@ -265,7 +305,7 @@ $(document).ready(function () {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <b>Itens obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk req"></span>
+                    <b>Items obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk req"></span>
                 </div>
                 <div class="panel-body">
                     <!-- Form de Cliente -->
@@ -274,13 +314,13 @@ $(document).ready(function () {
                             <div class="col-lg-6 yes">
                                 <!-- Campos do Formulário -->
                                 <div class="form-group">
-                                    <label>Nome do Usuário <span class="glyphicon glyphicon-asterisk req"></span></label>
+                                    <label>Nome do usuário <span class="glyphicon glyphicon-asterisk req"></span></label>
                                     <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" placeholder="Insira o nome do usuário"  />
                                     
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Senha do Usuário <span class="glyphicon glyphicon-asterisk req"></span></label>
+                                    <label>Senha do usuário <span class="glyphicon glyphicon-asterisk req"></span></label>
                                     <input type="password" class="form-control" id="senhaUser" name="senhaUser" placeholder="Insira a senha do usuário" />
                                 </div>
 
@@ -290,13 +330,13 @@ $(document).ready(function () {
                             <div class="col-lg-6">
 
                                 <div class="form-group">
-                                    <label>Email do Usuário <span class="glyphicon glyphicon-asterisk req"></span></label>
+                                    <label>Email do usuário <span class="glyphicon glyphicon-asterisk req"></span></label>
                                     <input type="email" class="form-control" id="emailUser" name="emailUser" placeholder="Insira o email do usuário" />
                                     
                                 </div>
 
                                 <div class="form-group" >
-                                    <label>Tipo de Usuário: <span class="glyphicon glyphicon-asterisk req"></span></label>
+                                    <label>Tipo de usuário: <span class="glyphicon glyphicon-asterisk req"></span></label>
                                     <div class="radio">
                                         <label class="radio">
                                             <input type="radio" name="tipoUsuario" id="userAdmin" value="Administrador"    />Administrador
@@ -314,7 +354,8 @@ $(document).ready(function () {
 
                             </div>
                             <!-- /.col-lg-6 (nested) -->
-                            <hr width="85%">
+
+                        <hr width="85%">
                         </div>
                         <!-- /.row (nested) -->
                         
@@ -323,13 +364,13 @@ $(document).ready(function () {
                         <div class="row">
                             <div class="col-lg-4">
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                             <!-- Button Limpar Campos -->
-                                <button type="reset" id="resetCliente" class="btn btn-danger">Limpar Campos</button>
+                                <button type="reset" id="resetCliente" class="btn btn-danger"><span class="glyphicon glyphicon-repeat" style="color:white;"></span>&nbsp; Limpar Campos</button>
 
-                                <button  type="submit" id="enviarUser" name="enviarUser" class="btn btn-success">Enviar</button>
+                                <button  type="button" id="enviarUser" name="enviarUser" class="btn btn-primary"><span class="glyphicon glyphicon-check" style="color:white;"></span>&nbsp; Cadastrar</button>
                             </div>
                         </div>
                     </form>
@@ -348,6 +389,47 @@ $(document).ready(function () {
 <!-- /.row -->
 
 <!-- /.row -->
+
+     <!-- Modal confirmação de salvamento -->
+        <div class="modal fade bs-example-modal-sm2" id="sucessoInserção"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
+          <div class="modal-dialog modal-sm vertical-centered " >
+            <div class="modal-content">
+              <div class="modal-header" style="background-color:#5cb85c;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-ok" style="color:white;"></span>&nbsp;&nbsp;Usuário Inserido com Sucesso</h4>
+              </div>
+              <div class="modal-body">
+                    <span>Usuário <b id="userInserted"></b> foi inserido com sucesso!</span>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <!-- Modal confirmação de salvamento -->
+        <div class="modal fade bs-example-modal-sm2" id="erroInserção"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
+          <div class="modal-dialog vertical-centered " >
+            <div class="modal-content">
+              <div class="modal-header" style="background-color:#d9534f;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Erro no cadastro de usuário</h4>
+              </div>
+              <div class="modal-body" id="cadastroMensagemErro">
+                    <span>Algum erro ocorreu na inserção do usuário. Possíveis causas:</span>
+                    <ul>
+                        <li><b>O usuário já existe na base de dados.</b></li>
+                        <li><b>Houve falha na comunicação com a base de dados.</b> Contate o suporte</li>
+                    </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 </div>
 <!-- /#page-wrapper -->
 

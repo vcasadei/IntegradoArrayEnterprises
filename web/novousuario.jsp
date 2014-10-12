@@ -42,6 +42,34 @@
 
     <script>
         $(document).ready(function() {
+
+            $('#usuarioForm').bind("keyup keypress", function(e) {
+                  var code = e.keyCode || e.which; 
+                  if (code  == 13) {               
+                    e.preventDefault();
+                    return false;
+                  }
+                });
+
+            $( "#resetCliente" ).click(function() {
+                limparCampos();
+            });
+
+            function limparCampos(){
+                $('#usuarioForm').each (function(){
+                  this.reset();
+                });
+                $('#usuarioForm').bootstrapValidator('resetForm', true);
+            }
+
+        $("#enviarUser").click(function(e){
+            $('#usuarioForm').bootstrapValidator('validate');
+            
+            
+        });
+
+
+
             $('#usuarioForm').bootstrapValidator({
                 feedbackIcons: {
                     valid: 'glyphicon glyphicon-ok',
@@ -57,8 +85,8 @@
                             },
                             stringLength: {
                                 min: 6,
-                                max: 10,
-                                message: 'O nome do usuário deve ter entre 6 e 30 caracteres'
+                                max: 20,
+                                message: 'O nome do usuário deve ter entre 6 e 20 caracteres'
                             },
                             regexp: {
                                 regexp: /[a-zA-Z]+$/,
@@ -77,8 +105,8 @@
                             },
                             stringLength: {
                                 min: 6,
-                                max: 10,
-                                message: 'A senha deve ter entre 6 e 16 caracteres'
+                                max: 15,
+                                message: 'A senha deve ter entre 6 e 15 caracteres'
                             },
                             regexp: {
                                 regexp: /[\S]+$/,
@@ -108,10 +136,49 @@
                     }
                 },
                 submitHandler: function(validator, form, submitButton) {
-                    var fullName = validator.getFieldElements('nomeUsuario').val();
-                    alert('Hello ' + fullName);
+                    
                 }
-            });
+            }).on('success.form.bv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
+
+                var varUsername =  $('#nomeUsuario').val();
+                var varPassword = $('#senhaUser').val();
+                var varEmail = $('#emailUser').val();
+                var varTipoUser = $('input[name=tipoUsuario]:checked', '#usuarioForm').val();
+
+                    var dataString;
+                    dataString = "nomeUsuario=" + varUsername + "&senhaUser=" + varPassword + "&emailUser=" + varEmail + "&tipoUsuario=" + varTipoUser;
+                    $.ajax({
+                        type: "POST",
+                        url: "CadastrarUsuario",
+                        dataType: "json",
+                        data: dataString,
+                        //if received a response from the server
+                        success: function( data) {
+                             if(data.success){
+                                $('#userInserted').val(varUsername);
+                                $('#sucessoInserção').modal('show');
+                                limparCampos();
+                                 
+
+
+                             } 
+                             else {
+                                    limparCampos();
+                                    $('#erroInserção').modal('show');
+                                        
+                             }
+                        },
+                        
+                        //If there was no resonse from the server
+                        error: function(){
+                            limparCampos();
+                            $('#erroInserção').modal('show');
+                              
+                        }
+                            });
+        });
 });
 </script>
 
@@ -135,33 +202,7 @@ $( document ).ready(function() {
 });
 </script>
 
-<!-- Funcao para limpar campos de form -->
-<script>
-$( document ).ready(function() {
-    $( "#resetCliente" ).click(function() {
 
-        $('#usuarioForm').each (function(){
-          this.reset();
-        });
-        $('#usuarioForm').bootstrapValidator('resetForm', true);
-    });
-});
-</script>
-
-<!-- Input somente de numeros -->
-<script>
-$(document).ready(function () {
-            //called when key is pressed in textbox
-            $("#numeroRua").keypress(function (e) {
-                //if the letter is not digit then display error and don't type anything
-                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                    //display error message
-                    //$("#errmsg").html("Digits Only").show().fadeOut("slow");
-                    return false;
-                }
-            });
-        });
-</script>
 
 
 <title>Cadastro de Cliente - ArrayEnterprises</title>
@@ -212,17 +253,6 @@ $(document).ready(function () {
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <!-- Barra de Pesquisa -->
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" name="pesquisaLateral" placeholder="Pesquisar...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </li>
                         <li>
                             <a  href="index.html"><i class="fa fa-dashboard fa-fw"></i> Painel de Controle</a>
                         </li>
@@ -279,7 +309,7 @@ $(document).ready(function () {
                 </div>
                 <div class="panel-body">
                     <!-- Form de Cliente -->
-                    <form id="usuarioForm" action="CadastrarUsuario" method="POST">
+                    <form id="usuarioForm" >
                         <div class="row">
                             <div class="col-lg-6 yes">
                                 <!-- Campos do Formulário -->
@@ -325,15 +355,24 @@ $(document).ready(function () {
                             </div>
                             <!-- /.col-lg-6 (nested) -->
 
+                        
                         </div>
+                        <hr width="85%">
                         <!-- /.row (nested) -->
+                        
 
-                        <div class="form-group text-center">
                             <!-- Button Submit -->
-                            <button  type="submit" id="enviarUser" name="enviarUser" class="btn btn-success">Enviar</button>
-
+                        <div class="row">
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-4">
                             <!-- Button Limpar Campos -->
-                            <button type="reset" id="resetCliente" class="btn btn-danger">Limpar Campos</button>
+                                <button type="reset" id="resetCliente" class="btn btn-danger"><span class="glyphicon glyphicon-repeat" style="color:white;"></span>&nbsp; Limpar Campos</button>
+
+                                <button  type="button" id="enviarUser" name="enviarUser" class="btn btn-primary"><span class="glyphicon glyphicon-check" style="color:white;"></span>&nbsp; Cadastrar</button>
+                            </div>
                         </div>
                     </form>
 
@@ -351,6 +390,47 @@ $(document).ready(function () {
 <!-- /.row -->
 
 <!-- /.row -->
+
+     <!-- Modal confirmação de salvamento -->
+        <div class="modal fade bs-example-modal-sm2" id="sucessoInserção"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
+          <div class="modal-dialog modal-sm vertical-centered " >
+            <div class="modal-content">
+              <div class="modal-header" style="background-color:#5cb85c;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-ok" style="color:white;"></span>&nbsp;&nbsp;Usuário Inserido com Sucesso</h4>
+              </div>
+              <div class="modal-body">
+                    <span>Usuário <b id="userInserted"></b> foi inserido com sucesso!</span>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <!-- Modal confirmação de salvamento -->
+        <div class="modal fade bs-example-modal-sm2" id="erroInserção"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
+          <div class="modal-dialog vertical-centered " >
+            <div class="modal-content">
+              <div class="modal-header" style="background-color:#d9534f;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Erro no cadastro de usuário</h4>
+              </div>
+              <div class="modal-body" id="cadastroMensagemErro">
+                    <span>Algum erro ocorreu no cadastro de usuário. Possíveis causas:</span>
+                    <ul>
+                        <li><b>O usuário já existe na base de dados.</b></li>
+                        <li><b>Houve falha na comunicação com a base de dados.</b> Contate o suportes</li>
+                    </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 </div>
 <!-- /#page-wrapper -->
 
