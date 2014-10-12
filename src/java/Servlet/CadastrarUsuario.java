@@ -20,6 +20,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 /**
  *
  * @author Igor
@@ -88,12 +92,24 @@ public class CadastrarUsuario extends HttpServlet {
         String email = request.getParameter("emailUser");
         String tipo = request.getParameter("tipoUsuario");
         
+        PrintWriter out = response.getWriter();
+        Gson gson = new Gson(); 
+        JsonObject myObj = new JsonObject();
+        
         CadastrarUsuarioDAO dao;
         Usuario u = new Usuario(nome, senha, email, tipo);     
 
         try {
             dao = new CadastrarUsuarioDAO();
-            dao.CadastrarUsuario(u);
+            boolean success = dao.CadastrarUsuario(u);
+            if(success){
+                myObj.addProperty("success", true);
+            } else {
+                myObj.addProperty("success", false);
+            }
+            
+            out.println(myObj.toString());
+            out.close();
         } catch (BdDAOException ex) {
             Logger.getLogger(CadastrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

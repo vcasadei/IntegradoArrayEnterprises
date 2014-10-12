@@ -22,7 +22,7 @@ public class CadastrarUsuarioDAO {
         this.bdConn = ConnectionBanco.getConnection();
     }
     
-    public void CadastrarUsuario (Usuario u) throws SQLException, BdDAOException {
+    public boolean CadastrarUsuario (Usuario u) throws SQLException, BdDAOException {
         
         Statement stat = bdConn.createStatement();
         String SQL = "INSERT INTO usuario VALUES ('" +
@@ -31,7 +31,15 @@ public class CadastrarUsuarioDAO {
                 u.getEmail() + "', '" + 
                 u.getTipo()  + "');";
        
-        stat.executeUpdate(SQL);
+        int rowInserted = stat.executeUpdate(SQL);
+        boolean success = false;
+        if(rowInserted > 0){
+            success = true;
+        } else {
+            success = false;
+        }
+        
         ConnectionBanco.close(bdConn, stat, null);
+        return success;
     }
 }

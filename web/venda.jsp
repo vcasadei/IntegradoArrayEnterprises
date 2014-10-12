@@ -73,15 +73,6 @@
 
 
 
-                // $('#dataVenda').focusin(function() {
-                //     console.log("mudow a merda do valor");
-                    
-                    
-                        
-                    
-                // });
-
-
 
                 $('#closeErroPesquisaCodigo').click(function(){
                     $('#erroPesquisaCodigo').fadeOut(300);
@@ -1391,7 +1382,7 @@
     </div>
     <!-- /.modal -->
 
-    <!-- Modal erro de não selecionar nenhum item -->
+    <!-- Modal confirmação de salvamento -->
     <div class="modal fade bs-example-modal-sm2" id="salvarRelatorioComo"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
   <div class="modal-dialog modal-sm vertical-centered " >
     <div class="modal-content">
