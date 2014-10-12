@@ -17,7 +17,13 @@ import java.util.ArrayList;
  * @author Igor
  */
 public class BuscarLotesDAO {
+    
     private Connection bdConn;
+    
+    public BuscarLotesDAO() throws BdDAOException, SQLException {
+        
+        this.bdConn = ConnectionBanco.getConnection();
+    }
     
     public ArrayList<Lote> BuscaLotesAutomatico(int codigo, int qtde) throws SQLException, BdDAOException
     {
@@ -35,6 +41,8 @@ public class BuscarLotesDAO {
            aux.setQntdInicial(rs.getInt(3));
            aux.setQntdInicial(rs.getInt(4));
            aux.setValidade(rs.getString(5));
+           
+           System.out.println("codigo = " + aux.getCodigoLote());
            
            lotes.add(aux);
         }   

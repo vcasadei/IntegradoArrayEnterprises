@@ -89,12 +89,17 @@ public class BuscaLotesAutomatico extends HttpServlet {
         int codigo = Integer.parseInt(request.getParameter("codigo"));
         int qtde = Integer.parseInt(request.getParameter("quantidade"));
         ArrayList<Lote> lotes = new ArrayList<Lote>();         
-        BuscarLotesDAO dao = new BuscarLotesDAO();
+        BuscarLotesDAO lotesDAO;
         
         try {   
             
-            lotes = dao.BuscaLotesAutomatico(codigo, qtde);
+            lotesDAO = new BuscarLotesDAO();
+            lotes = lotesDAO.BuscaLotesAutomatico(codigo, qtde);
                
+            for(Lote l : lotes) {
+                System.out.println("LOTE = " + l.getCodigoLote());
+            }
+            
             // Seta os atributos da request
             request.setAttribute("listaLotes", lotes);
             request.setAttribute("quantidadeLotes", lotes.size());

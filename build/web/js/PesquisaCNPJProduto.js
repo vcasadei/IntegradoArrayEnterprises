@@ -2,9 +2,8 @@
 
 $(document).ready(function() {
 
-    //Pesquisa um cliente pelo CNPJ
-    $('#buttonpesquisaCNPJCliente').click(function() {
-        $.ajax({
+    function pesquisarCNPJ() {
+         $.ajax({
             type: "POST",
             url: "BuscaClienteProdutoCNPJCod",
             dataType: "html",
@@ -16,6 +15,9 @@ $(document).ready(function() {
 
                 $('#pesquisaCNPJCliente').val("");
                 $('#erroPesquisaCNPJ').fadeIn("slow");
+                $('#nomeCliente').val("");
+                $('#cnpjCliente').val("");
+
             } else {
 
                 var aux = "";
@@ -25,13 +27,17 @@ $(document).ready(function() {
                 $('#nomeCliente').val(aux[0]);
                 $('#cnpjCliente').val(aux[1]);
                 $('#pesquisaCNPJCliente').val("");
+
+                $('#buttonSelectProduto').removeAttr("disabled");
+            $('#buttonPesquisaNomeProduto').removeAttr("disabled");
+            $('#pesquisaNomeProduto').removeAttr("disabled");
+            $('#produtoPanel').fadeTo( "slow", 1 );
             }
 
         });
-    });
+    }
 
-    //Pesquisa um produto pelo código
-    $('#buttonPesquisaNomeProduto').click(function() {
+    function pesquisarCodigo() {
         $.ajax({
             type: "GET",
             url: "BuscaClienteProdutoCNPJCod",
@@ -43,7 +49,16 @@ $(document).ready(function() {
                 //Criar mensagem que diz que o o produto com esse código não existe
                 $('#erroPesquisaCodigo').fadeIn("slow");
                 $('#pesquisaNomeProduto').val("");
+                $('#nomeProduto').val("");
+                $('#codigoProduto').val("");
+                $('#valorUnitario').val("");
+                var osRaio = $('input:radio[name=tipoProduto]');
+                osRaio.filter('[value=medicamento]').attr('checked', false);
+                osRaio.filter('[value=alimento]').attr('checked', false);
+                
+
             } else {
+
 
                 var aux = data.split(";");
 
@@ -60,7 +75,71 @@ $(document).ready(function() {
                 }
                 $('#valorUnitario').val(aux[3]);
                 $('#pesquisaNomeProduto').val("");
+
+                setTimeout(
+                      function() 
+                      {
+                        //do something special
+                        $('#quantidadeProduto').prop('autofocus',true);
+                        $('#quantidadeProduto').delay(200).focus();
+                        $('#quantidadeProduto').tooltip({title : 'Insira a quantidade e clique em Lote Automático',
+            placement : 'left',trigger: 'manual'}).tooltip('show');
+                        
+                      }, 
+                500);
+
+
             }
         });
+    }
+
+     function pesquisarLotesAutomatico() {
+         $.ajax({
+            type: "POST",
+            url: "BuscaLotesAutomatico",
+            dataType: "html",
+            data: {codigo:     $('#codigoProduto').val(),
+                   quantidade: $('#quantidadeProduto').val() }
+        }).done(function(data) {
+
+            if (data === "null") {
+                //Criar mensagem que diz que o cliente com esse cnpj não existe
+                
+            } else {
+
+                var aux = data.split(";");
+
+                
+            }
+
+        });
+    }
+
+
+        $('#pesquisaCNPJCliente').keypress(function(e) {
+            if(e.which == 13) {
+                pesquisarCNPJ();
+            }
+        });
+
+        $('#pesquisaNomeProduto').keypress(function(e) {
+            if(e.which == 13) {
+                pesquisarCodigo();
+            }
+        });
+
+    //Pesquisa um cliente pelo CNPJ
+    $('#buttonpesquisaCNPJCliente').click(function() {
+        pesquisarCNPJ();
+    });
+
+    //Pesquisa um produto pelo código
+    $('#buttonPesquisaNomeProduto').click(function() {
+        pesquisarCodigo();
+    });
+
+    //Pesquisa um produto pelo código
+    $('#loteAutomatico').click(function() {
+        pesquisarLotesAutomatico();
     });
 });
