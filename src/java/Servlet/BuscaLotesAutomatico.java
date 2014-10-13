@@ -87,14 +87,6 @@ public class BuscaLotesAutomatico extends HttpServlet {
         int codigo = Integer.parseInt(request.getParameter("codigoProduto"));
         int qtde = Integer.parseInt(request.getParameter("quantidadeProduto"));
         ArrayList<Lote> lotes = new ArrayList<Lote>();         
-<<<<<<< Updated upstream
-        BuscarLotesDAO lotesDAO;
-        
-        try {   
-            
-            lotesDAO = new BuscarLotesDAO();
-            lotes = lotesDAO.BuscaLotesAutomatico(codigo, qtde);
-=======
         response.setContentType("text/plain");  
         response.setCharacterEncoding("UTF-8"); 
         
@@ -115,12 +107,7 @@ public class BuscaLotesAutomatico extends HttpServlet {
                 response.getWriter().write(lotes.get(i).getValidade());
                 response.getWriter().write(";"); 
             }
->>>>>>> Stashed changes
                
-            for(Lote l : lotes) {
-                System.out.println("LOTE = " + l.getCodigoLote());
-            }
-            
             // Seta os atributos da request
 //            request.setAttribute("listaLotes", lotes);
 //            request.setAttribute("quantidadeLotes", lotes.size());

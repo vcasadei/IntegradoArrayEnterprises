@@ -20,15 +20,10 @@ import java.util.logging.Logger;
  * @author Igor
  */
 public class BuscarLotesDAO {
-    
     private Connection bdConn;
     
     public BuscarLotesDAO() throws BdDAOException, SQLException {
-<<<<<<< Updated upstream
-        
-=======
 
->>>>>>> Stashed changes
         this.bdConn = ConnectionBanco.getConnection();
     }
     
@@ -58,21 +53,6 @@ public class BuscarLotesDAO {
         }
         
         
-<<<<<<< Updated upstream
-        while (rs.next()){
-           aux = new Lote();
-           aux.setCodigoLote(rs.getString(1));
-           aux.setCodigoProduto(rs.getInt(2));
-           aux.setQntdInicial(rs.getInt(3));
-           aux.setQntdInicial(rs.getInt(4));
-           aux.setValidade(rs.getString(5));
-           
-           System.out.println("codigo = " + aux.getCodigoLote());
-           
-           lotes.add(aux);
-        }   
-=======
->>>>>>> Stashed changes
         
         return lotes;
     }
