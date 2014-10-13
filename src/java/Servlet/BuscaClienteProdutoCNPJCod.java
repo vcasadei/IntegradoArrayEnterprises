@@ -74,16 +74,16 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
         Produto produto;
         BuscaProdutosDAO produtosDAO;
         String codigo;
+        codigo = "1";
 
         try {
 
             produtosDAO = new BuscaProdutosDAO();
             
             codigo = request.getParameter("cod");
-            
-            produto = produtosDAO.BuscaProdutoCod(Integer.parseInt(codigo));
-
-            PrintWriter writer = response.getWriter();
+            if(!codigo.equals("")){
+                produto = produtosDAO.BuscaProdutoCod(Integer.parseInt(codigo));
+                PrintWriter writer = response.getWriter();
             if (produto == null){
                 writer.print("null");
             } else {
@@ -91,6 +91,11 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
                         + produto.getValorUnitario());
             }
             writer.close();
+            }
+            
+            
+
+            
 
         } catch (BdDAOException ex) {
             Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);

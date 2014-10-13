@@ -488,23 +488,32 @@
         <script>
             $(document).ready(function() {
                 $("#resetVenda").click(function() {
-                    $('#nomeProduto').text('');
-                    $('#codigoProduto').text('');
+
+                    limparFormulario();
+                    
+
+                });
+    
+            function limparFormulario(){
+                $('#nomeProduto').val('');
+                    $('#codigoProduto').val('');
+                    $('#dataVenda').val('');
+                    $('#valorTotal').val('');
                     $('input[name="tipoProduto"]:checked').text('');
-                    $('#quantidadeProduto').text('');
+                    $('#quantidadeProduto').val('');
                     $('input[name="unidadeProduto"]:checked').text('');
-                    $('#descricaoProduto').text('');
+                    $('#descricaoProduto').val('');
 
-                    $('#nomeCliente').text('');
-                    $('#cnpjCliente').text('');
+                    $('#nomeCliente').val('');
+                    $('#cnpjCliente').val('');
 
-                    $('#dataVenda').text('');
+                    $('#dataVenda').val('');
 
-                    $('#codigoLote').text('');
-                    $('#dataFabricacao').text('');
-                    $('#dataValidade').text('');
-                    $('#observacoes').text('');
-                    $('#quantidadeProduto').text('');
+                    $('#codigoLote').val('');
+                    $('#dataFabricacao').val('');
+                    $('#dataValidade').val('');
+                    $('#observacoes').val('');
+                    $('#quantidadeProduto').val('');
                     $('.addedPanel').remove();
                     $('.addedRelatorio').remove();
                     $('.addedPrint').remove();
@@ -530,8 +539,11 @@
                     $('#pesquisaNomeProduto').prop("disabled",true);
                     $('#clientePanel').fadeTo( "slow", 0.5 );
                     $('#produtoPanel').fadeTo( "slow", 0.5 );
+            }
 
-                });
+            $('#relatorioVenda').on('hidden.bs.modal', function () {
+                limparFormulario();
+            })
             });
         </script>
 

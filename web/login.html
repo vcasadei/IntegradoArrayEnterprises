@@ -105,6 +105,7 @@
                              if(data.success){
                                  $("#sucessoMensagem").html('Bem-Vindo <b>' + varUsername + '</b>. Você será redirecionado à página do sistema em 3 segundos.');
                                         $('#sucessoLogin').show('slow');
+                                        $('.form-group').removeClass('has-error');
                                  setTimeout(
                                       function() 
                                       {
