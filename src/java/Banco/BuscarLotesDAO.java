@@ -6,11 +6,14 @@
 package Banco;
 
 import Bean.Lote;
+import Servlet.BuscaLotesAutomatico;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +24,11 @@ public class BuscarLotesDAO {
     private Connection bdConn;
     
     public BuscarLotesDAO() throws BdDAOException, SQLException {
+<<<<<<< Updated upstream
         
+=======
+
+>>>>>>> Stashed changes
         this.bdConn = ConnectionBanco.getConnection();
     }
     
@@ -31,9 +38,27 @@ public class BuscarLotesDAO {
         ResultSet rs;
         ArrayList<Lote> lotes = new ArrayList<Lote>();
         Lote aux;
+        try{
+            rs = stat.executeQuery("SELECT * FROM RecuperaLotesAutomatico(" + codigo + ", " + qtde + ");");
+            while (rs.next()){
+                System.out.println(rs.getString(1) + rs.getInt(2) + rs.getInt(3) + rs.getInt(4) + rs.getString(5));
+                aux = new Lote();
+                aux.setCodigoLote(rs.getString(1));
+                aux.setCodigoProduto(rs.getInt(2));
+                aux.setQntdInicial(rs.getInt(3));
+                aux.setQntdAtual(rs.getInt(4));
+                aux.setValidade(rs.getString(5));
+
+                lotes.add(aux);
+             }   
+
+             ConnectionBanco.close(bdConn, stat, rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscaLotesAutomatico.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        rs = stat.executeQuery("SELECT * FROM RecuperaLotesAutomatico(" + codigo + ", " + qtde + ");");
         
+<<<<<<< Updated upstream
         while (rs.next()){
            aux = new Lote();
            aux.setCodigoLote(rs.getString(1));
@@ -46,8 +71,9 @@ public class BuscarLotesDAO {
            
            lotes.add(aux);
         }   
+=======
+>>>>>>> Stashed changes
         
-        ConnectionBanco.close(bdConn, stat, rs);
         return lotes;
     }
 }

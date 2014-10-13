@@ -88,6 +88,10 @@ $(document).ready(function() {
 			doc.text(158, 83, 'R$ ' + $('#valorTotalModal').val());
 
 
+			
+			//Relatorio Automatico
+			var quantos = parseInt($('#quantidadeParaRelatorio').val());
+			console.log("quantos=" + quantos);
 			doc.setFontType("bold");
 			doc.setFontSize(18);
 			doc.text(20, 93, 'Lote');
@@ -95,23 +99,47 @@ $(document).ready(function() {
 			doc.line(19, 94, 190, 94);
 			doc.setLineWidth(0.2);
 
-			doc.setFontType("bold");
-			doc.setFontSize(14);
-			doc.text(25, 101, 'Código do Lote:');
-			doc.text(136, 101, 'Quantidade:');
-			doc.setFontType("normal");
-			doc.setFontSize(14);
-			doc.text(62, 101, '3244');
-			doc.text(165, 101, '24');
+			var i = 1;
+			var local1 = 101;
+			var local2 = 110;
+			var auxI = 0;
+			var auxj = 0;
+			var aux = "";
+			while(quantos > 0){
 
-			doc.setFontType("bold");
-			doc.setFontSize(14);
-			doc.text(25, 110, 'Data de Fabricação:');
-			doc.text(122, 110, 'Data de Validade:');
-			doc.setFontType("normal");
-			doc.setFontSize(14);
-			doc.text(71, 110, '02/04/2013');
-			doc.text(163, 110, '02/04/2016');
+				
+
+				doc.setFontType("bold");
+				doc.setFontSize(14);
+				doc.text(25, local1 + auxI, 'Código do Lote:');
+				doc.text(136, local1 + auxI, 'Quantidade:');
+				doc.setFontType("normal");
+				doc.setFontSize(14);
+				console.log("i=" + i);
+				 aux = $('#codParaRelatorio' + (i).toString()).val();
+				doc.text(62, local1 + auxI, aux);
+				i++;
+				console.log("i=" + i);
+				 aux = $('#quantidadeParaRelatorio' + (i).toString()).val();
+				doc.text(165, local1 + auxI, aux);
+				i++;
+
+				doc.setFontType("bold");
+				doc.setFontSize(14);
+				doc.text(25, local2 + auxI, 'Data de Validade:');
+				doc.setFontType("normal");
+				doc.setFontSize(14);
+				 aux = $('#validadeParaRelatorio' + (i).toString()).val();
+				doc.text(71, local2 + auxI, aux);
+				i++;
+				doc.line(30, local2 + auxI + 3, 175, local2 + auxI + 3);
+
+				local1 = local2 + 6;
+				local2 = local2 + 9 + 6;
+				auxI = auxI + 9;
+				quantos--;
+
+			}
 
 
 			//Valor TOTAL da venda

@@ -17,6 +17,21 @@ $(document).ready(function() {
                 $('#erroPesquisaCNPJ').fadeIn("slow");
                 $('#nomeCliente').val("");
                 $('#cnpjCliente').val("");
+                $('#buttonSelectProduto').attr("disabled", true);
+                $('#buttonPesquisaNomeProduto').attr("disabled", true);
+                $('#pesquisaNomeProduto').attr("disabled", true);
+                $('#produtoPanel').fadeTo( "slow", 0.5 );
+                $('#inserirVenda').attr("disabled", "true");
+                $('.addedPanel').remove();
+                $('.addedRelatorio').remove();
+                $('.addedPrint').remove();
+
+                if($('#nomeClienteHidden').hasClass('hidden')){
+
+                } else {
+                    $('#nomeClienteHidden').addClass('hidden');
+                }
+                    
 
             } else {
 
@@ -29,9 +44,9 @@ $(document).ready(function() {
                 $('#pesquisaCNPJCliente').val("");
 
                 $('#buttonSelectProduto').removeAttr("disabled");
-            $('#buttonPesquisaNomeProduto').removeAttr("disabled");
-            $('#pesquisaNomeProduto').removeAttr("disabled");
-            $('#produtoPanel').fadeTo( "slow", 1 );
+                $('#buttonPesquisaNomeProduto').removeAttr("disabled");
+                $('#pesquisaNomeProduto').removeAttr("disabled");
+                $('#produtoPanel').fadeTo( "slow", 1 );
             }
 
         });
@@ -55,6 +70,17 @@ $(document).ready(function() {
                 var osRaio = $('input:radio[name=tipoProduto]');
                 osRaio.filter('[value=medicamento]').attr('checked', false);
                 osRaio.filter('[value=alimento]').attr('checked', false);
+
+                $('#inserirVenda').attr("disabled", "true");
+                $('.addedPanel').remove();
+                $('.addedRelatorio').remove();
+                $('.addedPrint').remove();
+
+                if($('#produtoHidden').hasClass('hidden')){
+
+                } else {
+                    $('#produtoHidden').addClass('hidden');
+                }
                 
 
             } else {
@@ -94,25 +120,132 @@ $(document).ready(function() {
     }
 
      function pesquisarLotesAutomatico() {
-         $.ajax({
-            type: "POST",
-            url: "BuscarLotesAutomatico",
-            dataType: "html",
-            data: {codigo:     $('#codigoProduto').val(),
-                   quantidade: $('#quantidadeProduto').val() }
-        }).done(function(data) {
+        var teste = $('#quantidadeProduto').val();
+        teste = parseInt(teste);
+        console.log(teste + " " + $('#quantidadeProduto').val());
 
-            if (data === "null") {
-                //Criar mensagem que diz que o cliente com esse cnpj não existe
+        if($('#quantidadeProduto').val() != "" && teste > 0){
+            var codProduto =  $('#codigoProduto').val();
+            var quantProduto = $('#quantidadeProduto').val();
+
+
+            var dataString;
+            dataString = "codigoProduto=" + codProduto + "&quantidadeProduto=" + quantProduto;
+             $.ajax({
+                type: "POST",
+                url: "BuscaLotesAutomatico",
+                dataType: "text",
+                data: dataString
+            }).done(function(data) {
+
+                if (data === "0;") {
+                    //ERRO
+                    console.log("não achou os lotes, deu erro");
+                    $('#erroLoteInsuficiente').modal('show');
+                    $('#inserirVenda').attr("disabled", "true");
+                    
+                } else {
+                    $('#inserirVenda').removeAttr("disabled");
+                    console.log("achou os lotes, sucesso " + data);
+
+                    $('.addedPanel').remove();
+                    $('.addedRelatorio').remove();
+                    $('.addedPrint').remove();
+                    buildLotes(data)
+                    
+
+
+                    
+                    
+                }
+
+            });
+
+        } else {
+            $('.addedPanel').remove();
+            $('.addedRelatorio').remove();
+            $('.addedPrint').remove();
+            $('#inserirVenda').attr("disabled", "true");
+            $('#formGroupQuantidadeProduto').addClass("has-error");
+            $('#formGroupQuantidadeProduto2').addClass("has-error");
+            $('#formGroupQuantidadeProduto2').fadeIn(200);
+
+        }
+        
+    }
+
+    function buildLotes(data){
+            var aux = data.split(';');
+            // if(aux.length > 2){
+            //     //Tenho mais de 1 lote
+            //     for(int i = 0; i < aux.length - 1; i++){
+            //         var aux2 = aux[i].split(";");
+                    
+            //         //Aqui posso acessar
+            //     }
+            // } else {
+            //     //Tenho somente 1 lote
+            // }
+            var qtde = aux[0];
+
+            $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='quantidadeParaRelatorio' value='" + qtde + "'>");
+ 
+
+            var quantidadeLotes = qtde;
+            console.log("quantidade " + quantidadeLotes);
+            var $template = $(".template");
+
+            var $relatorioTemplate = $(".relatorioGerado");
+               
+            var hash = 0;
+            var i = 1
+            var j = 1;
+            while(quantidadeLotes > 0){
+
+                var $newPanel = $template.clone();
+
+                var $newRelatorio = $relatorioTemplate.clone(); 
+
+                var codLote = aux[i];
                 
-            } else {
+                $newPanel.find(".collapse").removeClass("in");
+                $newPanel.find(".accordion-toggle").attr("href", "#" + (++hash))
+                        .text("Lote " + codLote );
+                $newPanel.find(".panel-collapse").attr("id", hash).addClass("collapse").removeClass("in");
+                $newPanel.removeClass("hidden");
+                $newPanel.addClass("addedPanel");
 
-                var aux = data.split(";");
+                $newRelatorio.removeClass("hidden");
+                $newRelatorio.addClass("addedRelatorio");
 
+
+                $newPanel.find("#codigoLote").val(codLote);
+                $newRelatorio.find("#codigoLoteModal").val(codLote);
+                $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='codParaRelatorio" + (j++).toString() + "' value='" + codLote + "'>");
+
+                i = i+2;
+                var quantidadeAux = aux[i];
+                i++;
+                $newPanel.find("#quantidadeProduto").val(quantidadeAux);
+                $newRelatorio.find("#quantidadeProdutoModal").val(quantidadeAux);
+                $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='quantidadeParaRelatorio" + (j++).toString() + "'  value='" + quantidadeAux + "'>");
+                var validadeAux = aux[++i];
+                $newPanel.find("#validade").val(validadeAux);
+                $newRelatorio.find("#dataValidadeModal").val(validadeAux);
+                $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='validadeParaRelatorio" + (j++).toString() + "'  value='" + validadeAux + "'>");
+
+                $("#accordion").append($newPanel.fadeIn());
                 
+                $("#loteRelatorio").append($newRelatorio);
+                $("#loteRelatorio").append("<hr width='50%'>");
+
+                i++;
+                
+                quantidadeLotes--;
+                console.log(quantidadeLotes);
             }
-
-        });
+            
+        
     }
 
 

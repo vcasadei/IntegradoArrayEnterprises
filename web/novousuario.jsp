@@ -254,7 +254,7 @@ $( document ).ready(function() {
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a  href="index.html"><i class="fa fa-dashboard fa-fw"></i> Painel de Controle</a>
+                            <a  href="index.html"><i class="glyphicon glyphicon-home fa-fw"></i> Painel de Controle</a>
                         </li>
 
                         <li>
@@ -290,7 +290,7 @@ $( document ).ready(function() {
             <h1 class="page-header">Cadastro de novo usuário</h1>
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-dashboard"></i>  <a href="index.html">Painel de Controle</a>
+                    <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Painel de Controle</a>
                 </li>
                 <li class="active">
                     <i class="fa fa-edit"></i> Cadastro de novo usuário

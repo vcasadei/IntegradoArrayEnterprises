@@ -84,29 +84,51 @@ public class BuscaLotesAutomatico extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        response.setCharacterEncoding("UTF-8");
-        
-        int codigo = Integer.parseInt(request.getParameter("codigo"));
-        int qtde = Integer.parseInt(request.getParameter("quantidade"));
+        int codigo = Integer.parseInt(request.getParameter("codigoProduto"));
+        int qtde = Integer.parseInt(request.getParameter("quantidadeProduto"));
         ArrayList<Lote> lotes = new ArrayList<Lote>();         
+<<<<<<< Updated upstream
         BuscarLotesDAO lotesDAO;
         
         try {   
             
             lotesDAO = new BuscarLotesDAO();
             lotes = lotesDAO.BuscaLotesAutomatico(codigo, qtde);
+=======
+        response.setContentType("text/plain");  
+        response.setCharacterEncoding("UTF-8"); 
+        
+        try {   
+            BuscarLotesDAO dao = new BuscarLotesDAO();
+            lotes = dao.BuscaLotesAutomatico(codigo, qtde);
+            response.getWriter().write(lotes.size() + ";"); 
+            for (int i = 0; i < lotes.size(); i++) {
+                System.out.println(lotes.get(i).getCodigoLote());
+                response.getWriter().write(lotes.get(i).getCodigoLote()); 
+                response.getWriter().write(";"); 
+                response.getWriter().write(Integer.toString(lotes.get(i).getCodigoProduto()));
+                response.getWriter().write(";"); 
+                response.getWriter().write(Integer.toString(lotes.get(i).getQntdInicial())); 
+                response.getWriter().write(";"); 
+                response.getWriter().write(Integer.toString(lotes.get(i).getQntdAtual())); 
+                response.getWriter().write(";"); 
+                response.getWriter().write(lotes.get(i).getValidade());
+                response.getWriter().write(";"); 
+            }
+>>>>>>> Stashed changes
                
             for(Lote l : lotes) {
                 System.out.println("LOTE = " + l.getCodigoLote());
             }
             
             // Seta os atributos da request
-            request.setAttribute("listaLotes", lotes);
-            request.setAttribute("quantidadeLotes", lotes.size());
-            
-            RequestDispatcher rd = null;
-            rd = request.getRequestDispatcher("/venda.jsp");
-            rd.forward(request, response);
+//            request.setAttribute("listaLotes", lotes);
+//            request.setAttribute("quantidadeLotes", lotes.size());
+//            
+//            RequestDispatcher rd = null;
+//            rd = request.getRequestDispatcher("/venda.jsp");
+//            rd.forward(request, response);
+
             
         } catch (SQLException ex) {
             Logger.getLogger(BuscaLotesAutomatico.class.getName()).log(Level.SEVERE, null, ex);
