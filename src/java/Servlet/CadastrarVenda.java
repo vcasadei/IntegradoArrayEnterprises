@@ -86,11 +86,26 @@ public class CadastrarVenda extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String auxCod = request.getParameter("codCliente");
+        int codCliente = 0;
+        int codigoProduto = 0;
+        int quantidade = 0;
+        if(!auxCod.equals("")){
+            codCliente = Integer.parseInt(auxCod);
+        }
         
-        int codCliente = Integer.parseInt(request.getParameter("codCliente"));
         String dataVenda = request.getParameter("dataVenda");
-        int codigoProduto = Integer.parseInt(request.getParameter("codProduto"));
-        int quantidade = Integer.parseInt(request.getParameter("QtdeVenda"));
+        String auxCodProd = request.getParameter("codProduto");
+        if(!auxCodProd.equals("")){
+            codigoProduto = Integer.parseInt(auxCodProd);
+        }
+        
+        
+        String auxQtde = request.getParameter("QtdeVenda");
+        if(!auxQtde.equals("")){
+             quantidade = Integer.parseInt(auxQtde);
+        }
+        
         
         PrintWriter out = response.getWriter();
         Gson gson = new Gson(); 

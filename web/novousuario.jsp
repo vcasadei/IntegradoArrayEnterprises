@@ -89,7 +89,7 @@
                                 message: 'O nome do usuário deve ter entre 6 e 20 caracteres'
                             },
                             regexp: {
-                                regexp: /[a-zA-Z]+$/,
+                                regexp: /^[A-Za-z]+$/,
                                 message: 'O nome do usuário deve conter apenas letras'
                             }
                         }
@@ -305,7 +305,7 @@ $( document ).ready(function() {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <b>Items obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk req"></span>
+                    <b>Items obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk "></span>
                 </div>
                 <div class="panel-body">
                     <!-- Form de Cliente -->
@@ -314,13 +314,13 @@ $( document ).ready(function() {
                             <div class="col-lg-6 yes">
                                 <!-- Campos do Formulário -->
                                 <div class="form-group">
-                                    <label>Nome do usuário <span class="glyphicon glyphicon-asterisk req"></span></label>
-                                    <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" placeholder="Insira o nome do usuário"  />
+                                    <label>Nome do usuário <span class="glyphicon glyphicon-asterisk "></span></label>
+                                    <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" placeholder="Insira o nome do usuário" autofocus />
                                     
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Senha do usuário <span class="glyphicon glyphicon-asterisk req"></span></label>
+                                    <label>Senha do usuário <span class="glyphicon glyphicon-asterisk "></span></label>
                                     <input type="password" class="form-control" id="senhaUser" name="senhaUser" placeholder="Insira a senha do usuário" />
                                 </div>
 
@@ -330,13 +330,13 @@ $( document ).ready(function() {
                             <div class="col-lg-6">
 
                                 <div class="form-group">
-                                    <label>Email do usuário <span class="glyphicon glyphicon-asterisk req"></span></label>
+                                    <label>Email do usuário <span class="glyphicon glyphicon-asterisk "></span></label>
                                     <input type="email" class="form-control" id="emailUser" name="emailUser" placeholder="Insira o email do usuário" />
                                     
                                 </div>
 
                                 <div class="form-group" >
-                                    <label>Tipo de usuário: <span class="glyphicon glyphicon-asterisk req"></span></label>
+                                    <label>Tipo de usuário: <span class="glyphicon glyphicon-asterisk "></span></label>
                                     <div class="radio">
                                         <label class="radio">
                                             <input type="radio" name="tipoUsuario" id="userAdmin" value="Administrador"    />Administrador

@@ -36,11 +36,14 @@ $(document).ready(function() {
             } else {
 
                 var aux = "";
+                console.log("DATAAAAA: " + data)
                 aux = data.split(";");
 
                 $('#nomeClienteHidden').removeClass('hidden');
                 $('#nomeCliente').val(aux[0]);
                 $('#cnpjCliente').val(aux[1]);
+                console.log("codigo do cliente " + aux[2])
+                $('#codigoCliente').val(aux[2]);
                 $('#pesquisaCNPJCliente').val("");
 
                 $('#buttonSelectProduto').removeAttr("disabled");
@@ -99,7 +102,10 @@ $(document).ready(function() {
                     osRaio.filter('[value=alimento]').attr('checked', true);
                     console.log("Alimento");
                 }
-                $('#valorUnitario').val(aux[3]);
+                var auxValorUnitario = aux[3];
+                auxValorUnitario = auxValorUnitario.replace(/,/g, '.');
+                auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
+                $('#valorUnitario').val(auxValorUnitario);
                 $('#pesquisaNomeProduto').val("");
 
                 setTimeout(
@@ -230,6 +236,8 @@ $(document).ready(function() {
                 $newRelatorio.find("#quantidadeProdutoModal").val(quantidadeAux);
                 $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='quantidadeParaRelatorio" + (j++).toString() + "'  value='" + quantidadeAux + "'>");
                 var validadeAux = aux[++i];
+                var secAux = validadeAux.split('-');
+                validadeAux = secAux[2] + "/" + secAux[1] + "/" + secAux[0];
                 $newPanel.find("#validade").val(validadeAux);
                 $newRelatorio.find("#dataValidadeModal").val(validadeAux);
                 $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='validadeParaRelatorio" + (j++).toString() + "'  value='" + validadeAux + "'>");

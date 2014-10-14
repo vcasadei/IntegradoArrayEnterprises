@@ -22,7 +22,8 @@
         <script type="text/javascript" src="js/jsPDF/FileSaver.js"></script> 
         
         
-        
+        <link rel="stylesheet" href="css/bootstrapValidator.min.css"/>
+    <script  src="js/bootstrapValidator.js"></script>
         
         <script src="js/jsPDF/jspdf.min.js"></script>
 
@@ -37,6 +38,9 @@
 
         <!-- Pesquisa produto/Cliente -->
     <script src="js/PesquisaCNPJProduto.js"></script>
+
+    <script src="js/salvarVenda.js"></script>
+
 
 
         <script>
@@ -229,11 +233,14 @@
                         console.log("ALGO FOI SELECIONADO");
                         var auxNomeCliente = auxSplit[1];
                         var auxCNPJ = auxSplit[2];
+                        var auxCodigo = auxSplit[3];
                         $('#nomeClienteHidden').removeClass('hidden');
                         console.log(auxNomeCliente);
                         console.log(auxCNPJ);
+                        console.log("Codigo: " + auxCodigo);
                         $('#nomeCliente').val(auxNomeCliente);
                         $('#cnpjCliente').val(auxCNPJ);
+                        $('#codigoCliente').val(auxCodigo);
                         auxSplit === "none";
                         aux2 = "";
                         auxNomeCliente = "";
@@ -257,42 +264,6 @@
                     placement : 'left'
                 });
 
-
-                $('#inserirVenda').click(function() {
-
-                    var dataVenda = $('#dataVenda').val();
-                    var nomeCliente = $('#nomeCliente').val();
-                    var cnpjCliente = $('#cnpjCliente').val();
-                    var nomeProduto = $('#nomeProduto').val();
-                    var tipoProduto;
-                    var auxTipoProd2;
-                    var osRaio2 = $('input:radio[name=tipoProduto]');
-                    if (auxTipoProd2 === "medicamento") {
-                        osRaio2.filter('[value=medicamento]').attr('checked', true);
-                        tipoProduto = 'Farmacêutico';
-                    } else {
-                        osRaio2.filter('[value=alimento]').attr('checked', true);
-                        tipoProduto = 'Alimentício';
-                    }
-
-
-                    var quantidadeProduto = $('#quantidadeProduto').val();
-                    var codigoProduto = $('#codigoProduto').val();
-                    var valorUnitario = $('#valorUnitario').val();
-                    var valorTotal = $('#valorTotal').val();
-
-                    $('#dataVendaModal').val(dataVenda);
-                    $('#nomeClienteModal').val(nomeCliente);
-                    $('#cnpjClienteModal').val(cnpjCliente);
-                    $('#nomeProdutoModal').val(nomeProduto);
-                    $('#codProdutoModal').val(codigoProduto);
-                    $('#tipoProdutoModal').val(tipoProduto);
-                    $('#quantidadeModal').val(quantidadeProduto);
-                    $('#valorUnitarioModal').val(valorUnitario);
-                    $('#valorTotalModal').val(valorTotal);
-
-
-                });
 
                 var table = $('#loadProduto').dataTable( {
                     language: {
@@ -337,7 +308,7 @@
                         var auxValorUnitario = auxSplit[4];
                         $('#produtoHidden').removeClass('hidden');
 
-                        auxValorUnitario = auxValorUnitario.replace(/\,/g, '.');
+                        auxValorUnitario = auxValorUnitario.replace(/,/g, '.');
                         auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
 
                         $('#hid').removeClass('hidden');
@@ -445,8 +416,11 @@
                         var valueUnity = document.getElementById('valorUnitario').value;
                         valueUnity = parseFloat(valueUnity);
                         var total = value*valueUnity;
-                        total = total + ",00";
-                        document.getElementById('valorTotal').value=total;
+                        var totalString = "";
+                        totalString = total + "";
+                        totalString = totalString.replace(/,/g, '');
+                        totalString = totalString.replace(/\./g, ',');
+                        document.getElementById('valorTotal').value=totalString;
 
                     if($('#quantidadeProduto').val() == "" || parseInt($('#quantidadeProduto').val()) < 0 || parseInt($('#quantidadeProduto').val()) == 0) {
                         $('#inserirVenda').attr("disabled", "true");
@@ -539,6 +513,7 @@
                     $('#pesquisaNomeProduto').prop("disabled",true);
                     $('#clientePanel').fadeTo( "slow", 0.5 );
                     $('#produtoPanel').fadeTo( "slow", 0.5 );
+                    $('#formVenda').bootstrapValidator('resetForm', true);
             }
 
             $('#relatorioVenda').on('hidden.bs.modal', function () {
@@ -662,15 +637,15 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <b>Itens obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk req"></span>
+                        <b>Itens obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk "></span>
                     </div>
                     <div class="panel-body">
                         <!-- Form de Venda -->
-                        <form role="formVenda" action="CadastrarVenda" method="POST">
+                        <form id="formVenda" >
 
                             <div class="row">
                                 <div class="col-lg-8 yes">
-                                    <label>Data da Venda <span class="glyphicon glyphicon-asterisk req"></span></label>
+                                    <label>Data da Venda <span class="glyphicon glyphicon-asterisk "></span></label>
                                     <div class="form-group input-group"  data-date-format="dd-mm-yyyy" >
                                         <input class="form-control" id="dataVenda" name="dataVenda" data-date-format="dd/mm/yyyy" placeholder="Clique e selecione" readonly="readonly" style="cursor:pointer;">
                                     </div>
@@ -726,6 +701,7 @@
                                                 <div class="form-group">
                                                     <label>CNPJ do cliente</label>
                                                     <input class="form-control" id="cnpjCliente" name="cnpjCliente" placeholder="Insira o CNPJ do cliente" data-mask="99.999.999/9999-99" readonly>
+                                                    <input id="codigoCliente" class="hidden" value="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -788,7 +764,7 @@
 
 
 
-                                                    <label>Quantidade</label>&nbsp;<span class="glyphicon glyphicon-asterisk req"></span>
+                                                    <label>Quantidade</label>&nbsp;<span class="glyphicon glyphicon-asterisk "></span>
                                                     <div class="form-group input-group" id="formGroupQuantidadeProduto">
 
                                                         <input class="form-control" id="quantidadeProduto" class="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto" >
@@ -1024,7 +1000,7 @@
                                     <!-- Button Limp3r Campos -->
                                     <button type="reset" id="resetVenda" class="btn btn-danger"><span class="glyphicon glyphicon-repeat" style="color:white;"></span>&nbsp; Limpar Campos</button>
 
-                                    <button id="inserirVenda" type="button" class="btn btn-primary" data-toggle="modal" data-target="#relatorioVenda" disabled><span class="glyphicon glyphicon-shopping-cart" style="color:white;"></span>&nbsp; Efetuar Venda</button>
+                                    <button id="inserirVenda" type="button" class="btn btn-primary"  disabled><span class="glyphicon glyphicon-shopping-cart" style="color:white;"></span>&nbsp; Efetuar Venda</button>
                                 </div>
                             </div>
 
@@ -1056,6 +1032,7 @@
                             <tr>
                                 <th>Nome do Cliente</th>
                                 <th>CNPJ</th>
+                                <th class="hidden">cod</th>
 
                             </tr>
                         </thead>
@@ -1064,6 +1041,7 @@
                             <tr>
                                 <th>Nome do Cliente</th>
                                 <th>CNPJ</th>
+                                <th class="hidden">cod</th>
 
                             </tr>
                         </tfoot>
@@ -1074,6 +1052,7 @@
                             <tr>
                                 <td> <%=clientes.get(i).getNome()%> </td>
                                 <td> <%=clientes.get(i).getCNPJ()%> </td>
+                                <td class="hidden"> <%=clientes.get(i).getCodCliente()%> </td>
                             </tr>
                             <%
                                 }
@@ -1509,8 +1488,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary" id="salvarRelatorio" ><span class="glyphicon glyphicon-floppy-disk" style="color:white;"></span>&nbsp;Salvar Relatório</button>
-                    <button type="button" id="printRelatorioNome" class="btn btn-primary"><span class="glyphicon glyphicon-print" style="color:white;"></span>&nbsp;Imprimir</button>
-                    
+                                        
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -1566,6 +1544,24 @@
       </div>
       <div class="modal-body">
         <p>Não existem produtos suficientes em estoque para essa venda.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Modal erro de não selecionar nenhum item -->
+    <div class="modal fade bs-example-modal-sm " id="erroVenda"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog vertical-centered " >
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#d9534f;">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Erro do Cadastro da venda</h4>
+      </div>
+      <div class="modal-body">
+        <p>Não foi possível inserir a venda na base de dados. Aparentemente já existe uma venda cadastrada com os mesmos parâmetros ou a base de dados pode estar com problemas de comunicação.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
