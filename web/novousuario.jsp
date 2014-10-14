@@ -211,7 +211,7 @@ $( document ).ready(function() {
 <link href="css/meucss.css" rel="stylesheet">
 
 <!-- Bootstrap Core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
 
 <link href="css/jasny-bootstrap.css" rel="stylesheet">
 

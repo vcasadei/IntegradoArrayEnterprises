@@ -66,11 +66,7 @@
 
 
            $('#formVenda').bootstrapValidator({
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
+
                 fields: {
                     dataVenda: {
                         validators: {
@@ -84,6 +80,10 @@
                             notEmpty: {
                                 message: 'Por favor, insira a quantidade do produto'
                             },
+                            greaterThan: {
+                                value: 1.0,
+                                message: 'A quantidade deve ser maior que 0'
+                            }
                         }
                     }
                 },

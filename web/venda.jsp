@@ -414,6 +414,9 @@
                     
                         var value = document.getElementById('quantidadeProduto').value;
                         var valueUnity = document.getElementById('valorUnitario').value;
+                        if(valueUnity == ""){
+                            valueUnity = 0;
+                        }
                         valueUnity = parseFloat(valueUnity);
                         var total = value*valueUnity;
                         var totalString = "";
@@ -765,13 +768,9 @@
 
 
                                                     <label>Quantidade</label>&nbsp;<span class="glyphicon glyphicon-asterisk "></span>
-                                                    <div class="form-group input-group" id="formGroupQuantidadeProduto">
+                                                    <div class="form-group" id="formGroupQuantidadeProduto">
 
                                                         <input class="form-control" id="quantidadeProduto" class="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto" >
-                                                        <span class="input-group-addon" id="unidadeAddon">unidades</span>
-
-
-
                                                     </div>
 
                                                     <div class="form-group input-group" id="formGroupQuantidadeProduto2" style="display: none;">
