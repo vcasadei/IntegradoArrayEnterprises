@@ -4,12 +4,23 @@
  */
 package Servlet;
 
+import Banco.BdDAOException;
+import Banco.CadastrarUsuarioDAO;
+import Banco.CadastrarVendaDAO;
+import Bean.Venda;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -76,7 +87,35 @@ public class CadastrarVenda extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        int codCliente = Integer.parseInt(request.getParameter("codCliente"));
+        String dataVenda = request.getParameter("dataVenda");
+        int codigoProduto = Integer.parseInt(request.getParameter("codProduto"));
+        int quantidade = Integer.parseInt(request.getParameter("QtdeVenda"));
         
+        PrintWriter out = response.getWriter();
+        Gson gson = new Gson(); 
+        JsonObject myObj = new JsonObject();
+        
+        CadastrarVendaDAO dao;
+        Venda v = new Venda(codCliente, dataVenda, codigoProduto, quantidade);     
+
+        try {
+            dao = new CadastrarVendaDAO();
+            boolean success = dao.CadastrarVenda(v);
+            if(success){
+                myObj.addProperty("success", true);
+            } else {
+                myObj.addProperty("success", false);
+            }
+            
+            out.println(myObj.toString());
+            out.close();
+            
+        } catch (BdDAOException ex) {
+            Logger.getLogger(CadastrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         
     }
 
