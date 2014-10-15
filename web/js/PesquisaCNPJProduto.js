@@ -3,126 +3,134 @@
 $(document).ready(function() {
 
     function pesquisarCNPJ() {
-         $.ajax({
-            type: "POST",
-            url: "BuscaClienteProdutoCNPJCod",
-            dataType: "html",
-            data: {CNPJ: $('#pesquisaCNPJCliente').val()}
-        }).done(function(data) {
 
-            if (data === "null") {
-                //Criar mensagem que diz que o cliente com esse cnpj não existe
+        if($("#pesquisaCNPJCliente").val() != ""){
+            $.ajax({
+                type: "POST",
+                url: "BuscaClienteProdutoCNPJCod",
+                dataType: "html",
+                data: {CNPJ: $('#pesquisaCNPJCliente').val()}
+            }).done(function(data) {
 
-                $('#pesquisaCNPJCliente').val("");
-                $('#erroPesquisaCNPJ').fadeIn("slow");
-                $('#nomeCliente').val("");
-                $('#cnpjCliente').val("");
-                $('#buttonSelectProduto').attr("disabled", true);
-                $('#buttonPesquisaNomeProduto').attr("disabled", true);
-                $('#pesquisaNomeProduto').attr("disabled", true);
-                $('#produtoPanel').fadeTo( "slow", 0.5 );
-                $('#inserirVenda').attr("disabled", "true");
-                $('.addedPanel').remove();
-                $('.addedRelatorio').remove();
-                $('.addedPrint').remove();
+                if (data === "null") {
+                    //Criar mensagem que diz que o cliente com esse cnpj não existe
 
-                if($('#nomeClienteHidden').hasClass('hidden')){
+                    $('#pesquisaCNPJCliente').val("");
+                    $('#erroPesquisaCNPJ').fadeIn("slow");
+                    $('#nomeCliente').val("");
+                    $('#cnpjCliente').val("");
+                    $('#buttonSelectProduto').attr("disabled", true);
+                    $('#buttonPesquisaNomeProduto').attr("disabled", true);
+                    $('#pesquisaNomeProduto').attr("disabled", true);
+                    $('#produtoPanel').fadeTo( "slow", 0.5 );
+                    $('#inserirVenda').attr("disabled", "true");
+                    $('.addedPanel').remove();
+                    $('.addedRelatorio').remove();
+                    $('.addedPrint').remove();
+
+                    if($('#nomeClienteHidden').hasClass('hidden')){
+
+                    } else {
+                        $('#nomeClienteHidden').addClass('hidden');
+                    }
+                        
 
                 } else {
-                    $('#nomeClienteHidden').addClass('hidden');
+
+                    var aux = "";
+                    aux = data.split(";");
+
+                    $('#nomeClienteHidden').removeClass('hidden');
+                    $('#nomeCliente').val(aux[0]);
+                    $('#cnpjCliente').val(aux[1]);
+                    console.log("codigo do cliente " + aux[2])
+                    $('#codigoCliente').val(aux[2]);
+                    $('#pesquisaCNPJCliente').val("");
+
+                    $('#buttonSelectProduto').removeAttr("disabled");
+                    $('#buttonPesquisaNomeProduto').removeAttr("disabled");
+                    $('#pesquisaNomeProduto').removeAttr("disabled");
+                    $('#produtoPanel').fadeTo( "slow", 1 );
                 }
-                    
 
-            } else {
-
-                var aux = "";
-                console.log("DATAAAAA: " + data)
-                aux = data.split(";");
-
-                $('#nomeClienteHidden').removeClass('hidden');
-                $('#nomeCliente').val(aux[0]);
-                $('#cnpjCliente').val(aux[1]);
-                console.log("codigo do cliente " + aux[2])
-                $('#codigoCliente').val(aux[2]);
-                $('#pesquisaCNPJCliente').val("");
-
-                $('#buttonSelectProduto').removeAttr("disabled");
-                $('#buttonPesquisaNomeProduto').removeAttr("disabled");
-                $('#pesquisaNomeProduto').removeAttr("disabled");
-                $('#produtoPanel').fadeTo( "slow", 1 );
-            }
-
-        });
+            });
+        } 
+         
     }
 
     function pesquisarCodigo() {
-        $.ajax({
-            type: "GET",
-            url: "BuscaClienteProdutoCNPJCod",
-            dataType: "html",
-            data: {cod: $('#pesquisaNomeProduto').val()}
-        }).done(function(data) {
 
-            if (data === "null") {
-                //Criar mensagem que diz que o o produto com esse código não existe
-                $('#erroPesquisaCodigo').fadeIn("slow");
-                $('#pesquisaNomeProduto').val("");
-                $('#nomeProduto').val("");
-                $('#codigoProduto').val("");
-                $('#valorUnitario').val("");
-                var osRaio = $('input:radio[name=tipoProduto]');
-                osRaio.filter('[value=medicamento]').attr('checked', false);
-                osRaio.filter('[value=alimento]').attr('checked', false);
+        if($("#pesquisaNomeProduto").val() != ""){
+            $.ajax({
+                type: "GET",
+                url: "BuscaClienteProdutoCNPJCod",
+                dataType: "html",
+                data: {cod: $('#pesquisaNomeProduto').val()}
+            }).done(function(data) {
 
-                $('#inserirVenda').attr("disabled", "true");
-                $('.addedPanel').remove();
-                $('.addedRelatorio').remove();
-                $('.addedPrint').remove();
+                if (data === "null") {
+                    //Criar mensagem que diz que o o produto com esse código não existe
+                    $('#erroPesquisaCodigo').fadeIn("slow");
+                    $('#pesquisaNomeProduto').val("");
+                    $('#nomeProduto').val("");
+                    $('#codigoProduto').val("");
+                    $('#valorUnitario').val("");
+                    var osRaio = $('input:radio[name=tipoProduto]');
+                    osRaio.filter('[value=medicamento]').attr('checked', false);
+                    osRaio.filter('[value=alimento]').attr('checked', false);
 
-                if($('#produtoHidden').hasClass('hidden')){
+                    $('#inserirVenda').attr("disabled", "true");
+                    $('.addedPanel').remove();
+                    $('.addedRelatorio').remove();
+                    $('.addedPrint').remove();
+
+                    if($('#produtoHidden').hasClass('hidden')){
+
+                    } else {
+                        $('#produtoHidden').addClass('hidden');
+                    }
+                    
 
                 } else {
-                    $('#produtoHidden').addClass('hidden');
+
+
+                    var aux = data.split(";");
+
+                    $('#hid').removeClass('hidden');
+                    $('#nomeProduto').val(aux[0]);
+                    $('#codigoProduto').val(aux[1]);
+                    //Seta o rádio do tipo do produto
+                    var osRaio = $('input:radio[name=tipoProduto]');
+                    if (aux[2] === "medicamento") {
+                        osRaio.filter('[value=medicamento]').attr('checked', true);
+                    } else {
+                        osRaio.filter('[value=alimento]').attr('checked', true);
+                        console.log("Alimento");
+                    }
+                    var auxValorUnitario = aux[3];
+                    auxValorUnitario = auxValorUnitario.replace(/,/g, '.');
+                    auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
+                    $('#valorUnitario').val(auxValorUnitario);
+                    $('#pesquisaNomeProduto').val("");
+
+                    setTimeout(
+                          function() 
+                          {
+                            //do something special
+                            $('#quantidadeProduto').prop('autofocus',true);
+                            $('#quantidadeProduto').delay(200).focus();
+                            $('#quantidadeProduto').tooltip({title : 'Insira a quantidade e clique em Lote Automático',
+                placement : 'left',trigger: 'manual'}).tooltip('show');
+                            
+                          }, 
+                    500);
+
+
                 }
-                
-
-            } else {
-
-
-                var aux = data.split(";");
-
-                $('#hid').removeClass('hidden');
-                $('#nomeProduto').val(aux[0]);
-                $('#codigoProduto').val(aux[1]);
-                //Seta o rádio do tipo do produto
-                var osRaio = $('input:radio[name=tipoProduto]');
-                if (aux[2] === "medicamento") {
-                    osRaio.filter('[value=medicamento]').attr('checked', true);
-                } else {
-                    osRaio.filter('[value=alimento]').attr('checked', true);
-                    console.log("Alimento");
-                }
-                var auxValorUnitario = aux[3];
-                auxValorUnitario = auxValorUnitario.replace(/,/g, '.');
-                auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
-                $('#valorUnitario').val(auxValorUnitario);
-                $('#pesquisaNomeProduto').val("");
-
-                setTimeout(
-                      function() 
-                      {
-                        //do something special
-                        $('#quantidadeProduto').prop('autofocus',true);
-                        $('#quantidadeProduto').delay(200).focus();
-                        $('#quantidadeProduto').tooltip({title : 'Insira a quantidade e clique em Lote Automático',
-            placement : 'left',trigger: 'manual'}).tooltip('show');
-                        
-                      }, 
-                500);
-
-
-            }
-        });
+            });
+        }
+        
+        
     }
 
      function pesquisarLotesAutomatico() {
@@ -259,24 +267,36 @@ $(document).ready(function() {
 
         $('#pesquisaCNPJCliente').keypress(function(e) {
             if(e.which == 13) {
-                pesquisarCNPJ();
+                if($("#pesquisaCNPJCliente").val() != "" && $("#pesquisaCNPJCliente").val() != "__.___.___/____-__"){
+                    console.log($("#pesquisaCNPJCliente").val())
+                    pesquisarCNPJ();
+                } 
             }
         });
 
         $('#pesquisaNomeProduto').keypress(function(e) {
             if(e.which == 13) {
-                pesquisarCodigo();
+                if($("#pesquisaNomeProduto").val() != ""){
+                    pesquisarCodigo();
+                }
+                
             }
         });
 
     //Pesquisa um cliente pelo CNPJ
     $('#buttonpesquisaCNPJCliente').click(function() {
-        pesquisarCNPJ();
+        if($("#pesquisaCNPJCliente").val() != ""){
+            pesquisarCNPJ();
+        } 
+        
     });
 
     //Pesquisa um produto pelo código
     $('#buttonPesquisaNomeProduto').click(function() {
-        pesquisarCodigo();
+        if($("#pesquisaNomeProduto").val() != ""){
+            pesquisarCodigo();
+        }
+        
     });
 
     //Pesquisa um produto pelo código

@@ -666,7 +666,7 @@
 
                                 <div class="panel panel-info" id="clientePanel" style="opacity:0.5;">
                                     <div class="panel-heading">
-                                        <div class="row" style="margin-bottom: -16px;" >
+                                        <div class="row"  >
                                             <div class="col-lg-9" >
                                                 <div class="form-group input-group" >
                                                     <input type="text" class="form-control" id="pesquisaCNPJCliente" name="pesquisaCNPJCliente" data-mask="99.999.999/9999-99" placeholder="Pesquise pelo CNPJ do Cliente (apenas números)" disabled>
@@ -680,7 +680,7 @@
                                                 <span><b style="color:black;"> OU </b>
                                             </div>
                                             <div class="col-lg-2" style="margin-left: -10px; ">
-                                                <button type="button" id="buttonSelectCliente" class="btn btn-primary" disabled>Escolher Cliente</button>
+                                                <button type="button" id="buttonSelectCliente" class="btn btn-primary" disabled>Ver Clientes</button>
                                             </div>
                                         </div>
 
@@ -718,7 +718,7 @@
                                     <div class="panel-heading">
 
 
-                                        <div class="row" style="margin-bottom: -16px;">
+                                        <div class="row" >
                                             <div class="col-lg-9" >
                                                 <div class="form-group input-group">
                                                     <input type="text" class="form-control" id="pesquisaNomeProduto" name="pesquisaNomeProduto" placeholder="Pesquise pelo código do Produto (apenas números)" disabled>
@@ -732,7 +732,7 @@
                                                 <span><b style="color:black;"> OU </b>
                                             </div>
                                             <div class="col-lg-2" style="margin-left: -10px; ">
-                                                <button type="button" id="buttonSelectProduto" class="btn btn-primary"  disabled>Escolher Produto</button>
+                                                <button type="button" id="buttonSelectProduto" class="btn btn-primary"  disabled>Ver Produtos</button>
                                             </div>
                                         </div>
 

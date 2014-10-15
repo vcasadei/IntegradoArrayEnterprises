@@ -12,6 +12,10 @@
         <servlet-name>BuscaClienteProdutoCNPJCod</servlet-name>
         <servlet-class>Servlet.BuscaClienteProdutoCNPJCod</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FazerLogin</servlet-name>
+        <servlet-class>Servlet.FazerLogin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CadastrarVenda</servlet-name>
         <url-pattern>/CadastrarVenda</url-pattern>
@@ -23,6 +27,14 @@
     <servlet-mapping>
         <servlet-name>BuscaClienteProdutoCNPJCod</servlet-name>
         <url-pattern>/BuscaClienteProdutoCNPJCod</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>EfetuarLogin</servlet-name>
+        <servlet-class>Servlet.EfetuarLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FazerLogin</servlet-name>
+        <url-pattern>/FazerLogin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
