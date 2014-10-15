@@ -27,14 +27,15 @@ public class BuscarLotesDAO {
         this.bdConn = ConnectionBanco.getConnection();
     }
     
-    public ArrayList<Lote> BuscaLotesAutomatico(int codigo, int qtde) throws SQLException, BdDAOException
+    public ArrayList<Lote> BuscaLotesAutomatico(int codigo, int qtde, String data) throws SQLException, BdDAOException
     {
         Statement stat = bdConn.createStatement();
         ResultSet rs;
         ArrayList<Lote> lotes = new ArrayList<Lote>();
         Lote aux;
         try{
-            rs = stat.executeQuery("SELECT * FROM RecuperaLotesAutomatico(" + codigo + ", " + qtde + ");");
+            rs = stat.executeQuery("SELECT * FROM RecuperaLotesAutomatico(" + codigo + ", " + qtde +
+                    ", '" + data + "');");
             while (rs.next()){
                 System.out.println(rs.getString(1) + rs.getInt(2) + rs.getInt(3) + rs.getInt(4) + rs.getString(5));
                 aux = new Lote();
@@ -51,8 +52,6 @@ public class BuscarLotesDAO {
         } catch (SQLException ex) {
             Logger.getLogger(BuscaLotesAutomatico.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
         
         return lotes;
     }

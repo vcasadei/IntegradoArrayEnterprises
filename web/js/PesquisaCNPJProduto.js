@@ -136,15 +136,15 @@ $(document).ready(function() {
      function pesquisarLotesAutomatico() {
         var teste = $('#quantidadeProduto').val();
         teste = parseInt(teste);
-        console.log(teste + " " + $('#quantidadeProduto').val());
 
         if($('#quantidadeProduto').val() != "" && teste > 0){
             var codProduto =  $('#codigoProduto').val();
             var quantProduto = $('#quantidadeProduto').val();
+            var dataVenda = $('#dataVenda').val();
 
 
             var dataString;
-            dataString = "codigoProduto=" + codProduto + "&quantidadeProduto=" + quantProduto;
+            dataString = "codigoProduto=" + codProduto + "&quantidadeProduto=" + quantProduto + "&dataVenda=" + dataVenda;
              $.ajax({
                 type: "POST",
                 url: "BuscaLotesAutomatico",
