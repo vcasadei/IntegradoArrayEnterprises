@@ -12,7 +12,7 @@
     <title>Acesso ao sistema - ArrayEnterprises</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -53,7 +53,7 @@
             $('#loginForm').bootstrapValidator('validate');
             
             
-            });
+        });
 
 
 
@@ -103,8 +103,12 @@
                         success: function( data) {
                             //our country code was correct so we have some information to display
                              if(data.success){
+                                $('#erroLogin').hide(200);
                                  $("#sucessoMensagem").html('Bem-Vindo <b>' + varUsername + '</b>. Você será redirecionado à página do sistema em 3 segundos.');
                                         $('#sucessoLogin').show('slow');
+                                        $('.form-group').removeClass('has-error');
+                                        $('#erroLogin').hide(200);
+
                                  setTimeout(
                                       function() 
                                       {
@@ -210,6 +214,10 @@
                 </div>
             </div>
         </div>
+
+       
+
+
     </div>
 
     <!-- jQuery Version 1.11.0 -->
