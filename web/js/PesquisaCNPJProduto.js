@@ -51,6 +51,7 @@ $(document).ready(function() {
                     $('#buttonPesquisaNomeProduto').removeAttr("disabled");
                     $('#pesquisaNomeProduto').removeAttr("disabled");
                     $('#produtoPanel').fadeTo( "slow", 1 );
+                    $('#erroPesquisaCNPJ').fadeOut(300);
                 }
 
             });
@@ -249,6 +250,9 @@ $(document).ready(function() {
                 $newPanel.find("#validade").val(validadeAux);
                 $newRelatorio.find("#dataValidadeModal").val(validadeAux);
                 $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='validadeParaRelatorio" + (j++).toString() + "'  value='" + validadeAux + "'>");
+
+                $newRelatorio.removeClass("hidden");
+                $newRelatorio.addClass("addedRelatorio");
 
                 $("#accordion").append($newPanel.fadeIn());
                 

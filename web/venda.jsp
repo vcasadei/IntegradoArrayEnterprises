@@ -70,15 +70,11 @@
                 });
 
 
-                $('#dataVenda').focusin(function() {
+                // $('#dataVenda').focusin(function() {
                     
-                        $('#buttonSelectCliente').removeAttr("disabled");
-                        $('#buttonpesquisaCNPJCliente').removeAttr("disabled");
-                        $('#pesquisaCNPJCliente').removeAttr("disabled");
-                        $('#clientePanel').fadeTo( "slow", 1 );
-
+                        
                     
-                });
+                // });
 
                 $('#buttonSelectCliente').click(function() {
                     $('#selecionarCliente').modal('show');
@@ -234,6 +230,7 @@
                         var auxNomeCliente = auxSplit[1];
                         var auxCNPJ = auxSplit[2];
                         var auxCodigo = auxSplit[3];
+                        var ramo = auxsplit[4];
                         $('#nomeClienteHidden').removeClass('hidden');
                         console.log(auxNomeCliente);
                         console.log(auxCNPJ);
@@ -241,6 +238,7 @@
                         $('#nomeCliente').val(auxNomeCliente);
                         $('#cnpjCliente').val(auxCNPJ);
                         $('#codigoCliente').val(auxCodigo);
+                        $('#ramoCliente').val(ramo);
                         auxSplit === "none";
                         aux2 = "";
                         auxNomeCliente = "";
@@ -450,7 +448,13 @@
 
         <script>
             $(document).ready(function() {
-                $('#dataVenda').datepicker();
+                $('#dataVenda').datepicker().on('changeDate', function (ev) {
+                                        $('#buttonSelectCliente').removeAttr("disabled");
+                                        $('#buttonpesquisaCNPJCliente').removeAttr("disabled");
+                                        $('#pesquisaCNPJCliente').removeAttr("disabled");
+                                        $('#clientePanel').fadeTo( "slow", 1 );
+                                        $(this).datepicker('hide');
+                });
             });
         </script>
 
@@ -518,10 +522,10 @@
                     $('#produtoPanel').fadeTo( "slow", 0.5 );
                     $('#formVenda').bootstrapValidator('resetForm', true);
             }
+                $('#sucessoVenda').on('hidden.bs.modal', function () {
+                    limparFormulario();
+                })
 
-            $('#relatorioVenda').on('hidden.bs.modal', function () {
-                limparFormulario();
-            })
             });
         </script>
 
@@ -705,6 +709,7 @@
                                                     <label>CNPJ do cliente</label>
                                                     <input class="form-control" id="cnpjCliente" name="cnpjCliente" placeholder="Insira o CNPJ do cliente" data-mask="99.999.999/9999-99" readonly>
                                                     <input id="codigoCliente" class="hidden" value="0">
+                                                    <input id="ramoCliente" class="hidden" value="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -1052,6 +1057,7 @@
                                 <td> <%=clientes.get(i).getNome()%> </td>
                                 <td> <%=clientes.get(i).getCNPJ()%> </td>
                                 <td class="hidden"> <%=clientes.get(i).getCodCliente()%> </td>
+                                <td class="hidden"> <%=clientes.get(i).getRamo()%> </td>  
                             </tr>
                             <%
                                 }
@@ -1349,13 +1355,31 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 
-
+<!-- Modal confirmação de salvamento -->
+        <div class="modal fade bs-example-modal-sm2" id="sucessoVenda"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
+          <div class="modal-dialog modal-sm vertical-centered " >
+            <div class="modal-content">
+              <div class="modal-header" style="background-color:#5cb85c;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-ok" style="color:white;"></span>&nbsp;&nbsp;Venda Efetuada com Sucesso</h4>
+              </div>
+              <div class="modal-body">
+                    <span>A venda foi efetuada com sucesso!</span>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="gerarRelatorio" ><span class="glyphicon glyphicon-book" style="color:white;"></span>&nbsp;Gerar Relatório</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
 
 
@@ -1525,7 +1549,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
         <button type="button" class="btn btn-primary" id="salvarRelatorioNome"><span class="glyphicon glyphicon-floppy-disk" style="color:white;"></span>&nbsp;Salvar Relatório</button>
       </div>
     </div><!-- /.modal-content -->
