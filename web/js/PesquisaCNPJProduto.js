@@ -145,7 +145,7 @@ $(document).ready(function() {
 
 
             var dataString;
-            dataString = "codigoProduto=" + codProduto + "&quantidadeProduto=" + quantProduto + "&dataVenda=" + dataVenda;
+            dataString = "codigoProduto=" + codProduto + "&quantidadeProduto=" + quantProduto;
              $.ajax({
                 type: "POST",
                 url: "BuscaLotesAutomatico",

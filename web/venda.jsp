@@ -110,6 +110,15 @@
                     $('.addedPanel').remove();
                     $('.addedRelatorio').remove();
                     $('.addedPrint').remove();
+                    if($('#ramoCliente').val().replace(/ /g, '') == "alimentício" ){
+
+                    } else {
+                        if($('#ramoCliente').val().replace(/ /g, '') == "medicamento" ){
+
+                        } else {
+                            //ambos
+                        }
+                    }
 
                     if($('#produtoHidden').hasClass('hidden')){
 
@@ -230,7 +239,7 @@
                         var auxNomeCliente = auxSplit[1];
                         var auxCNPJ = auxSplit[2];
                         var auxCodigo = auxSplit[3];
-                        var ramo = auxsplit[4];
+                        // var ramo = auxsplit[4];
                         $('#nomeClienteHidden').removeClass('hidden');
                         console.log(auxNomeCliente);
                         console.log(auxCNPJ);
@@ -238,7 +247,7 @@
                         $('#nomeCliente').val(auxNomeCliente);
                         $('#cnpjCliente').val(auxCNPJ);
                         $('#codigoCliente').val(auxCodigo);
-                        $('#ramoCliente').val(ramo);
+                        // $('#ramoCliente').val(ramo);
                         auxSplit === "none";
                         aux2 = "";
                         auxNomeCliente = "";
@@ -1038,6 +1047,7 @@
                                 <th>CNPJ</th>
                                 <th class="hidden">cod</th>
 
+
                             </tr>
                         </thead>
 
@@ -1046,6 +1056,7 @@
                                 <th>Nome do Cliente</th>
                                 <th>CNPJ</th>
                                 <th class="hidden">cod</th>
+                                
 
                             </tr>
                         </tfoot>
@@ -1057,7 +1068,7 @@
                                 <td> <%=clientes.get(i).getNome()%> </td>
                                 <td> <%=clientes.get(i).getCNPJ()%> </td>
                                 <td class="hidden"> <%=clientes.get(i).getCodCliente()%> </td>
-                                <td class="hidden"> <%=clientes.get(i).getRamo()%> </td>  
+                                
                             </tr>
                             <%
                                 }

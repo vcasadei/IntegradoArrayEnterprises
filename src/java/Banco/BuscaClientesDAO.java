@@ -58,13 +58,14 @@ public class BuscaClientesDAO {
         ResultSet rs;
         Cliente retorno;
         
-        rs = stat.executeQuery("SELECT nome, codcliente FROM Cliente WHERE CNPJ = '" + cnpj + "';");
+        rs = stat.executeQuery("SELECT nome, codcliente, ramo FROM Cliente WHERE CNPJ = '" + cnpj + "';");
         
         while (rs.next()){
             retorno = new Cliente();
             retorno.setNome(rs.getString(1));
             retorno.setCodCliente(Integer.parseInt(rs.getString(2)));
             retorno.setCNPJ(cnpj);
+            retorno.setRamo(rs.getString(3));
             return retorno;
         }
         

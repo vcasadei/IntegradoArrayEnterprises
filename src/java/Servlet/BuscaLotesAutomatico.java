@@ -94,7 +94,7 @@ public class BuscaLotesAutomatico extends HttpServlet {
         
         try {   
             BuscarLotesDAO dao = new BuscarLotesDAO();
-            lotes = dao.BuscaLotesAutomatico(codigo, qtde, dataVenda);
+            lotes = dao.BuscaLotesAutomatico(codigo, qtde);
             response.getWriter().write(lotes.size() + ";"); 
             for (int i = 0; i < lotes.size(); i++) {
                 System.out.println(lotes.get(i).getCodigoLote());
