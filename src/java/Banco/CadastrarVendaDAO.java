@@ -23,16 +23,6 @@ public class CadastrarVendaDAO {
         this.bdConn = ConnectionBanco.getConnection();
     }
     
-    public static void main (String args[]) throws BdDAOException, SQLException {
-        
-        CadastrarVendaDAO dao = new CadastrarVendaDAO();
-        Venda v = new Venda(1, "13/10/2014", 1, 3);
-        
-        if(dao.CadastrarVenda(v))
-            System.out.println("ok");
-        
-    }
-    
     public boolean CadastrarVenda (Venda v) throws SQLException, BdDAOException {
       
         Statement stat = bdConn.createStatement();

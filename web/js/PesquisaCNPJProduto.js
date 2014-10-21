@@ -145,7 +145,8 @@ $(document).ready(function() {
 
 
             var dataString;
-            dataString = "codigoProduto=" + codProduto + "&quantidadeProduto=" + quantProduto;
+            dataString = "codigoProduto=" + codProduto + "&quantidadeProduto=" + quantProduto
+            + "&dataVenda=" + dataVenda;
              $.ajax({
                 type: "POST",
                 url: "BuscaLotesAutomatico",
@@ -154,8 +155,6 @@ $(document).ready(function() {
             }).done(function(data) {
 
                 if (data === "0;") {
-                    //ERRO
-                    console.log("não achou os lotes, deu erro");
                     $('#erroLoteInsuficiente').modal('show');
                     $('#inserirVenda').attr("disabled", "true");
                     
@@ -166,12 +165,7 @@ $(document).ready(function() {
                     $('.addedPanel').remove();
                     $('.addedRelatorio').remove();
                     $('.addedPrint').remove();
-                    buildLotes(data)
-                    
-
-
-                    
-                    
+                    buildLotes(data);
                 }
 
             });

@@ -94,7 +94,7 @@ public class BuscaLotesAutomatico extends HttpServlet {
         
         try {   
             BuscarLotesDAO dao = new BuscarLotesDAO();
-            lotes = dao.BuscaLotesAutomatico(codigo, qtde);
+            lotes = dao.BuscaLotesAutomatico(codigo, qtde, dataVenda);
             response.getWriter().write(lotes.size() + ";"); 
             for (int i = 0; i < lotes.size(); i++) {
                 System.out.println(lotes.get(i).getCodigoLote());
@@ -109,15 +109,6 @@ public class BuscaLotesAutomatico extends HttpServlet {
                 response.getWriter().write(lotes.get(i).getValidade());
                 response.getWriter().write(";"); 
             }
-               
-            // Seta os atributos da request
-//            request.setAttribute("listaLotes", lotes);
-//            request.setAttribute("quantidadeLotes", lotes.size());
-//            
-//            RequestDispatcher rd = null;
-//            rd = request.getRequestDispatcher("/venda.jsp");
-//            rd.forward(request, response);
-
             
         } catch (SQLException ex) {
             Logger.getLogger(BuscaLotesAutomatico.class.getName()).log(Level.SEVERE, null, ex);
