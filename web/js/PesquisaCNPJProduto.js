@@ -232,9 +232,9 @@ $(document).ready(function() {
                 $newRelatorio.find("#codigoLoteModal").val(codLote);
                 $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='codParaRelatorio" + (j++).toString() + "' value='" + codLote + "'>");
 
-                i = i+2;
+                i = i+3;
                 var quantidadeAux = aux[i];
-                i++;
+                // i++;
                 $newPanel.find("#quantidadeProduto").val(quantidadeAux);
                 $newRelatorio.find("#quantidadeProdutoModal").val(quantidadeAux);
                 $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='quantidadeParaRelatorio" + (j++).toString() + "'  value='" + quantidadeAux + "'>");
