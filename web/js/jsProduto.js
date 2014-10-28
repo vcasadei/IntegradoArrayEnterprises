@@ -41,21 +41,21 @@ $(document).ready(function () {
         $('#nomeProduto').val("");
         $('#codigoProduto').val("");
         $('#valorUnitario').val("");
-        var osRaio = $('input:radio[name=tipoProduto]');
-        osRaio.filter('[value=medicamento]').attr('checked', false);
-        osRaio.filter('[value=alimento]').attr('checked', false);
+        if($('#optionsAlimento').is(':checked')){
+            $('#optionsAlimento').prop('checked', false);
+            console.log("Alimento esta selcionado")
+        }
+        if($('#optionsMedicamento').is(':checked')){
+            $('#optionsMedicamento').prop('checked', false);
+            console.log("Medicamento esta selcionado")
+        }
+ 
         $('.addedPanel').remove();
         $('.addedRelatorio').remove();
         $('.addedPrint').remove();
-        if ($('#ramoCliente').val().replace(/ /g, '') == "alimentício") {
-
-        } else {
-            if ($('#ramoCliente').val().replace(/ /g, '') == "medicamento") {
-
-            } else {
-                //ambos
-            }
-        }
+        $('#addToCart').attr('disabled', true);
+        $('#quantidadeProduto').val("");
+        $('#formGroupQuantidadeProduto').removeClass('has-success');
 
         if ($('#produtoHidden').hasClass('hidden')) {
 
@@ -172,15 +172,16 @@ $(document).ready(function () {
             $('#codigoProduto').val(auxCodProd);
             $('#valorUnitario').val(auxValorUnitario);
             var osRaio = $('input:radio[name=tipoProduto]');
-            if (auxTipoProd === "medicamento") {
+            console.log(auxSplit[3]);
+            if (auxSplit[3] === "alimentício") {
+                $('#optionsAlimento').prop('checked', true);
+                osRaio.filter('[value=alimento]').attr('checked', true);
+            } else {
+                $('#optionsMedicamento').prop('checked', true);
                 osRaio.filter('[value=medicamento]').attr('checked', true);
                 console.log("medicamento");
-            } else {
-                osRaio.filter('[value=alimento]').attr('checked', true);
-                console.log("Alimento");
             }
-            auxSplit === "none";
-            aux2 = "";
+            
             $('#selecionarProduto').modal('hide');
 
             setTimeout(
@@ -494,9 +495,14 @@ $(document).ready(function () {
                     $('#nomeProduto').val("");
                     $('#codigoProduto').val("");
                     $('#valorUnitario').val("");
-                    var osRaio = $('input:radio[name=tipoProduto]');
-                    osRaio.filter('[value=medicamento]').attr('checked', false);
-                    osRaio.filter('[value=alimento]').attr('checked', false);
+                    if($('#optionsAlimento').is(':checked')){
+                        $('#optionsAlimento').prop('checked', false);
+                        console.log("Alimento esta selcionado")
+                    }
+                    if($('#optionsMedicamento').is(':checked')){
+                        $('#optionsMedicamento').prop('checked', false);
+                        console.log("Medicamento esta selcionado")
+                    }
 
                     $('#addToCart').attr("disabled", "true");
                     $('.addedPanel').remove();
@@ -518,19 +524,23 @@ $(document).ready(function () {
                     $('#hid').removeClass('hidden');
                     $('#nomeProduto').val(aux[0]);
                     $('#codigoProduto').val(aux[1]);
-                    //Seta o rádio do tipo do produto
-                    var osRaio = $('input:radio[name=tipoProduto]');
-                    if (aux[2] === "medicamento") {
-                        osRaio.filter('[value=medicamento]').attr('checked', true);
-                    } else {
-                        osRaio.filter('[value=alimento]').attr('checked', true);
-                        console.log("Alimento");
-                    }
+
                     var auxValorUnitario = aux[3];
                     auxValorUnitario = auxValorUnitario.replace(/,/g, '.');
                     auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
                     $('#valorUnitario').val(auxValorUnitario);
                     $('#pesquisaNomeProduto').val("");
+                    //Seta o rádio do tipo do produto
+                    var osRaio = $('input:radio[name=tipoProduto]');
+                    console.log(aux[2]);
+                    if (aux[2] === "alimentício") {
+                        $('#optionsAlimento').prop('checked', true);
+                        osRaio.filter('[value=alimento]').attr('checked', true);
+                    } else {
+                        $('#optionsMedicamento').prop('checked', true);
+                        osRaio.filter('[value=medicamento]').attr('checked', true);
+                        console.log("medicamento");
+                    }
 
                     setTimeout(
                           function() 
@@ -556,6 +566,37 @@ $(document).ready(function () {
     $('#buttonPesquisaNomeProduto').click(function() {
         if($("#pesquisaNomeProduto").val() != ""){
             pesquisarCodigo();
+        } else {
+            $('#selecionarProduto').modal('show');
+            $('#erroPesquisaCodigo').fadeOut("slow");
+            $('#pesquisaNomeProduto').val("");
+            $('#nomeProduto').val("");
+            $('#codigoProduto').val("");
+            $('#valorUnitario').val("");
+            if($('#optionsAlimento').is(':checked')){
+                $('#optionsAlimento').prop('checked', false);
+                console.log("Alimento esta selcionado")
+            }
+            if($('#optionsMedicamento').is(':checked')){
+                $('#optionsMedicamento').prop('checked', false);
+                console.log("Medicamento esta selcionado")
+            }
+            
+            // var osRaio = $('input:radio[name=tipoProduto]');
+            // osRaio.filter('[value=medicamento]').attr('checked', false);
+            // osRaio.filter('[value=alimento]').attr('checked', false);
+            $('.addedPanel').remove();
+            $('.addedRelatorio').remove();
+            $('.addedPrint').remove();
+            $('#addToCart').attr('disabled', true);
+            $('#quantidadeProduto').val("");
+            $('#formGroupQuantidadeProduto').removeClass('has-success');
+
+            if ($('#produtoHidden').hasClass('hidden')) {
+
+            } else {
+                $('#produtoHidden').addClass('hidden');
+            }
         }
         
     });
@@ -564,6 +605,33 @@ $(document).ready(function () {
             if(e.which == 13) {
                 if($("#pesquisaNomeProduto").val() != ""){
                     pesquisarCodigo();
+                } else {
+                    $('#selecionarProduto').modal('show');
+                    $('#erroPesquisaCodigo').fadeOut("slow");
+                    $('#pesquisaNomeProduto').val("");
+                    $('#nomeProduto').val("");
+                    $('#codigoProduto').val("");
+                    $('#valorUnitario').val("");
+                    if($('#optionsAlimento').is(':checked')){
+                        $('#optionsAlimento').prop('checked', false);
+                        console.log("Alimento esta selcionado")
+                    }
+                    if($('#optionsMedicamento').is(':checked')){
+                        $('#optionsMedicamento').prop('checked', false);
+                        console.log("Medicamento esta selcionado")
+                    }
+                    $('.addedPanel').remove();
+                    $('.addedRelatorio').remove();
+                    $('.addedPrint').remove();
+                    $('#addToCart').attr('disabled', true);
+                    $('#quantidadeProduto').val("");
+                    $('#formGroupQuantidadeProduto').removeClass('has-success');
+
+                    if ($('#produtoHidden').hasClass('hidden')) {
+
+                    } else {
+                        $('#produtoHidden').addClass('hidden');
+                    }
                 }
                 
             }
@@ -674,9 +742,18 @@ $(document).ready(function () {
     });
 
     $('#cancelarVenda').click(function() {
+        $('#alertaCancelarVenda').modal('show');
+    });
+
+    $('#simCancelarVenda').click(function() {
         sessionStorage.clear();
         window.location.href = "/ArrayEnterprises/index.html";
     });
+
+    $('#verResumo').click(function() {
+        window.location.href = "/ArrayEnterprises/carrinho.jsp";
+    });
+
 });
 
 

@@ -112,7 +112,13 @@ $(document).ready(function() {
         $('#buttonpesquisaCNPJCliente').prop("disabled",true);
         $('#pesquisaCNPJCliente').prop("disabled",true);
         $('#clientePanel').fadeTo( "slow", 0.5 );
+
         
+        if($('#nomeClienteHidden').hasClass('hidden')){
+
+        } else {
+            $('#nomeClienteHidden').addClass('hidden');
+        }
 
 
         $('#pesquisaCNPJCliente').val('');

@@ -331,7 +331,29 @@ $(document).ready(function() {
     $('#buttonPesquisaNomeProduto').click(function() {
         if($("#pesquisaNomeProduto").val() != ""){
             pesquisarCodigo();
-        } 
+        } else {
+            $('#selecionarProduto').modal('show');
+            $('#erroPesquisaCodigo').fadeOut("slow");
+            $('#pesquisaNomeProduto').val("");
+            $('#nomeProduto').val("");
+            $('#codigoProduto').val("");
+            $('#valorUnitario').val("");
+            var osRaio = $('input:radio[name=tipoProduto]');
+            osRaio.filter('[value=medicamento]').attr('checked', false);
+            osRaio.filter('[value=alimento]').attr('checked', false);
+            $('.addedPanel').remove();
+            $('.addedRelatorio').remove();
+            $('.addedPrint').remove();
+            $('#addToCart').attr('disabled', true);
+            $('#quantidadeProduto').val("");
+            $('#formGroupQuantidadeProduto').removeClass('has-success');
+
+            if ($('#produtoHidden').hasClass('hidden')) {
+
+            } else {
+                $('#produtoHidden').addClass('hidden');
+            }
+        }
         
     });
 });   

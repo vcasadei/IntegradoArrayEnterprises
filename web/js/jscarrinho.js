@@ -295,6 +295,10 @@ $(document).ready(function() {
     });
 
     $('#cancelarVenda').click(function() {
+        $('#alertaCancelarVenda').modal('show');
+    });
+
+    $('#simCancelarVenda').click(function() {
         sessionStorage.clear();
         window.location.href = "/ArrayEnterprises/index.html";
     });

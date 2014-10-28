@@ -118,7 +118,7 @@
                                     <a class="active" href="BuscaClientesProdutos"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Efetuar Venda</a>
                                 </li>
                                 <li>
-                                    <a class="" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Carrinho de Compras</a>
+                                    <a class="" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Resumo da Venda</a>
                                 </li>
 
                             </ul>

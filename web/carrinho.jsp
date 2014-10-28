@@ -42,7 +42,7 @@
         <script src="js/salvarVenda.js"></script>
         <script src="js/jscarrinho.js"></script>
 
-        <title>Carrinho de Compras - ArrayEnterprises</title>
+        <title>Resumo da venda - ArrayEnterprises</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="datepicker/css/datepicker.css" rel="stylesheet">
@@ -114,7 +114,7 @@
                                     <a class="" href="BuscaClientesProdutos"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Efetuar Venda</a>
                                 </li>
                                 <li>
-                                    <a class="active" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Carrinho de Compras</a>
+                                    <a class="active" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Resumo da Venda</a>
                                 </li>
 
                             </ul>
@@ -136,7 +136,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Efetuar Venda</h1>
+                <h1 class="page-header">Resumo da Venda</h1>
                 <ol class="breadcrumb">
                     <li>
                         <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Painel de Controle</a>
@@ -145,7 +145,7 @@
                         <i class="glyphicon glyphicon-share-alt"></i> Vendas
                     </li>
                     <li class="active">
-                        <i class="glyphicon glyphicon-shopping-cart"></i> Carrinho de Compras
+                        <i class="glyphicon glyphicon-shopping-cart"></i> Resumo da Venda
                     </li>
 
                 </ol>
@@ -276,6 +276,23 @@
     <!-- /#page-wrapper -->
 </div>
 
+    <div class="modal fade bs-example-modal-sm " id="alertaCancelarVenda"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm vertical-centered " >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#f0ad4e;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Cancelar Venda</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja cancelar a venda?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"  class="btn btn-default" data-dismiss="modal">Não</button>
+                    <button type="button" id="simCancelarVenda" class="btn btn-primary" data-dismiss="modal">Sim</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 
     <!-- Modal confirmação de salvamento -->
