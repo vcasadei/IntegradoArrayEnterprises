@@ -13,15 +13,10 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 /**
  *
@@ -93,7 +88,10 @@ public class FazerLogin extends HttpServlet {
             String username = request.getParameter("username");
             String senha = request.getParameter("password");
 
-            Usuario user = new Usuario(username, senha);
+            Usuario user = new Usuario();
+            user.setNome(username);
+            user.setSenha(senha);
+            
             Usuario userReturn = null;
         
             UsuarioDAO usuario = new UsuarioDAO();

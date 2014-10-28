@@ -90,7 +90,10 @@ public class EfetuarLogin extends HttpServlet {
             String username = request.getParameter("username");
             String senha = request.getParameter("password");
 
-            Usuario user = new Usuario(username, senha);
+            Usuario user = new Usuario();
+            user.setNome(username);
+            user.setSenha(senha);
+            
             Usuario userReturn = null;
         
             UsuarioDAO usuario = new UsuarioDAO();

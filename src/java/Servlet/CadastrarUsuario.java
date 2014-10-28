@@ -13,7 +13,6 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
@@ -97,7 +95,11 @@ public class CadastrarUsuario extends HttpServlet {
         JsonObject myObj = new JsonObject();
         
         CadastrarUsuarioDAO dao;
-        Usuario u = new Usuario(nome, senha, email, tipo);     
+        Usuario u = new Usuario(); 
+        u.setNome(nome);
+        u.setSenha(senha);
+        u.setEmail(email);
+        u.setTipo(tipo);
 
         try {
             dao = new CadastrarUsuarioDAO();

@@ -15,28 +15,14 @@ public class Usuario {
     private String senha;
     private String email;
     private String tipo;
-
-    public Usuario(String nome, String senha, String email, String tipo){
-        this.nome = nome;
-        this.senha = senha;
-        this.email = email;
-        this.tipo = tipo;
-
-    }
-
-    public Usuario(String nome, String senha) {
-        this.senha = senha;
-        this.nome = nome;
-    }
     
-    public Usuario() {
-    }
+    public Usuario(){}
 
     public String getNome() {
         return nome;
     }
-
-    public void getNome(String nome) {
+    
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -55,11 +41,6 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
- 
 
     public String getTipo() {
         return tipo;
