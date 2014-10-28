@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     $('#header2').load('header.html');
 
+
     var sessao = sessionStorage.getItem( "dataCliente" );
     var clienteObj = JSON.parse( sessao );
     dataVenda = clienteObj[0].dataVenda;

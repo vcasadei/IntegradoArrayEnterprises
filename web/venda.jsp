@@ -41,7 +41,7 @@
         <script src="js/salvarVenda.js"></script>
 
         <script src="js/jsCliente.js"></script>
-
+        <script src="js/jsGeral.js"></script>
 
 
 
@@ -107,7 +107,7 @@
                             <a href="index.html"><i class="glyphicon glyphicon-home fa-fw"></i> Painel de Controle</a>
                         </li>
 
-                        <li>
+                        <li class="somenteAdm">
                             <a href="novousuario.jsp"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
                         </li>
 

@@ -27,7 +27,7 @@
 
         <script src="js/generatePDF.js"></script>
 
-
+        <script src="js/jsGeral.js"></script>
 
 
         <link rel="stylesheet" href="css/jasny-bootstrap.css">
@@ -103,7 +103,7 @@
                             <a href="index.html"><i class="glyphicon glyphicon-home fa-fw"></i> Painel de Controle</a>
                         </li>
 
-                        <li>
+                        <li class="somenteAdm">
                             <a href="novousuario.jsp"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
                         </li>
 

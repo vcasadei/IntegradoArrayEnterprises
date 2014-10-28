@@ -11,13 +11,9 @@
 
 
     <script src="js/jquery-1.11.1.js"></script>
+    
     <!-- Inserção de conteúdo -->
-    <script>
-        $( document ).ready(function() {
-            $('#header2').load('header.html');
-            $('#row-notification').load('row-notification.html');
-        });
-    </script>
+   
     
 
     <title>ArrayEnterprises - Sistema Integrado de Gestão Empresarial</title>
@@ -25,6 +21,12 @@
     <!-- Link de estilo CSS -->    
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/jsGeral.js"></script>
+     <script>
+        $( document ).ready(function() {
+            $('#header2').load('header.html');
+        });
+    </script>
 
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -68,7 +70,7 @@
                             <a class="active" href="index.html"><i class="glyphicon glyphicon-home fa-fw"></i> Painel de Controle</a>
                         </li>
 
-                        <li>
+                        <li class="somenteAdm">
                             <a href="novousuario.jsp"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
                         </li>
 
@@ -113,7 +115,7 @@
             <div id="row-notification"></div>
             <div class="row">
                 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6 somenteAdm" >
                     <div class="panel panel-primary" onclick="window.location = 'novousuario.jsp';" style="cursor:pointer;">
                         <div class="panel-heading">
                             <div class="row">

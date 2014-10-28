@@ -97,25 +97,37 @@
                     $.ajax({
                         type: "POST",
                         url: "FazerLogin",
-                        dataType: "json",
+                        dataType: "text",
                         data: dataString,
                         //if received a response from the server
                         }).done(function(data) {
                             testeData = data;
 
                             if (data === "erro") {
+                                console.log("chegou aqui");
                                 $('#erroLogin').show(200);
                                 $('#username').val('');
                                 $('#password').val('');
                                 $('.form-group').addClass('has-error');
                                 
                             } else {
-
+                                console.log("deu certo");
                                 $('#erroLogin').hide(200);
                                 $("#sucessoMensagem").html('Bem-Vindo <b>' + varUsername + '</b>. Você será redirecionado à página do sistema em 3 segundos.');
                                     $('#sucessoLogin').show('slow');
                                     $('.form-group').removeClass('has-error');
                                     $('#erroLogin').hide(200);
+
+                                    var aux = data.split(';');
+
+
+                                    sessionStorage.clear();
+                                    var user = {
+                                        nome: aux[1],
+                                        senha: aux[2],
+                                        tipo: aux[3]
+                                    };
+                                    sessionStorage.setItem('userData', JSON.stringify(user));
 
                                     setTimeout(
                                       function() 
@@ -124,15 +136,7 @@
                                         window.location.href = "/ArrayEnterprises/index.html";
                                         
                                       }, 3000);
-                                    var aux = data.split(';');
 
-
-                                    sessionStorage.clear();
-                                    var user = [{
-                                        nome: aux[0],
-                                        senha: aux[1],
-                                        tipo: aux[2]
-                                    }];
 
                                 } 
 

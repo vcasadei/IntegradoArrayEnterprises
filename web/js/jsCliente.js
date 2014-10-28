@@ -2,7 +2,6 @@ $(document).ready(function() {
 
     $('#header2').load('header.html');
 
-
     sessionStorage.clear();
     
 
@@ -113,7 +112,7 @@ $(document).ready(function() {
         $('#pesquisaCNPJCliente').prop("disabled",true);
         $('#clientePanel').fadeTo( "slow", 0.5 );
 
-        
+
         if($('#nomeClienteHidden').hasClass('hidden')){
 
         } else {
