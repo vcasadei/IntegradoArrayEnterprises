@@ -2,7 +2,7 @@ $(document).ready(function() {
 
    
 
-    if(sessionStorage.length != 0){
+    if(sessionStorage.length != 0 && sessionStorage.getItem( "dataCliente" ) != null){
         var sessao = sessionStorage.getItem( "dataCliente" );
         console.log(sessao);
         var clienteObj = JSON.parse( sessao );
@@ -238,14 +238,6 @@ $(document).ready(function() {
 
     
 
-
-
-
-    
-
-
-    $('#header2').load('header.html');
-
     $('#closeErroNomeVazio').click(function(e){
         $('#erroNomeVazio').fadeOut(300);
     });
@@ -299,7 +291,9 @@ $(document).ready(function() {
     });
 
     $('#simCancelarVenda').click(function() {
-        sessionStorage.clear();
+        sessionStorage.removeItem('dataProduto');
+        sessionStorage.removeItem('dataLote');
+        sessionStorage.removeItem('dataCliente');
         window.location.href = "/ArrayEnterprises/index.html";
     });
     

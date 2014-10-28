@@ -1,4 +1,13 @@
  <!-- Navigation -->
+    <script>
+        $(document).ready(function() {
+            $('#logout').click(function(e){
+                sessionStorage.clear();
+                window.location = "login.html";
+            });  
+        });
+
+    </script>
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -20,7 +29,7 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Sair do Sistema</a>
+                        <li class=""><a id="logout"><i class="fa fa-sign-out fa-fw"></i> Sair do Sistema</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

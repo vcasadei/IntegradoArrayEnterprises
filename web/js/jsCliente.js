@@ -1,8 +1,10 @@
 $(document).ready(function() {
 
-    $('#header2').load('header.html');
+    
 
-    sessionStorage.clear();
+    sessionStorage.removeItem('dataProduto');
+        sessionStorage.removeItem('dataLote');
+        sessionStorage.removeItem('dataCliente');
     
 
     //Controle da Seleção da data da venda
@@ -159,7 +161,9 @@ $(document).ready(function() {
         window.location.href = "/ArrayEnterprises/BuscaTodosProdutos";
     });
     $('#cancelarVenda').click(function() {
-        sessionStorage.clear();
+        sessionStorage.removeItem('dataProduto');
+        sessionStorage.removeItem('dataLote');
+        sessionStorage.removeItem('dataCliente');
         window.location.href = "/ArrayEnterprises/index.html";
     });
 

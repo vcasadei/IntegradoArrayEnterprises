@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-    $('#header2').load('header.html');
-
 
     var sessao = sessionStorage.getItem( "dataCliente" );
     var clienteObj = JSON.parse( sessao );
@@ -747,7 +745,9 @@ $(document).ready(function () {
     });
 
     $('#simCancelarVenda').click(function() {
-        sessionStorage.clear();
+        sessionStorage.removeItem('dataProduto');
+        sessionStorage.removeItem('dataLote');
+        sessionStorage.removeItem('dataCliente');
         window.location.href = "/ArrayEnterprises/index.html";
     });
 
