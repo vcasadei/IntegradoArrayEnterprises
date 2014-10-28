@@ -408,17 +408,10 @@ $(document).ready(function () {
     }
 
     function buildLotes(data){
+            var qtdeTotal = 0;
+            qtdeTotal = parseInt($('#quantidadeProduto').val());
             var aux = data.split(';');
-            // if(aux.length > 2){
-            //     //Tenho mais de 1 lote
-            //     for(int i = 0; i < aux.length - 1; i++){
-            //         var aux2 = aux[i].split(";");
-                    
-            //         //Aqui posso acessar
-            //     }
-            // } else {
-            //     //Tenho somente 1 lote
-            // }
+
             var qtde = aux[0];
 
             $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='quantidadeParaRelatorio' value='" + qtde + "'>");
@@ -458,6 +451,12 @@ $(document).ready(function () {
                 i = i+3;
                 var quantidadeAux = aux[i];
                 // i++;
+                if((qtdeTotal - quantidadeAux) >= 0){
+                    qtdeTotal = qtdeTotal - quantidadeAux;
+                } else {
+                    quantidadeAux = qtdeTotal;
+                    qtdeTotal = 0;
+                }
                 $newPanel.find("#quantidadeProduto").val(quantidadeAux);
                 $newRelatorio.find("#quantidadeProdutoModal").val(quantidadeAux);
                 $('#auxiliarParaRelatorio').append("<input class='addedPrint' id='quantidadeParaRelatorio" + (j++).toString() + "'  value='" + quantidadeAux + "'>");
@@ -684,6 +683,8 @@ $(document).ready(function () {
 
     $('#addToCart').click(function() {
         // console.log(testeData);
+        var qtdeTotal2 = 0;
+        qtdeTotal2 = parseInt($('#quantidadeProduto').val());
 
         var auxLote = testeData.split(';');
 
@@ -701,6 +702,12 @@ $(document).ready(function () {
             
             i = i+3;
             var quantidadeAux = auxLote[i];
+            if(qtdeTotal2 - parseInt(quantidadeAux) >= 0){
+                qtdeTotal2 = qtdeTotal2 - parseInt(quantidadeAux);
+            } else {
+                quantidadeAux = qtdeTotal2;
+                qtdeTotal2 = 0;
+            }
             var validadeAux = auxLote[++i];
             var secAux = validadeAux.split('-');
             validadeAux = secAux[2] + "/" + secAux[1] + "/" + secAux[0];
