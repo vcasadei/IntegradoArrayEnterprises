@@ -24,19 +24,25 @@ public class UsuarioDAO {
         this.bdConn = ConnectionBanco.getConnection();
     }
 
-    public boolean BuscaUsuario(Usuario user) throws SQLException, BdDAOException {
+    public Usuario BuscaUsuario(Usuario user) throws SQLException, BdDAOException {
         try{
             Statement stat = bdConn.createStatement();
         ResultSet rs = null;
-        boolean exist = false;
 
-        rs = stat.executeQuery("SELECT username, senha FROM usuario WHERE username = '"
+        Usuario aux = null;
+
+        rs = stat.executeQuery("SELECT username, senha, tipo FROM usuario WHERE username = '"
                 + user.getNome() + "' and senha = '" + user.getSenha() + "';");
 
-        
-        exist =  rs.next();
+        while(rs.next()){
+            aux = new Usuario();
+            aux.setNome(rs.getString(1));
+            aux.setSenha(rs.getString(2));
+            aux.setTipo(rs.getString(3));
+        }
+
         ConnectionBanco.close(bdConn, stat, rs);
-        return exist;
+        return aux;
             
         } finally {
             

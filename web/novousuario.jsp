@@ -146,6 +146,11 @@
                 var varPassword = $('#senhaUser').val();
                 var varEmail = $('#emailUser').val();
                 var varTipoUser = $('input[name=tipoUsuario]:checked', '#usuarioForm').val();
+                if(varTipoUser == "Administrador"){
+                    varTipoUser = "adm";
+                } else {
+                    varTipoUser = "comum"
+                }
 
                     var dataString;
                     dataString = "nomeUsuario=" + varUsername + "&senhaUser=" + varPassword + "&emailUser=" + varEmail + "&tipoUsuario=" + varTipoUser;

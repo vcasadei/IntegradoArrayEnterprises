@@ -28,6 +28,9 @@ public class Usuario {
         this.senha = senha;
         this.nome = nome;
     }
+    
+    public Usuario() {
+    }
 
     public String getNome() {
         return nome;
@@ -51,6 +54,10 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome;
     }
  
 

@@ -83,26 +83,38 @@ public class EfetuarLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/plain");  
+        response.setCharacterEncoding("UTF-8");
        
         try { 
             String username = request.getParameter("username");
             String senha = request.getParameter("password");
 
             Usuario user = new Usuario(username, senha);
-        
+            Usuario userReturn = null;
         
             UsuarioDAO usuario = new UsuarioDAO();
 //            usuario.BuscaUsuario(user);
-            if(usuario.BuscaUsuario(user)){
-               RequestDispatcher rd = null;
-              rd = request.getRequestDispatcher("/index.html");
-              rd.forward(request, response);
-            }  
-        } catch (BdDAOException ex) {
-            Logger.getLogger(EfetuarLogin.class.getName()).log(Level.SEVERE, null, ex);
+            userReturn = usuario.BuscaUsuario(user);
+            
+            if(userReturn != null){
+                response.getWriter().write("ok;"); 
+                response.getWriter().write(userReturn.getNome()); 
+                response.getWriter().write(";"); 
+                response.getWriter().write(userReturn.getSenha());
+                response.getWriter().write(";"); 
+                response.getWriter().write(userReturn.getTipo()); 
+                
+            } else {
+                response.getWriter().write("erro");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(EfetuarLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (BdDAOException ex) {
+            Logger.getLogger(EfetuarLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+        
+        
         
     }
 

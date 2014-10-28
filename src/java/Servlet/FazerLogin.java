@@ -86,36 +86,36 @@ public class FazerLogin extends HttpServlet {
             throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
        
+        response.setContentType("text/plain");  
+        response.setCharacterEncoding("UTF-8");
+       
         try { 
             String username = request.getParameter("username");
             String senha = request.getParameter("password");
-            
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson(); 
-            JsonObject myObj = new JsonObject();
 
             Usuario user = new Usuario(username, senha);
+            Usuario userReturn = null;
         
             UsuarioDAO usuario = new UsuarioDAO();
-            if(usuario.BuscaUsuario(user)){
-                myObj.addProperty("success", true);
-//              RequestDispatcher rd = null;
-//              rd = request.getRequestDispatcher("/index.html");
-//              rd.forward(request, response);
-            }  else {
-                myObj.addProperty("success", false);
-//              RequestDispatcher rd = null;
-//              rd = request.getRequestDispatcher("/loginError.html");
-//              rd.forward(request, response);
-            }
-            out.println(myObj.toString());
-            out.close();
+//            usuario.BuscaUsuario(user);
+            userReturn = usuario.BuscaUsuario(user);
             
-        } catch (BdDAOException ex) {
-            Logger.getLogger(EfetuarLogin.class.getName()).log(Level.SEVERE, null, ex);
+            if(userReturn != null){
+                response.getWriter().write("ok;"); 
+                response.getWriter().write(userReturn.getNome()); 
+                response.getWriter().write(";"); 
+                response.getWriter().write(userReturn.getSenha());
+                response.getWriter().write(";"); 
+                response.getWriter().write(userReturn.getTipo()); 
+                
+            } else {
+                response.getWriter().write("erro");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(EfetuarLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (BdDAOException ex) {
+            Logger.getLogger(EfetuarLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         
     }
 

@@ -100,52 +100,50 @@
                         dataType: "json",
                         data: dataString,
                         //if received a response from the server
-                        success: function( data) {
-                            //our country code was correct so we have some information to display
-                             if(data.success){
-                                $('#erroLogin').hide(200);
-                                 $("#sucessoMensagem").html('Bem-Vindo <b>' + varUsername + '</b>. Você será redirecionado à página do sistema em 3 segundos.');
-                                        $('#sucessoLogin').show('slow');
-                                        $('.form-group').removeClass('has-error');
-                                        $('#erroLogin').hide(200);
+                        }).done(function(data) {
+                            testeData = data;
 
-                                 setTimeout(
+                            if (data === "erro") {
+                                $('#erroLogin').show(200);
+                                $('#username').val('');
+                                $('#password').val('');
+                                $('.form-group').addClass('has-error');
+                                
+                            } else {
+
+                                $('#erroLogin').hide(200);
+                                $("#sucessoMensagem").html('Bem-Vindo <b>' + varUsername + '</b>. Você será redirecionado à página do sistema em 3 segundos.');
+                                    $('#sucessoLogin').show('slow');
+                                    $('.form-group').removeClass('has-error');
+                                    $('#erroLogin').hide(200);
+
+                                    setTimeout(
                                       function() 
                                       {
                                         //do something special
                                         window.location.href = "/ArrayEnterprises/index.html";
                                         
-                                      }, 
-                                3000);
-                                 
-                                 
+                                      }, 3000);
+                                    var aux = data.split(';');
 
 
-                             } 
-                             //display error message
-                             else {
-                                        $('#erroLogin').show(200);
-                                        $('#username').val('');
-                                        $('#password').val('');
-                                        $('.form-group').addClass('has-error');
-                                        
-                             }
-                        },
-                        
-                        //If there was no resonse from the server
-                        error: function(){
-                             $('#erroServer').show(200);
-                             $('#username').val('');
-                            $('#password').val('');
-                            $('.form-group').addClass('has-error');
-                              
-                        }
-                            });
-        });
+                                    sessionStorage.clear();
+                                    var user = [{
+                                        nome: aux[0],
+                                        senha: aux[1],
+                                        tipo: aux[2]
+                                    }];
+
+                                } 
+
+                        });
+
+
+            });
 
 
 
-});    
+        });    
   });
 })(jQuery);
 
