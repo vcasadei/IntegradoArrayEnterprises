@@ -4,6 +4,8 @@
  */
 package Bean;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Caah
@@ -16,7 +18,24 @@ public class Produto {
     private String ramo;
     private int diasLim_venda;
     private float valorUnitario;
+    private ArrayList<Lote> lotesVenda;
 
+    public Produto(){
+        lotesVenda = new ArrayList<Lote>();
+    }
+
+    public ArrayList<Lote> getLotesVenda() {
+        return lotesVenda;
+    }
+
+    public void setLotesVenda(ArrayList<Lote> lotesVenda) {
+        this.lotesVenda = lotesVenda;
+    }
+    
+    public void addLoteVenda(Lote lote){
+        this.lotesVenda.add(lote);
+    }
+    
     public int getCodProd() {
         return codProd;
     }

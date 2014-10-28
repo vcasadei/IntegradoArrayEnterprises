@@ -17,6 +17,8 @@ public class Lote {
     private int qntdAtual;
     private String validade;
     
+    public Lote(){}
+    
     public String getCodigoLote() {
         return codigoLote;
     }
@@ -55,7 +57,5 @@ public class Lote {
 
     public void setValidade(String validade) {
         this.validade = validade;
-    }
-    
-    
+    } 
 }

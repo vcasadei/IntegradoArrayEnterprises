@@ -5,6 +5,8 @@
  */
 package Bean;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Igor
@@ -13,19 +15,25 @@ public class Venda {
     
     private Cliente cliente;
     private String dataVenda;
-    private int codigoProduto;
+    private ArrayList<Produto> produtos;
     private int codVenda;
     private int quantidade;
     private float valorTotal;
 
-    public Venda(){}
+    public Venda(){
+        produtos = new ArrayList<Produto>();
+    }
+
+    public ArrayList<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(ArrayList<Produto> produtos) {
+        this.produtos = produtos;
+    }
     
-    public Venda (int cC, String dt, int cP, int q){
-        this.cliente = new Cliente();
-        this.cliente.setCodCliente(cC);
-        this.dataVenda = dt;
-        this.codigoProduto = cP;
-        this.quantidade = q;
+    public void addProduto(Produto prod){
+        this.produtos.add(prod);
     }
 
     public float getValorTotal() {
@@ -58,14 +66,6 @@ public class Venda {
 
     public void setDataVenda(String dataVenda) {
         this.dataVenda = dataVenda;
-    }
-
-    public int getCodigoProduto() {
-        return codigoProduto;
-    }
-
-    public void setCodigoProduto(int codigoProduto) {
-        this.codigoProduto = codigoProduto;
     }
 
     public int getQuantidade() {

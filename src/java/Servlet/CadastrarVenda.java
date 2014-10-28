@@ -5,8 +5,9 @@
 package Servlet;
 
 import Banco.BdDAOException;
-import Banco.CadastrarUsuarioDAO;
 import Banco.VendaDAO;
+import Bean.Cliente;
+import Bean.Produto;
 import Bean.Venda;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -111,8 +111,21 @@ public class CadastrarVenda extends HttpServlet {
         Gson gson = new Gson(); 
         JsonObject myObj = new JsonObject();
         
+        /*Cria o cliente*/
+        Cliente c = new Cliente();
+        c.setCodCliente(codCliente);
+        
+        /*Cria o produto*/
+        Produto p = new Produto();
+        p.setCodProd(codigoProduto);
+        
+        /*Cria a Venda*/
         VendaDAO dao;
-        Venda v = new Venda(codCliente, dataVenda, codigoProduto, quantidade);     
+        Venda v = new Venda();
+        v.setCliente(c);
+        v.setDataVenda(dataVenda);
+        v.setQuantidade(quantidade);
+        v.addProduto(p);
 
         try {
             dao = new VendaDAO();
