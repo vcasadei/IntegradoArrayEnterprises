@@ -74,8 +74,7 @@
 
         <link rel="stylesheet" href="css/bootstrap-table.css">
         <script src="js/bootstrap-table.js"></script>
-<script src="js/bootstrap-table-pt-BR.min.js"></script>
-
+        <script src="js/bootstrap-table-pt-BR.min.js"></script>
 
 
 
@@ -126,8 +125,7 @@
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
-        
-    </nav>
+        </nav>
     </div>
     <!-- Fim do menu lateral -->
 
@@ -136,7 +134,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Resumo da Venda</h1>
+                <h1 class="page-header">Efetuar Venda</h1>
                 <ol class="breadcrumb">
                     <li>
                         <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Painel de Controle</a>
@@ -154,127 +152,142 @@
         </div>
         <!-- /.row -->
         <!-- Conteúdo do Form -->
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-8 yes">
-                            <label>Data da Venda </label>
-                            <div class="form-group input-group"  data-date-format="dd-mm-yyyy" >
-                                <input class="form-control" id="fixDataVenda" name="fixDataVenda" data-date-format="dd/mm/yyyy" readonly="readonly" >
-                            </div>
-
-                        </div>
-                        <div class="col-lg-4    yes">
-                        </div>
-                        <div class="col-lg-4 yes">
-
-                        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        
                     </div>
+                    <div class="panel-body">
+                        <!-- Form de Venda -->
+                        
 
-                    <div class="col-lg-16" >
-                        <div class="panel panel-info" id="clientePanel" style="">
-                            <div class="panel-heading">
-                                <div class="row"  >
-                                    <h4 style="margin-left:20px;">Cliente</h4>
+                            <div class="row">
+                                <div class="col-lg-8 yes">
+                                    <label>Data da Venda </label>
+                                    <div class="form-group input-group"  data-date-format="dd-mm-yyyy" >
+                                        <input class="form-control" id="fixDataVenda" name="fixDataVenda" data-date-format="dd/mm/yyyy" readonly="readonly" >
+                                    </div>
+
                                 </div>
+                                <div class="col-lg-4    yes">
+                                </div>
+                                <div class="col-lg-4 yes">
 
-
+                                </div>
                             </div>
-                            <!-- Erro se não houver clientes cadastrados com o cnpj -->
-                            <div class="alert alert-danger" id="erroPesquisaCNPJ" style="display:none;">
-                                <button type="button" id="closeErroPesquisaCNPJ" class="close" >&times;</button>
-                                <span><b>Erro:</b> Não existem clientes cadastrados com esse CNPJ.</span>
-                            </div>
-                            <div class="panel-body">
 
-                                <div id="nomeClienteHidden" class=" row">
-                                    <div class="col-lg-6 yes">
-                                        <div class="form-group" >
-                                            <label>Nome do Cliente</label>
-                                            <input class="form-control" id="nomeCliente" name="nomeCliente" placeholder="" readonly>
+                            <div class="col-lg-16" >
+                                <div class="panel panel-info" id="clientePanel" style="">
+                                    <div class="panel-heading">
+                                        <div class="row"  >
+                                            <h4 style="margin-left:20px;">Cliente</h4>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- Erro se não houver clientes cadastrados com o cnpj -->
+                                    <div class="alert alert-danger" id="erroPesquisaCNPJ" style="display:none;">
+                                        <button type="button" id="closeErroPesquisaCNPJ" class="close" >&times;</button>
+                                        <span><b>Erro:</b> Não existem clientes cadastrados com esse CNPJ.</span>
+                                    </div>
+                                    <div class="panel-body">
+
+                                        <div id="nomeClienteHidden" class=" row">
+                                            <div class="col-lg-6 yes">
+                                                <div class="form-group" >
+                                                    <label>Nome do Cliente</label>
+                                                    <input class="form-control" id="nomeCliente" name="nomeCliente" placeholder="Insira o nome do cliente" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 yes" >
+                                                <div class="form-group">
+                                                    <label>CNPJ do cliente</label>
+                                                    <input class="form-control" id="cnpjCliente" name="cnpjCliente" placeholder="Insira o CNPJ do cliente" data-mask="99.999.999/9999-99" readonly>
+                                                    <input id="codigoCliente" class="hidden" value="0">
+                                                    <input id="ramoCliente" class="hidden" value="0">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 yes" >
-                                        <div class="form-group">
-                                            <label>CNPJ do cliente</label>
-                                            <input class="form-control" id="cnpjCliente" name="cnpjCliente" placeholder="" data-mask="99.999.999/9999-99" readonly>
-                                            <input id="codigoCliente" class="hidden" value="0">
-                                            <input id="ramoCliente" class="hidden" value="0">
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12 col-md-10 col-md-offset-1">
-                            <table id="table-methods-table"  >
-                                <thead>
-                                    <tr >
-
-                                        <th data-field="id" data-halign="center" data-align="center" >Item</th>
-                                        <th data-field="codigoProduto" data-halign="center" data-align="center" >Código</th>
-                                        <th data-field="produto" data-halign="center" data-align="center">Produto</th>
-                                        <th data-field="tipo" data-halign="center" data-align="center">Tipo</th>
-                                        <th data-field="quantidade" data-halign="center" data-align="center">Quantidade</th>
-                                        <th data-field="preco" data-halign="center" data-align="center">Preço (R$)</th>
-                                        <th data-field="subtotal" data-halign="center" data-align="center">SubTotal (R$)</th>
-                                        <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents" data-halign="center" data-align="center">Ação</th>
-                                    </tr>
-                                </thead>
-                            </table>
 
 
-                        </div>
-                    </div>
+                            <div class="col-lg-16">
 
-                    <div class="row" style="">
-                        <div class="col-lg-3">
-                        </div>
-                        <div class="col-lg-5">
-                        </div>
-                        <div class="col-lg-4">
-                            <h3><b>Total:</b>
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon">R$</span>
-                                    <input type="text" class="form-control input-lg" id="total" name="total" placeholder="" readonly>
+                                <table id="table-methods-table"  >
+                                    <thead>
+                                        <tr >
+
+                                            <th data-field="id" data-halign="center" data-align="center" >Item</th>
+                                            <th data-field="codigoProduto" data-halign="center" data-align="center" >Código</th>
+                                            <th data-field="produto" data-halign="center" data-align="center">Produto</th>
+                                            <th data-field="tipo" data-halign="center" data-align="center">Tipo</th>
+                                            <th data-field="quantidade" data-halign="center" data-align="center">Quantidade</th>
+                                            <th data-field="preco" data-halign="center" data-align="center">Preço (R$)</th>
+                                            <th data-field="subtotal" data-halign="center" data-align="center">SubTotal (R$)</th>
+                                            <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents" data-halign="center" data-align="center">Ação</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
+                            </div>
+
+
+
+
+                            <div class="row">
+                                <div class="col-lg-3">
                                 </div>
-                             </h3>
-                        </div>
+                                <div class="col-lg-5">
+                                </div>
+                                <div class="col-lg-4">
+                                    <h3><b>Total:</b>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">R$</span>
+                                            <input type="text" class="form-control input-lg" id="total" name="total" placeholder="" readonly>
+                                        </div>
+                                     </h3>
+                                </div>
+                            </div>
+                            <!-- /.panel-body -->
+
+
+                            
+
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-lg-2">
+                                </div>
+                                <div class="col-lg-3">
+                                </div>
+                                <div class="col-lg-7">
+                                    <button type="button" class="btn btn-danger" id="cancelarVenda">
+                                        <span class="glyphicon glyphicon-remove-sign"></span> Cancelar Venda
+                                    </button>
+
+                                    <button type="button" class="btn btn-primary" id="newProduct">
+                                        <span class="glyphicon glyphicon-plus-sign"></span> Adicionar Produto
+                                    </button>
+
+                                    <button type="button" class="btn btn-success" id="terminarCompra">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span> Finalizar Compra
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="row" style="margin-top: 10px;">
-                        <div class="col-lg-2">
-                        </div>
-                        <div class="col-lg-3">
-                        </div>
-                        <div class="col-lg-7">
-                            <button type="button" class="btn btn-danger" id="cancelarVenda">
-                                <span class="glyphicon glyphicon-remove-sign"></span> Cancelar Venda
-                            </button>
-
-                            <button type="button" class="btn btn-primary" id="newProduct">
-                                <span class="glyphicon glyphicon-plus-sign"></span> Adicionar Produto
-                            </button>
-
-                            <button type="button" class="btn btn-success" id="terminarCompra">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> Finalizar Compra
-                            </button>
-                        </div>
-                    </div>
-                    
-                    
-                    
-
+                    <!-- /.panel -->
                 </div>
-                <!-- /#row -->
+                <!-- /.col-lg-12 -->
             </div>
+            <!-- /.row -->
+
+            <!-- /.row -->
         </div>
+        <!-- /#page-wrapper -->
+
     </div>
-    <!-- /#page-wrapper -->
-</div>
 
     <div class="modal fade bs-example-modal-sm " id="alertaCancelarVenda"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm vertical-centered " >
