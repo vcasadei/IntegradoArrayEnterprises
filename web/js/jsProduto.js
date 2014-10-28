@@ -9,6 +9,7 @@ $(document).ready(function () {
     ramoCliente = clienteObj[0].ramoCliente;
     nomeCliente = clienteObj[0].nomeCliente;
     cnpjCliente = clienteObj[0].cnpjCliente;
+    ramoCliente = clienteObj[0].ramoCliente;
     $("#fixDataVenda").val(dataVenda);
     $("#nomeCliente").val(nomeCliente);
     $("#cnpjCliente").val(cnpjCliente);
@@ -111,6 +112,18 @@ $(document).ready(function () {
         }
         
         j++;
+    });
+
+    $('#loadProduto').find("td.ramo").each(function(index){
+        var oRamo = $(this).html().replace(/ /g, '');
+        if(ramoCliente == "ambos"){
+
+        } else {
+            if(ramoCliente != oRamo){
+                $(this).closest('tr').addClass('hidden remover');
+            }
+        }
+
     });
      
     

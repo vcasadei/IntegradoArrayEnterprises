@@ -283,6 +283,7 @@
                                 <th>Nome do Cliente</th>
                                 <th>CNPJ</th>
                                 <th class="hidden">cod</th>
+                                <th class="hidden">ramo</th>
 
 
                             </tr>
@@ -293,6 +294,7 @@
                                 <th>Nome do Cliente</th>
                                 <th>CNPJ</th>
                                 <th class="hidden">cod</th>
+                                <th class="hidden">ramo</th>
 
 
                             </tr>
@@ -305,6 +307,7 @@
                                 <td> <%=clientes.get(i).getNome()%> </td>
                                 <td> <%=clientes.get(i).getCNPJ()%> </td>
                                 <td class="hidden"> <%=clientes.get(i).getCodCliente()%> </td>
+                                <td class="hidden"> <%=clientes.get(i).getRamo()%> </td>
 
                             </tr>
                             <%

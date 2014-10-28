@@ -145,7 +145,7 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
             if (cliente == null){
                 writer.print("null");
             } else {
-                writer.print(cliente.getNome() + ";" + cnpj + ";" +  cliente.getCodCliente());
+                writer.print(cliente.getNome() + ";" + cnpj + ";" +  cliente.getCodCliente() + ";" + cliente.getRamo());
             }
             writer.close();
 

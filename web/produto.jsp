@@ -487,7 +487,7 @@
                             <tr>
                                 <td class="code"><%= produtos.get(i).getCodProd()%></td>
                                 <td><%= produtos.get(i).getNome()%></td>
-                                <td><%= produtos.get(i).getRamo()%></td>
+                                <td class="ramo"><%= produtos.get(i).getRamo()%></td>
                                 <td hidden=""><%= produtos.get(i).getValorUnitario()%></td>
 
                             </tr>

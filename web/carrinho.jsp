@@ -236,7 +236,12 @@
                         <div class="col-lg-5">
                         </div>
                         <div class="col-lg-4">
-                            <h3><b>Total:</b> R$ <span id="total"></span></h3>
+                            <h3><b>Total:</b>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <input type="text" class="form-control input-lg" id="total" name="total" placeholder="" readonly>
+                                </div>
+                             </h3>
                         </div>
                     </div>
 

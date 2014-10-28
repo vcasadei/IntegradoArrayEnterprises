@@ -29,6 +29,7 @@ $(document).ready(function() {
         
         $('#nomeCliente').val("");
         $('#cnpjCliente').val("");
+        $('#toProducts').attr("disabled", true);
     });
 
     //Quando um cliente é selecionado no modal
@@ -44,11 +45,11 @@ $(document).ready(function() {
 
 
         } else {
-            console.log("ALGO FOI SELECIONADO");
+            console.log("ALGO FOI SELECIONADO " + auxSplit);
             var auxNomeCliente = auxSplit[1];
             var auxCNPJ = auxSplit[2];
             var auxCodigo = auxSplit[3];
-            // var ramo = auxsplit[4];
+            var ramo = auxSplit[4];
             $('#nomeClienteHidden').removeClass('hidden');
             console.log(auxNomeCliente);
             console.log(auxCNPJ);
@@ -56,7 +57,7 @@ $(document).ready(function() {
             $('#nomeCliente').val(auxNomeCliente);
             $('#cnpjCliente').val(auxCNPJ);
             $('#codigoCliente').val(auxCodigo);
-            // $('#ramoCliente').val(ramo);
+            $('#ramoCliente').val(ramo);
             auxSplit === "none";
             aux2 = "";
             auxNomeCliente = "";
@@ -129,13 +130,15 @@ $(document).ready(function() {
         var ramoCliente = $('#ramoCliente').val().replace(/ /g, '');
         var nomeCliente = $('#nomeCliente').val();
         var cnpjCliente = $('#cnpjCliente').val().replace(/ /g, '');
+        var ramoCliente = $('#ramoCliente').val().replace(/ /g, '');
 
         var venda = [{
             dataVenda: dataVenda,
             codCliente: codCliente,
             ramoCliente: ramoCliente,
             nomeCliente: nomeCliente,
-            cnpjCliente:cnpjCliente
+            cnpjCliente: cnpjCliente,
+            ramoCliente: ramoCliente
         }];
         var jsonStr = JSON.stringify( venda );
         console.log(jsonStr);

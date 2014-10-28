@@ -22,7 +22,7 @@ $(document).ready(function() {
         var produto = sessionStorage.getItem( "dataProduto" );
         if(produto == '[]'){
             rows = [];
-            $('#total').html(0);
+            $('#total').val(0);
             $('#terminarCompra').prop("disabled",true);
 
         } else {
@@ -85,7 +85,7 @@ $(document).ready(function() {
                 
              }
              console.log(rows);
-             $('#total').html(compraTotal);
+             $('#total').val(compraTotal);
              $('#terminarCompra').prop("disabled",false);
         }
     } else {
@@ -123,7 +123,7 @@ $(document).ready(function() {
 
         var auxTeste = $table.bootstrapTable('getData');
         if(auxTeste.length == 0){
-            $('#total').html(0);
+            $('#total').val(0);
             $('#terminarCompra').prop("disabled",true);
         }
         console.log("aux teste ", auxTeste);
@@ -141,7 +141,7 @@ $(document).ready(function() {
             valorUni = valorUni.replace(/R\$/g, '');
             var qtde = auxTeste[i].quantidade.toString();
             compraTotal = compraTotal + (parseInt(qtde) * parseInt(valorUni));
-            $('#total').html(compraTotal);
+            $('#total').val(compraTotal);
             auxJsonData = {
                 codigoProduto: cod,
                 nomeProduto: nome,

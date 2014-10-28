@@ -53,6 +53,19 @@ $(document).ready(function() {
                 }
 
             });
+        } else {
+            $('#selecionarCliente').modal('show');
+            $('#erroPesquisaCNPJ').fadeOut("slow");
+
+            if($('#nomeClienteHidden').hasClass('hidden')){
+
+            } else {
+                $('#nomeClienteHidden').addClass('hidden');
+            }
+            
+            $('#nomeCliente').val("");
+            $('#cnpjCliente').val("");
+            $('#toProducts').attr("disabled", true);
         } 
          
     }
@@ -267,7 +280,20 @@ $(document).ready(function() {
                 if($("#pesquisaCNPJCliente").val() != "" && $("#pesquisaCNPJCliente").val() != "__.___.___/____-__"){
                     console.log($("#pesquisaCNPJCliente").val())
                     pesquisarCNPJ();
-                } 
+                } else {
+                    $('#selecionarCliente').modal('show');
+                    $('#erroPesquisaCNPJ').fadeOut("slow");
+
+                    if($('#nomeClienteHidden').hasClass('hidden')){
+
+                    } else {
+                        $('#nomeClienteHidden').addClass('hidden');
+                    }
+                    
+                    $('#nomeCliente').val("");
+                    $('#cnpjCliente').val("");
+                    $('#toProducts').attr("disabled", true);
+                }
             }
         });
 
@@ -284,7 +310,20 @@ $(document).ready(function() {
     $('#buttonpesquisaCNPJCliente').click(function() {
         if($("#pesquisaCNPJCliente").val() != ""){
             pesquisarCNPJ();
-        } 
+        } else {
+            $('#selecionarCliente').modal('show');
+            $('#erroPesquisaCNPJ').fadeOut("slow");
+
+            if($('#nomeClienteHidden').hasClass('hidden')){
+
+            } else {
+                $('#nomeClienteHidden').addClass('hidden');
+            }
+            
+            $('#nomeCliente').val("");
+            $('#cnpjCliente').val("");
+            $('#toProducts').attr("disabled", true);
+        }
         
     });
 
@@ -292,7 +331,7 @@ $(document).ready(function() {
     $('#buttonPesquisaNomeProduto').click(function() {
         if($("#pesquisaNomeProduto").val() != ""){
             pesquisarCodigo();
-        }
+        } 
         
     });
 });   
