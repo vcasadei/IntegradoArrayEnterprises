@@ -6,7 +6,7 @@ package Servlet;
 
 import Banco.BdDAOException;
 import Banco.CadastrarUsuarioDAO;
-import Banco.CadastrarVendaDAO;
+import Banco.VendaDAO;
 import Bean.Venda;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -111,11 +111,11 @@ public class CadastrarVenda extends HttpServlet {
         Gson gson = new Gson(); 
         JsonObject myObj = new JsonObject();
         
-        CadastrarVendaDAO dao;
+        VendaDAO dao;
         Venda v = new Venda(codCliente, dataVenda, codigoProduto, quantidade);     
 
         try {
-            dao = new CadastrarVendaDAO();
+            dao = new VendaDAO();
             boolean success = dao.CadastrarVenda(v);
             if(success){
                 myObj.addProperty("success", true);

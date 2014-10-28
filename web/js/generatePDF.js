@@ -1,6 +1,7 @@
 
 $(document).ready(function() {
     $('#salvarRelatorioNome').click(function(){
+    	console.log("entrou para salvar");
     	console.log($('#nomeRelatorio').val());
     	if( $('#nomeRelatorio').val() != "" ){
     		console.log('é diferente de vazio');
@@ -19,11 +20,12 @@ $(document).ready(function() {
 			//Set PDF properities
 			doc.setProperties({
 			    title: 'Relório de Vendas',
-			    subject: 'Vendas dia ' + $('#dataVendaModal').val() + ' - ' + 'Vitor Casadei',
+			    subject: 'Vendas ArrayEnterprises',
 			    author: 'ArrayEnterprises',
 			    keywords: 'pdf, relatorio, vendas',
 			    creator: 'AE'
 			});
+			console.log("passou por aqui;")
 
 			doc.setFont("times");
 			doc.setFontType("bold");
@@ -31,12 +33,14 @@ $(document).ready(function() {
 			doc.text(70, 20, 'Relatório de Vendas');
 
 			doc.line(68, 22, 145, 22);
+			var clientData = sessionStorage.getItem( "dataCliente" );
+			clientData = JSON.parse(clientData);
 
 			doc.setFontType("bold");
 			doc.setFontSize(16);
 			doc.text(30, 30, 'Data da Venda: ');
 			doc.setFontType("normal");
-			doc.text(70, 30, $('#dataVendaModal').val() );
+			doc.text(70, 30, clientData[0].dataVenda );
 
 			doc.setFontType("bold");
 			doc.setFontSize(18);
@@ -50,116 +54,167 @@ $(document).ready(function() {
 			doc.text(129, 48, 'CNPJ:');
 			doc.setFontType("normal");
 			doc.setFontSize(14);
-			doc.text(65, 48, $('#nomeClienteModal').val());
-			doc.text(146, 48, $('#cnpjClienteModal').val());
+			doc.text(65, 48, clientData[0].nomeCliente);
+			doc.text(146, 48, clientData[0].cnpjCliente);
 
-			doc.setFontType("bold");
-			doc.setFontSize(18);
-			doc.text(20, 58, 'Produto');
-			doc.setLineWidth(0.5);
-			doc.line(19, 59, 190, 59);
-			doc.setLineWidth(0.2);
+			var produtoX = 58;
+			console.log("passou por aqui;:")
 
-			doc.setFontType("bold");
-			doc.setFontSize(14);
-			doc.text(25, 66, 'Nome do Produto:');
-			doc.text(136, 66, 'Código:');
-			doc.setFontType("normal");
-			doc.setFontSize(14);
-			doc.text(67, 66, $('#nomeProdutoModal').val());
-			doc.text(155, 66, $('#codProdutoModal').val());
+			// PRODUTOS
+			var productData = sessionStorage.getItem('dataProduto');
+			productData = JSON.parse(productData);
+			var valorTotalDoRelatorio = 0;
+			console.log("passou por aqui;;;")
+			console.log("produtctData " + productData.length);
+			for(var i = 0; i < productData.length; i++){
+				console.log("i: " + i);
+				doc.setFontType("bold");
+				doc.setFontSize(18);
+				doc.text(20, produtoX, 'Produto ' + (i + 1));
+				doc.setLineWidth(0.5);
+				doc.line(19, produtoX + 1, 190, produtoX + 1);
+				doc.setLineWidth(0.2);
 
-			doc.setFontType("bold");
-			doc.setFontSize(14);
-			doc.text(25, 74, 'Tipo do Produto:');
-			doc.text(116, 74, 'Quantidade (unidades):');
-			doc.setFontType("normal");
-			doc.setFontSize(14);
-			doc.text(67, 74, $('#tipoProdutoModal').val());
-			doc.text(169, 74, $('#quantidadeModal').val());
-
-			doc.setFontType("bold");
-			doc.setFontSize(14);
-			doc.text(25, 83, 'Valor Unitário:');
-			doc.text(122, 83, 'Valor Total:');
-			doc.setFontType("normal");
-			doc.setFontSize(14);
-			doc.text(62, 83, 'R$ ' +  $('#valorUnitarioModal').val() );
-			doc.text(158, 83, 'R$ ' + $('#valorTotalModal').val());
-
-			
-			//Relatorio Automatico
-			var quantos = parseInt($('#quantidadeParaRelatorio').val());
-			console.log("quantos=" + quantos);
-			doc.setFontType("bold");
-			doc.setFontSize(18);
-			doc.text(20, 93, 'Lote');
-			doc.setLineWidth(0.5);
-			doc.line(19, 94, 190, 94);
-			doc.setLineWidth(0.2);
-
-			var i = 1;
-			var local1 = 101;
-			var local2 = 110;
-			var auxI = 0;
-			var auxj = 0;
-			var aux = "";
-			while(quantos > 0){
-
-				
+				produtoX = produtoX + 8;
+				if(produtoX > 280){
+					doc.addPage();
+					produtoX = 20;
+				}
 
 				doc.setFontType("bold");
 				doc.setFontSize(14);
-				doc.text(25, local1 + auxI, 'Código do Lote:');
-				doc.text(136, local1 + auxI, 'Quantidade:');
+				doc.text(25, produtoX, 'Nome do Produto:');
+				doc.text(136, produtoX, 'Código:');
 				doc.setFontType("normal");
 				doc.setFontSize(14);
-				console.log("i=" + i);
-				 aux = $('#codParaRelatorio' + (i).toString()).val();
-				doc.text(62, local1 + auxI, aux);
-				i++;
-				console.log("i=" + i);
-				 aux = $('#quantidadeParaRelatorio' + (i).toString()).val();
-				doc.text(165, local1 + auxI, aux);
-				i++;
+				doc.text(67, produtoX, productData[i].nomeProduto);
+				doc.text(155, produtoX, productData[i].codigoProduto);
+
+				var quantidadePro = productData[i].quantidadeProduto.replace(/ /g, '');
+		        var valor = productData[i].valorUnitario.replace(/ /g, '');
+		        quantidadePro = parseInt(quantidadePro);
+		        valor = parseInt(valor);
+		        var total = quantidadePro * valor;
+		        valorTotalDoRelatorio = valorTotalDoRelatorio + total;
+
+		        produtoX = produtoX + 8;
+		        if(produtoX > 280){
+					doc.addPage();
+					produtoX = 20;
+				}
 
 				doc.setFontType("bold");
 				doc.setFontSize(14);
-				doc.text(25, local2 + auxI, 'Data de Validade:');
+				doc.text(25, produtoX, 'Tipo do Produto:');
+				doc.text(116, produtoX, 'Quantidade (unidades):');
 				doc.setFontType("normal");
 				doc.setFontSize(14);
-				 aux = $('#validadeParaRelatorio' + (i).toString()).val();
-				doc.text(71, local2 + auxI, aux);
-				i++;
-				doc.line(30, local2 + auxI + 3, 175, local2 + auxI + 3);
+				doc.text(67, produtoX, productData[i].tipoProduto);
+				doc.text(169, produtoX, quantidadePro.toString());
 
-				local1 = local2 + 6;
-				local2 = local2 + 9 + 6;
-				auxI = auxI + 9;
-				quantos--;
+				produtoX = produtoX + 9;
+				if(produtoX > 280){
+					doc.addPage();
+					produtoX = 20;
+				}
 
+				doc.setFontType("bold");
+				doc.setFontSize(14);
+				doc.text(25, produtoX, 'Valor Unitário:');
+				doc.text(122, produtoX, 'Valor Total:');
+				doc.setFontType("normal");
+				doc.setFontSize(14);
+				doc.text(62, produtoX, 'R$ ' +  valor.toString());
+				doc.text(158, produtoX, 'R$ ' + total.toString());
+
+				var loteData = sessionStorage.getItem('dataLote');
+				loteData = JSON.parse(loteData);
+
+				var loteX = produtoX;
+
+				loteX = loteX + 10;
+		 		if(loteX > 280){
+		 			doc.addPage();
+		 			loteX = 20;
+		 		}
+
+		 		doc.setFontType("bold");
+		 		doc.setFontSize(18);
+		 		doc.text(20, loteX, 'Lote');
+		 		doc.setLineWidth(0.5);
+		 		doc.line(19, loteX + 1, 190, loteX + 1);
+		 		doc.setLineWidth(0.2);
+
+				console.log("loteData " + loteData.length);
+				 for(var y = 0; y < loteData.length; y++){
+				 	console.log("y: " + y);
+				 	console.log("loteCod: " + loteData[y].codProduto + "prodCod: " + productData[i].codigoProduto);
+				 	if(loteData[y].codProduto == productData[i].codigoProduto){
+	
+
+				 		loteX = loteX + 9;
+				 		if(loteX > 280){
+				 			doc.addPage();
+				 			loteX = 20;
+				 		}
+
+				 		doc.setFontType("bold");
+				 		doc.setFontSize(14);
+				 		doc.text(25, loteX, 'Código do Lote:');
+				 		doc.text(136, loteX, 'Quantidade:');
+				 		doc.setFontType("normal");
+				 		doc.setFontSize(14);						 
+				 		doc.text(62, loteX, loteData[y].codLote);
+				 		doc.text(165, loteX, loteData[y].quantidade.toString());
+						
+				 		loteX = loteX + 8;
+				 		if(loteX > 280){
+				 			doc.addPage();
+				 			loteX = 20;
+				 		}
+
+				 		doc.setFontType("bold");
+				 		doc.setFontSize(14);
+				 		doc.text(25, loteX, 'Data de Validade:');
+				 		doc.setFontType("normal");
+				 		doc.setFontSize(14);
+				 		doc.text(71, loteX, loteData[y].validade);			
+				 		doc.line(30, loteX + 3, 175, loteX + 3);
+
+				 		loteX = loteX + 3;
+				 		if(loteX > 280){
+				 			doc.addPage();
+				 			loteX = 20;
+				 		}
+
+				 	}
+				 }
+				produtoX = loteX;
+				produtoX = produtoX + 10;
 			}
 
-			
 
+//Fazer ainda
+console.log("saiu");
+			var valorX = produtoX + 20;
+			if(valorX > 280){
+				doc.addPage();
+				valorX = 20;
+			}
 
 			//Valor TOTAL da venda
 			doc.setFontType("bold");
 			doc.setFontSize(16);
-			doc.text(120, 280, 'Valor Total: ');
+			doc.text(120, valorX, 'Valor Total: ');
 			doc.setFontType("normal");
-			doc.text(155, 280, 'R$ ' + $('#valorTotalModal').val());
-			doc.setLineWidth(0.7);
-			doc.line(114, 284, 202, 284);
-			doc.line(114, 272, 202, 272);
-			doc.line(114, 272, 114, 284);
-			doc.line(202, 272, 202, 284);
+			doc.text(155, valorX, 'R$ ' + valorTotalDoRelatorio);
+
 
 
 			doc.save($('#nomeRelatorio').val() + '.pdf');
 			$('#salvarRelatorioComo').modal('hide');
     	} else {
-    		$('#erroNomeVazio').fadeIn(200);
+    	 	$('#erroNomeVazio').fadeIn(200);
             $('#nomeRelatorioInputGroup').addClass('has-error');
     	}
 

@@ -32,6 +32,10 @@
         <servlet-name>BuscaDadosVenda</servlet-name>
         <servlet-class>Servlet.BuscaDadosVenda</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BuscaTodosProdutos</servlet-name>
+        <servlet-class>Servlet.BuscaTodosProdutos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CadastrarVenda</servlet-name>
         <url-pattern>/CadastrarVenda</url-pattern>
@@ -67,6 +71,10 @@
     <servlet-mapping>
         <servlet-name>BuscaDadosVenda</servlet-name>
         <url-pattern>/BuscaDadosVenda</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BuscaTodosProdutos</servlet-name>
+        <url-pattern>/BuscaTodosProdutos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

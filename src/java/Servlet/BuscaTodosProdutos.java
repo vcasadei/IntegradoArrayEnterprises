@@ -1,5 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package Servlet;
@@ -12,8 +13,10 @@ import Bean.Produto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,14 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Caah
+ * @author casadei
  */
-public class BuscaClienteProdutoCNPJCod extends HttpServlet {
+public class BuscaTodosProdutos extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -44,10 +46,10 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BuscaClienteProdutoCNPJCod</title>");
+            out.println("<title>Servlet BuscaTodosProdutos</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BuscaClienteProdutoCNPJCod at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet BuscaTodosProdutos at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {
@@ -57,8 +59,7 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -68,34 +69,24 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         response.setCharacterEncoding("UTF-8");
-
-        Produto produto;
+        
+        /*Variáveis para buscar e armazenar os produtos*/
+        ArrayList<Produto> produtos = new ArrayList<Produto>();
         ProdutosDAO produtosDAO;
-        String codigo;
-        codigo = "1";
 
         try {
-
+           
+            
+            /*Faz a busca dos produtos*/
             produtosDAO = new ProdutosDAO();
-            
-            codigo = request.getParameter("cod");
-            if(!codigo.equals("")){
-                produto = produtosDAO.BuscaProdutoCod(Integer.parseInt(codigo));
-                PrintWriter writer = response.getWriter();
-            if (produto == null){
-                writer.print("null");
-            } else {
-                writer.print(produto.getNome() + ";" + produto.getCodProd() + ";" + produto.getRamo() + ";"
-                        + produto.getValorUnitario());
-            }
-            writer.close();
-            }
-            
-            
+            produtos = produtosDAO.BuscaTodosProdutos();
 
+            request.setAttribute("listaProdutos", produtos);
             
+            RequestDispatcher rd = null;
+            rd = request.getRequestDispatcher("/produto.jsp");
+            rd.forward(request, response);
 
         } catch (BdDAOException ex) {
             Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,8 +96,7 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -116,44 +106,7 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-
-        response.setCharacterEncoding("UTF-8");
-
-        Cliente cliente;
-        BuscaClientesDAO clientesDAO;
-        String cnpj;
-
-        try {
-
-            clientesDAO = new BuscaClientesDAO();
-            String auxCNPJ = "";
-            
-            cnpj = request.getParameter("CNPJ");
-            
-            /*Tira os pontos e traços do cnpj*/
-            for (int i = 0; i < cnpj.length(); i++){
-                if (!cnpj.substring(i, i+1).equals(".") && !cnpj.substring(i, i+1).equals("/") &&
-                        !cnpj.substring(i, i+1).equals("-")){
-                    auxCNPJ += cnpj.substring(i, i+1);
-                }
-            }
-            
-            cliente = clientesDAO.BuscaClienteCNPJ(auxCNPJ);
-
-            PrintWriter writer = response.getWriter();
-            if (cliente == null){
-                writer.print("null");
-            } else {
-                writer.print(cliente.getNome() + ";" + cnpj + ";" +  cliente.getCodCliente());
-            }
-            writer.close();
-
-        } catch (BdDAOException ex) {
-            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -165,4 +118,5 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

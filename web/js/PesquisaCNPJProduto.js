@@ -1,5 +1,3 @@
-
-
 $(document).ready(function() {
 
     function pesquisarCNPJ() {
@@ -155,6 +153,7 @@ $(document).ready(function() {
             }).done(function(data) {
 
                 if (data === "0;") {
+                    console.log("deu erro insuficiente")
                     $('#erroLoteInsuficiente').modal('show');
                     $('#inserirVenda').attr("disabled", "true");
                     
@@ -296,9 +295,4 @@ $(document).ready(function() {
         }
         
     });
-
-    //Pesquisa um produto pelo código
-    $('#loteAutomatico').click(function() {
-        pesquisarLotesAutomatico();
-    });
-});
+});   

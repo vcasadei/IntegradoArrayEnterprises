@@ -262,12 +262,15 @@ $( document ).ready(function() {
                         </li>
 
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                            <a href="#"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Vendas<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse out">
                                 <li>
-                                    <a class="acrtive" href="BuscaClientesProdutos">Efetuar Venda</a>
+                                    <a class="" href="BuscaClientesProdutos"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Efetuar Venda</a>
                                 </li>
-                                
+                                <li>
+                                    <a class="" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Carrinho de Compras</a>
+                                </li>
+
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

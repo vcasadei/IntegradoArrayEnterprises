@@ -6,7 +6,7 @@ package Servlet;
 
 import Banco.BdDAOException;
 import Banco.BuscaClientesDAO;
-import Banco.BuscaProdutosDAO;
+import Banco.ProdutosDAO;
 import Bean.Cliente;
 import Bean.Produto;
 import java.io.IOException;
@@ -79,7 +79,7 @@ public class BuscaClientesProdutos extends HttpServlet {
         
         /*Variáveis para buscar e armazenar os produtos*/
         ArrayList<Produto> produtos = new ArrayList<Produto>();
-        BuscaProdutosDAO produtosDAO;
+        ProdutosDAO produtosDAO;
 
         try {
             
@@ -88,7 +88,7 @@ public class BuscaClientesProdutos extends HttpServlet {
             clientes = clientesDAO.BuscaTodosClientes();
             
             /*Faz a busca dos produtos*/
-            produtosDAO = new BuscaProdutosDAO();
+            produtosDAO = new ProdutosDAO();
             produtos = produtosDAO.BuscaTodosProdutos();
 
             /*Seta os atributos no request*/

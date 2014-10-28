@@ -1,6 +1,5 @@
 <%@page import="java.util.List"%>
 <%@page import="Bean.Cliente"%>
-<%@page import="Bean.Produto"%>
 <!DOCTYPE html>
 <html lang="pt-br" class="wf-sourcecodepro-n4-active wf-sourcecodepro-n7-active wf-active">
 
@@ -18,13 +17,13 @@
         <script src="js/example.js"></script>
         <link href="css/bootstrap-dialog.css" rel="stylesheet" type="text/css" />
         <script src="js/bootstrap-dialog.js"></script>
-        
+
         <script type="text/javascript" src="js/jsPDF/FileSaver.js"></script> 
-        
-        
+
+
         <link rel="stylesheet" href="css/bootstrapValidator.min.css"/>
-    <script  src="js/bootstrapValidator.js"></script>
-        
+        <script  src="js/bootstrapValidator.js"></script>
+
         <script src="js/jsPDF/jspdf.min.js"></script>
 
 
@@ -37,506 +36,12 @@
         <script src="js/printPDF.js"></script>
 
         <!-- Pesquisa produto/Cliente -->
-    <script src="js/PesquisaCNPJProduto.js"></script>
+        <script src="js/PesquisaCNPJProduto.js"></script>
 
-    <script src="js/salvarVenda.js"></script>
+        <script src="js/salvarVenda.js"></script>
 
+        <script src="js/jsCliente.js"></script>
 
-
-        <script>
-            $(document).ready(function() {
-
-                $('#closeErroNomeVazio').click(function(e){
-                    $('#erroNomeVazio').fadeOut(300);
-                });
-
-
-                // The function you currently have
-                $('#nomeRelatorio').keypress(function (e) {
-                    var allowedChars = new RegExp("^[a-zA-Z0-9\-]+$");
-                    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                    if (allowedChars.test(str)) {
-                        return true;
-                    }
-                    e.preventDefault();
-                    return false;
-                }).keyup(function() {
-                    // the addition, which whill check the value after a keyup (triggered by Ctrl+V)
-                    // We take the same regex as for allowedChars, but we add ^ after the first bracket : it means "all character BUT these"
-                    var forbiddenChars = new RegExp("[^a-zA-Z0-9\-]", 'g');
-                    if (forbiddenChars.test($(this).val())) {
-                        $(this).val($(this).val().replace(forbiddenChars, ''));
-                    }
-                });
-
-
-                // $('#dataVenda').focusin(function() {
-                    
-                        
-                    
-                // });
-
-                $('#buttonSelectCliente').click(function() {
-                    $('#selecionarCliente').modal('show');
-                    $('#pesquisaCNPJCliente').val("");
-                    $('#erroPesquisaCNPJ').fadeOut("slow");
-                    $('#buttonSelectProduto').attr("disabled", true);
-                    $('#buttonPesquisaNomeProduto').attr("disabled", true);
-                    $('#pesquisaNomeProduto').attr("disabled", true);
-                    $('#produtoPanel').fadeTo( "slow", 0.5 );
-                    if($('#nomeClienteHidden').hasClass('hidden')){
-
-                    } else {
-                        $('#nomeClienteHidden').addClass('hidden');
-                    }
-                    
-                    $('#nomeCliente').val("");
-                    $('#cnpjCliente').val("");
-                });
-
-                $('#buttonSelectProduto').click(function() {
-                    $('#selecionarProduto').modal('show');
-
-                    $('#erroPesquisaCodigo').fadeOut("slow");
-                    $('#pesquisaNomeProduto').val("");
-                    $('#nomeProduto').val("");
-                    $('#codigoProduto').val("");
-                    $('#valorUnitario').val("");
-                    var osRaio = $('input:radio[name=tipoProduto]');
-                    osRaio.filter('[value=medicamento]').attr('checked', false);
-                    osRaio.filter('[value=alimento]').attr('checked', false);
-
-                    $('#inserirVenda').attr("disabled", "true");
-                    $('.addedPanel').remove();
-                    $('.addedRelatorio').remove();
-                    $('.addedPrint').remove();
-                    if($('#ramoCliente').val().replace(/ /g, '') == "alimentício" ){
-
-                    } else {
-                        if($('#ramoCliente').val().replace(/ /g, '') == "medicamento" ){
-
-                        } else {
-                            //ambos
-                        }
-                    }
-
-                    if($('#produtoHidden').hasClass('hidden')){
-
-                    } else {
-                        $('#produtoHidden').addClass('hidden');
-                    }
-                });
-
-
-                
-
-
-
-
-                $('#closeErroPesquisaCodigo').click(function(){
-                    $('#erroPesquisaCodigo').fadeOut(300);
-                });
-
-                $('#closeErroPesquisaCNPJ').click(function(){
-                    $('#erroPesquisaCNPJ').fadeOut(300);
-                });
-                
-
-                //Insere as caixas de lote Automaticamente
-                // $("#loteAutomatico").click(function(){
-                //     if($('#quantidadeProduto').val() != ""){
-                //         var quantidadeLotes = 2;
-                //         var $template = $(".template");
-                           
-                //         var hash = 0;
-                //         while(quantidadeLotes > 0){
-                //             var $newPanel = $template.clone();
-                            
-                //             $newPanel.find(".collapse").removeClass("in");
-                //             $newPanel.find(".accordion-toggle").attr("href", "#" + (++hash))
-                //                     .text("Lote " + hash + " - " + "Codigo Lote" );
-                //             $newPanel.find(".panel-collapse").attr("id", hash).addClass("collapse").removeClass("in");
-                //             $newPanel.removeClass("hidden");
-                //             $("#accordion").append($newPanel.fadeIn());
-                            
-                //             quantidadeLotes--;
-                //             console.log(quantidadeLotes);
-                //         }
-                //         $('#inserirVenda').removeAttr("disabled");
-                //     } else {
-                //         $('#formGroupQuantidadeProduto').addClass("has-error");
-                //         $('#formGroupQuantidadeProduto2').addClass("has-error");
-                //         $('#formGroupQuantidadeProduto2').fadeIn(200);
-
-
-                //     }
-                    
-
-
-                // });
-
-
-
-            });
-        </script>
-
-
-        <script>
-            $(document).ready(function() {
-
-                var table = $('#loadCliente').DataTable( {
-                    language: {
-                        url: 'localisation/Portuguese-Brasil.json'
-                    }
-                } );
-
-                var aux2 = "";
-                var auxSplit = "none";
-
-
-
-                $('#loadCliente tbody').on('click', 'tr', function() {
-                    if ($(this).hasClass('selected')) {
-                        $(this).removeClass('selected');
-                        auxSplit = "none";
-                    }
-                    else {
-                        table.$('tr.selected').removeClass('selected');
-                        $(this).addClass('selected');
-
-                        $(this).find("td").each(function() {
-                            aux2 = aux2 + "#/" + $(this).text();
-                        });
-
-                        auxSplit = aux2.split("#/");
-                    }
-                });
-
-                $('#salvarRelatorio').click(function() {
-                    var auxDataVenda = $('#dataVenda').val();
-                    auxDataVenda = auxDataVenda.replace(/\//g, "-");
-
-                    $('#nomeRelatorio').val('RelatorioVendas' + auxDataVenda);
-                    $('#salvarRelatorioComo').modal('show');
-
-                });
-                
-               
-
-                $('#selectClient').click(function() {
-                
-                    if ($('#loadCliente tbody tr').hasClass('selected')) {
-                        $('#load tbody tr').removeClass('selected');
-                    }
-                
-                    if (auxSplit === "none") {
-                        console.log("Nada foi Selecionado");
-                        $('#modalErroDeSelecao').modal('show');
-
-
-                    } else {
-                        console.log("ALGO FOI SELECIONADO");
-                        var auxNomeCliente = auxSplit[1];
-                        var auxCNPJ = auxSplit[2];
-                        var auxCodigo = auxSplit[3];
-                        // var ramo = auxsplit[4];
-                        $('#nomeClienteHidden').removeClass('hidden');
-                        console.log(auxNomeCliente);
-                        console.log(auxCNPJ);
-                        console.log("Codigo: " + auxCodigo);
-                        $('#nomeCliente').val(auxNomeCliente);
-                        $('#cnpjCliente').val(auxCNPJ);
-                        $('#codigoCliente').val(auxCodigo);
-                        // $('#ramoCliente').val(ramo);
-                        auxSplit === "none";
-                        aux2 = "";
-                        auxNomeCliente = "";
-                        auxCNPJ = "";
-                        $('#buttonSelectProduto').removeAttr("disabled");
-                        $('#buttonPesquisaNomeProduto').removeAttr("disabled");
-                        $('#pesquisaNomeProduto').removeAttr("disabled");
-                        $('#produtoPanel').fadeTo( "slow", 1 );
-                        $('#selecionarCliente').modal('hide');
-                    }
-                    $('#erroPesquisaCNPJ').fadeOut(300);
-                });
-            });
-        </script>
-
-        <script >
-            $(document).ready(function() {
-
-                $('#quantidadeProduto').tooltip({
-                    title : 'Insira a quantidade e clique em Lote Automático',
-                    placement : 'left'
-                });
-
-
-                var table = $('#loadProduto').dataTable( {
-                    language: {
-                        url: 'localisation/Portuguese-Brasil.json'
-                    }
-                } );
-                var aux2 = "";
-                var auxSplit = "none";
-
-                $('#loadProduto tbody').on('click', 'tr', function() {
-                    if ($(this).hasClass('selected')) {
-                        $(this).removeClass('selected');
-                        auxSplit = "none";
-                    }
-                    else {
-                        table.$('tr.selected').removeClass('selected');
-                        $(this).addClass('selected');
-
-                        $(this).find("td").each(function() {
-                            aux2 = aux2 + "#/" + $(this).text();
-                        });
-
-                        auxSplit = aux2.split("#/");
-                    }
-                });
-
-                // Camila - buguei o bang de produtos aqui
-                $('#selectProduct').click(function() {
-
-                    if ($('#loadProduto tbody tr').hasClass('selected')) {
-                        $('#loadProduto tbody tr').removeClass('selected');
-
-                    }
-
-                    if (auxSplit === "none") {
-                        console.log("Nada foi Selecionado");
-                        $('#modalErroDeSelecao').modal('show');
-                    } else {
-                        var auxCodProd = auxSplit[1];
-                        var auxNomeProd = auxSplit[2];
-                        var auxTipoProd = auxSplit[3];
-                        var auxValorUnitario = auxSplit[4];
-                        $('#produtoHidden').removeClass('hidden');
-
-                        auxValorUnitario = auxValorUnitario.replace(/,/g, '.');
-                        auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
-
-                        $('#hid').removeClass('hidden');
-                        $('#nomeProduto').val(auxNomeProd);
-                        $('#codigoProduto').val(auxCodProd);
-                        $('#valorUnitario').val(auxValorUnitario);
-                        var osRaio = $('input:radio[name=tipoProduto]');
-                        if (auxTipoProd === "medicamento") {
-                            osRaio.filter('[value=medicamento]').attr('checked', true);
-                            console.log("medicamento");
-                        } else {
-                            osRaio.filter('[value=alimento]').attr('checked', true);
-                            console.log("Alimento");
-                        }
-                        auxSplit === "none";
-                        aux2 = "";
-                        $('#selecionarProduto').modal('hide');
-
-                        setTimeout(
-                              function() 
-                              {
-                                //do something special
-                                $('#quantidadeProduto').prop('autofocus',true);
-                                $('#quantidadeProduto').delay(200).focus();
-                                $('#quantidadeProduto').tooltip({title : 'Insira a quantidade e clique em Lote Automático',
-                    placement : 'left',trigger: 'manual'}).tooltip('show');
-                                
-                              }, 
-                        500);
-                        
-                        
-                        
-                        //autofocus
-                        
-
-                    }
-                    $('#erroPesquisaCodigo').fadeOut(300);
-                });
-
-                $('#loadLote').dataTable();
-
-                $('#selectLote').click(function() {
-                    $('#loteHidden').removeClass('hidden');
-                });
-
-
-            });
-        </script>
-
-        <script type="text/javascript">
-            var $template = $(".template");
-
-            var hash = 2;
-            $(".btn-add-panel").on("click", function() {
-                var $newPanel = $template.clone();
-                $newPanel.find(".collapse").removeClass("in");
-                $newPanel.find(".accordion-toggle").attr("href", "#" + (++hash))
-                        .text("Dynamic panel #" + hash);
-                $newPanel.find(".panel-collapse").attr("id", hash).addClass("collapse").removeClass("in");
-                $("#accordion").append($newPanel.fadeIn());
-            });
-
-
-        </script>
-
-        <!-- Input somente de numeros -->
-        <script>
-            $(document).ready(function() {
-                //called when key is pressed in textbox
-                $("#quantidadeProduto").keypress(function(e) {
-                    //if the letter is not digit then display error and don't type anything
-                    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                        //display error message
-                        //$("#errmsg").html("Digits Only").show().fadeOut("slow");
-                        return false;
-                    } else {
-                        $('#formGroupQuantidadeProduto').removeClass("has-error");
-                        $('#formGroupQuantidadeProduto2').removeClass("has-error");
-                        $('#formGroupQuantidadeProduto2').fadeOut(200);
-                    }
-                });
-
-                $("#valorUnitario").keypress(function(e) {
-                    //if the letter is not digit then display error and don't type anything
-                    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                        //display error message
-                        //$("#errmsg").html("Digits Only").show().fadeOut("slow");
-                        return false;
-                    }
-                });
-
-                $("#quantidadeProduto").click(function(e) { 
-                    console.log("clicou");
-                    $('#inserirVenda').attr("disabled", "true");
-                    $('.addedPanel').remove();
-                    $('.addedRelatorio').remove();
-                    $('.addedPrint').remove();
-
-                 });
-
-                $("#quantidadeProduto").keyup(function(e) {
-                    //if the letter is not digit then display error and don't type anything
-                    
-                        var value = document.getElementById('quantidadeProduto').value;
-                        var valueUnity = document.getElementById('valorUnitario').value;
-                        if(valueUnity == ""){
-                            valueUnity = 0;
-                        }
-                        valueUnity = parseFloat(valueUnity);
-                        var total = value*valueUnity;
-                        var totalString = "";
-                        totalString = total + "";
-                        totalString = totalString.replace(/,/g, '');
-                        totalString = totalString.replace(/\./g, ',');
-                        document.getElementById('valorTotal').value=totalString;
-
-                    if($('#quantidadeProduto').val() == "" || parseInt($('#quantidadeProduto').val()) < 0 || parseInt($('#quantidadeProduto').val()) == 0) {
-                        $('#inserirVenda').attr("disabled", "true");
-                        $('.addedPanel').remove();
-                        $('.addedRelatorio').remove();
-                        $('.addedPrint').remove();
-                    } 
-                });
-
-
-                //Pesquisa pelo código do Prod que só aceita números
-                $("#pesquisaNomeProduto").keypress(function(e) {
-                    //if the letter is not digit then display error and don't type anything
-                    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                        //display error message
-                        //$("#errmsg").html("Digits Only").show().fadeOut("slow");
-                        return false;
-                    }
-                });
-
-            });
-        </script>
-
-
-        <script>
-            $(document).ready(function() {
-                $('#dataVenda').datepicker().on('changeDate', function (ev) {
-                                        $('#buttonSelectCliente').removeAttr("disabled");
-                                        $('#buttonpesquisaCNPJCliente').removeAttr("disabled");
-                                        $('#pesquisaCNPJCliente').removeAttr("disabled");
-                                        $('#clientePanel').fadeTo( "slow", 1 );
-                                        $(this).datepicker('hide');
-                });
-            });
-        </script>
-
-        <script>
-            $(document).ready(function() {
-                $('#header2').load('header.html');
-
-            });
-        </script>
-
-        <!-- Funcao para limpar campos de form -->
-        <script>
-            $(document).ready(function() {
-                $("#resetVenda").click(function() {
-
-                    limparFormulario();
-                    
-
-                });
-    
-            function limparFormulario(){
-                $('#nomeProduto').val('');
-                    $('#codigoProduto').val('');
-                    $('#dataVenda').val('');
-                    $('#valorTotal').val('');
-                    $('input[name="tipoProduto"]:checked').text('');
-                    $('#quantidadeProduto').val('');
-                    $('input[name="unidadeProduto"]:checked').text('');
-                    $('#descricaoProduto').val('');
-
-                    $('#nomeCliente').val('');
-                    $('#cnpjCliente').val('');
-
-                    $('#dataVenda').val('');
-
-                    $('#codigoLote').val('');
-                    $('#dataFabricacao').val('');
-                    $('#dataValidade').val('');
-                    $('#observacoes').val('');
-                    $('#quantidadeProduto').val('');
-                    $('.addedPanel').remove();
-                    $('.addedRelatorio').remove();
-                    $('.addedPrint').remove();
-
-                    if (!($('#nomeClienteHidden').hasClass('hidden'))) {
-                        $('#nomeClienteHidden').addClass('hidden');
-                    }
-
-                    if (!($('#hid').hasClass('hidden'))) {
-                        $('#hid').addClass('hidden');
-                    }
-
-                    if (!($('#loteHidden').hasClass('hidden'))) {
-                        $('#loteHidden').addClass('hidden');
-                    }
-
-                    $('#buttonSelectCliente').prop("disabled",true);
-                    $('#buttonpesquisaCNPJCliente').prop("disabled",true);
-                    $('#pesquisaCNPJCliente').prop("disabled",true);
-                    $('#inserirVenda').prop("disabled",true);
-                    $('#buttonSelectProduto').prop("disabled",true);
-                    $('#buttonPesquisaNomeProduto').prop("disabled",true);
-                    $('#pesquisaNomeProduto').prop("disabled",true);
-                    $('#clientePanel').fadeTo( "slow", 0.5 );
-                    $('#produtoPanel').fadeTo( "slow", 0.5 );
-                    $('#formVenda').bootstrapValidator('resetForm', true);
-            }
-                $('#sucessoVenda').on('hidden.bs.modal', function () {
-                    limparFormulario();
-                })
-
-            });
-        </script>
 
 
 
@@ -586,7 +91,6 @@
         <!-- Pega o que veio do request-->
         <%
             List<Cliente> clientes = (List<Cliente>) request.getAttribute("listaClientes");
-            List<Produto> produtos = (List<Produto>) request.getAttribute("listaProdutos");
         %>
 
 
@@ -608,10 +112,13 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse in">
                                 <li>
-                                    <a class="active" href="BuscaClientesProdutos">Efetuar Venda</a>
+                                    <a class="active" href="BuscaClientesProdutos"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Efetuar Venda</a>
+                                </li>
+                                <li>
+                                    <a class="" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Carrinho de Compras</a>
                                 </li>
 
                             </ul>
@@ -638,11 +145,15 @@
                         <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Painel de Controle</a>
                     </li>
                     <li>
-                        <i class="glyphicon glyphicon-shopping-cart"></i> Vendas
+                        <i class="glyphicon glyphicon-share-alt"></i> Vendas
+                    </li>
+                    <li class="">
+                        <i class="glyphicon glyphicon-share-alt"></i> <a href="BuscaClientesProdutos">Efetuar Venda</a>
                     </li>
                     <li class="active">
-                        <i class="glyphicon glyphicon-shopping-cart"></i> Efetuar Venda
+                        <i class="glyphicon glyphicon-user"></i> Selecionar Cliente
                     </li>
+
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -699,7 +210,7 @@
 
 
                                     </div>
-                                     <!-- Erro se não houver clientes cadastrados com o cnpj -->
+                                    <!-- Erro se não houver clientes cadastrados com o cnpj -->
                                     <div class="alert alert-danger" id="erroPesquisaCNPJ" style="display:none;">
                                         <button type="button" id="closeErroPesquisaCNPJ" class="close" >&times;</button>
                                         <span><b>Erro:</b> Não existem clientes cadastrados com esse CNPJ.</span>
@@ -727,282 +238,7 @@
                             </div>
 
 
-                            <div class="col-lg-16">
-                                <div class="panel panel-warning" id="produtoPanel" style="opacity:0.5;">
-                                    <div class="panel-heading">
-
-
-                                        <div class="row" >
-                                            <div class="col-lg-9" >
-                                                <div class="form-group input-group">
-                                                    <input type="text" class="form-control" id="pesquisaNomeProduto" name="pesquisaNomeProduto" placeholder="Pesquise pelo código do Produto (apenas números)" disabled>
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" id="buttonPesquisaNomeProduto" type="button" disabled><i class="fa fa-search"></i>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-1" style="margin-top: 8px; ">
-                                                <span><b style="color:black;"> OU </b>
-                                            </div>
-                                            <div class="col-lg-2" style="margin-left: -10px; ">
-                                                <button type="button" id="buttonSelectProduto" class="btn btn-primary"  disabled>Ver Produtos</button>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <!-- Erro se não houver produtos cadastrados com o código -->
-                                    <div class="alert alert-danger" id="erroPesquisaCodigo" style="display:none;">
-                                        <button type="button" id="closeErroPesquisaCodigo" class="close">&times;</button>
-                                        <span><b>Erro:</b> Não existem produtos cadastrados com esse código.</span>
-                                    </div>
-                                    
-                                    <div class="panel-body">
-                                        <div id="hid" class="hidden">
-
-                                            <div id="produtoHidden" class=" row">
-
-                                                <div class="col-lg-6 yes">
-                                                    <div class="form-group">
-                                                        <label>Nome do Produto</label>
-                                                        <input class="form-control" id="nomeProduto" placeholder="Insira o Nome do Produto" readonly>
-                                                    </div>
-
-                                                    <div class="form-group" >
-                                                        <label>Tipo de Produto: </label><br>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="tipoProduto" id="optionsAlimento" value="alimento"  disabled>Alimentício
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="tipoProduto" id="optionsMedicamento" value="medicamento"  disabled>Farmacêutico
-                                                        </label>
-                                                    </div>
-
-
-
-                                                    <label>Quantidade</label>&nbsp;<span class="glyphicon glyphicon-asterisk "></span>
-                                                    <div class="form-group" id="formGroupQuantidadeProduto">
-
-                                                        <input class="form-control" id="quantidadeProduto" class="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto" >
-                                                    </div>
-
-                                                    <div class="form-group input-group" id="formGroupQuantidadeProduto2" style="display: none;">
-                                                        <small class="help-block"  >Por favor, insira a quantidade do produto</small>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col-lg-6 yes">
-                                                    <div class="form-group">
-                                                        <label>Código do Produto</label>
-                                                        <input class="form-control" id="codigoProduto" name="codigoProduto" placeholder="Insira o código do produto" readonly>
-                                                    </div>
-                                                    <label>Valor Unitário</label>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">R$</span>
-                                                        <input  class="form-control" id="valorUnitario" name="valorUnitario" placeholder="Insira o valor unitário do produto" readonly></textarea>
-                                                    </div>
-
-                                                    <div class="form-group input-group" style="margin-top: 6%;">
-
-                                                        <div class="col-lg-6 yes">
-                                                            <button type="button" id="loteAutomatico" class="btn btn-primary">Lote Automático</button>
-                                                        </div>
-                                                        <div class="col-lg-4 yes">
-                                                            <button type="button" class="btn btn-primary" disabled>Lote Manual</button>
-                                                        </div>
-                                                        
-                                                        
-
-
-                                                    </div>
-                                                </div>
-
-
-
-
-
-
-
-
-
-
-
-                                            </div>
-
-
-
-
-
-
-
-                                            <!-- ACCORDION -->
-
-
-                                            <!-- <div class="panel-group" id="accordion">
-                                                <div class="hidden panel panel-default template">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                                                Lote 1
-                                                            </a> 
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapseOne" class="panel-collapse collapse">
-                                                        <div class="panel-body">
-
-                                                            <div class="col-lg-6 yes">
-                                                                
-
-                                                                <div class="form-group">
-                                                                    <label>Código do Lote</label>
-                                                                    <input class="form-control" id="codigoLote" name="codigoLote" placeholder="Insira o código do lote" readonly>
-                                                                    <p class="help-block">Deixe em branco para auto-gerar código</p>
-                                                                </div>
-
-                                                                <div class="col-lg-6 yes">
-                                                                    <label>Data de Fabricação</label>
-                                                                    <div class="form-group input-group"  data-date-format="dd-mm-yyyy">
-                                                                        <input class="form-control" id="dataFabricacao" name="dataFabricacao" data-date-format="dd/mm/yyyy" placeholder="Clique e selecione" readonly>
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="col-lg-6    yes">
-
-                                                                    <label>Data de Validade</label>
-                                                                    <div class="form-group input-group" data-date-format="dd-mm-yyyy">
-                                                                        <input class="form-control" id="dataValidade" name="dataValidade"  data-date-format="dd/mm/yyyy" placeholder="Clique e selecione" readonly>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            
-                                                            <div class="col-lg-6">
-
-                                                                <div class="form-group">
-                                                                    <label>Unidades de Produto</label>
-                                                                    <input class="form-control" id="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto no lote" readonly>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label>Observações</label>
-                                                                    <textarea class="form-control" id="observacoes" name="observacoes" rows="2" readonly></textarea>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="col-lg-3">
-
-                                                            </div>
-                                                            <div class="col-lg-9">
-
-                                                            </div>
-                                                            <div class="col-lg-2">
-                                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecionarLote">Selecionar Lote</button>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div> -->
-
-
-
-    <div class="panel-group" id="accordion">
-    <div class="hidden panel panel-default template" >
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                    
-                </a> 
-            </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse">
-            <div class="panel-body">
-
-                <div class="col-lg-6 yes">
-                    <!-- Campos do Formulário -->
-
-                    <div class="form-group">
-                        <label>Código do Lote</label>
-                        <input class="form-control" id="codigoLote" name="codigoLote" placeholder="Insira o código do lote" readonly>
-                        
-                    </div>
-
-
-                        
-                        <div class="form-group " >
-                            <label>Data de Validade</label>
-                            <input class="form-control" id="validade" name="validade" style="width: 130px;" readonly>
-                        </div>
-
-
-                </div>
-                <!-- /.col-lg-6 (nested) -->
-                <div class="col-lg-6">
-                    <label>Unidades de Produto</label>
-                    <div class="form-group input-group">
-                        
-                        <input class="form-control" id="quantidadeProduto" name="quantidadeProduto"  readonly><span class="input-group-addon" id="unidadeAddon">unidades</span>
-                    </div>
-
-                </div>
-
-                <div class="col-lg-3">
-
-                </div>
-                <div class="col-lg-9">
-
-                </div>
-                <div class="col-lg-2">
-                                    </div>
-
-            </div>
-        </div>
-    </div>
-
-</div>
-                                            <br />
-                                            <button  type="button" class=" hidden btn btn btn-primary btn-add-panel">
-                                                <i class="glyphicon glyphicon-plus white" style="color:white"></i> Adicionar novo lote
-                                            </button>
-                                        </div>
-
-                                    </div>
-
-
-
-
-
-
-                                </div>
-                                
-
-                            </div>
-
-
-
-
-                            <div class="row">
-                                <div class="col-lg-4 yes">
-                                </div>
-                                <div class="col-lg-3 yes">
-                                </div>
-                                <div class="col-lg-4 yes">
-                                    <label>Valor Total</label>
-
-                                    <div class="form-group input-group">
-                                        <span class="input-group-addon">R$</span>
-                                        <input type="text" class="form-control" id="valorTotal" name="valorTotal" placeholder="Valor total da venda" readonly>
-                                    </div>
-
-                                </div>
-                                
-                                <hr width="85%">
-                            </div>
-                            <!-- /.panel-body -->
+                            
 
                             <div class="row">
                                 <div class="col-lg-3">
@@ -1013,7 +249,7 @@
                                     <!-- Button Limp3r Campos -->
                                     <button type="reset" id="resetVenda" class="btn btn-danger"><span class="glyphicon glyphicon-repeat" style="color:white;"></span>&nbsp; Limpar Campos</button>
 
-                                    <button id="inserirVenda" type="button" class="btn btn-primary"  disabled><span class="glyphicon glyphicon-shopping-cart" style="color:white;"></span>&nbsp; Efetuar Venda</button>
+                                    <button id="toProducts" type="button" class="btn btn-primary"  disabled><span class="glyphicon glyphicon-plus-sign" style="color:white;"></span>&nbsp; Adicionar Produtos</button>
                                 </div>
                             </div>
 
@@ -1030,6 +266,7 @@
         <!-- /#page-wrapper -->
 
     </div>
+    
 
     <!-- Modal Selecionar Cliente -->
     <div class="modal fade" id="selecionarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1056,7 +293,7 @@
                                 <th>Nome do Cliente</th>
                                 <th>CNPJ</th>
                                 <th class="hidden">cod</th>
-                                
+
 
                             </tr>
                         </tfoot>
@@ -1068,7 +305,7 @@
                                 <td> <%=clientes.get(i).getNome()%> </td>
                                 <td> <%=clientes.get(i).getCNPJ()%> </td>
                                 <td class="hidden"> <%=clientes.get(i).getCodCliente()%> </td>
-                                
+
                             </tr>
                             <%
                                 }
@@ -1088,523 +325,28 @@
     </div>
     <!-- /.modal -->
 
-    <!-- Modal -->
 
-    <div class="modal fade" id="selecionarProduto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" >
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Selecionar Produto</h4>
-                </div>
-                <div class="modal-body">
-                    <table id="loadProduto" class="display table-bordered" cellspacing="0" width="100%" style="cursor: pointer;">
-
-
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Nome do Produto</th>
-                                <th>Tipo</th>
-                                <th hidden="">Valor Unitário</th>
-
-                            </tr>
-                        </thead>
-
-                        <tfoot>
-                            <tr>
-                                <th>Código</th>
-                                <th>Nome do Produto</th>
-                                <th>Tipo</th>
-                                <th hidden="">Valor Unitário</th>
-
-                            </tr>
-                        </tfoot>
-
-                        <tbody>
-                            <%
-                                for (int i = 0; i < produtos.size(); i++) {
-                            %>
-                            <tr>
-                                <td><%= produtos.get(i).getCodProd()%></td>
-                                <td><%= produtos.get(i).getNome()%></td>
-                                <td><%= produtos.get(i).getRamo()%></td>
-                                <td hidden=""><%= produtos.get(i).getValorUnitario()%></td>
-
-                            </tr>
-                            <%
-                                }
-                            %>
-                        </tbody>
-                    </table>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="selectProduct"  >Selecionar Produto</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <!-- Modal Selecionar Lote -->
-    <div class="modal fade" id="selecionarLote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Selecionar Lote</h4>
-                </div>
-                <div class="modal-body">
-                    <table id="loadLote" class="hover table table-striped table-bordered" cellspacing="0" width="100%" style="cursor: pointer;">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Unidades</th>
-                                <th>Data de Fabricação</th>
-                                <th>Data de Validade</th>
-
-                            </tr>
-                        </thead>
-
-                        <tfoot>
-                            <tr>
-                                <th>Código</th>
-                                <th>Unidades</th>
-                                <th>Data de Fabricação</th>
-                                <th>Data de Validade</th>
-
-                            </tr>
-                        </tfoot>
-
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Brielle Williamson</td>
-                                <td>Integration Specialist</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Herrod Chandler</td>
-                                <td>Sales Assistant</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Rhona Davidson</td>
-                                <td>Integration Specialist</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Colleen Hurst</td>
-                                <td>Javascript Developer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Sonya Frost</td>
-                                <td>Software Engineer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Jena Gaines</td>
-                                <td>Office Manager</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Quinn Flynn</td>
-                                <td>Support Lead</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Charde Marshall</td>
-                                <td>Regional Director</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Haley Kennedy</td>
-                                <td>Senior Marketing Designer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Tatyana Fitzpatrick</td>
-                                <td>Regional Director</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Michael Silva</td>
-                                <td>Marketing Designer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Paul Byrd</td>
-                                <td>Chief Financial Officer (CFO)</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Gloria Little</td>
-                                <td>Systems Administrator</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Bradley Greer</td>
-                                <td>Software Engineer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Dai Rios</td>
-                                <td>Personnel Lead</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Jenette Caldwell</td>
-                                <td>Development Lead</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Yuri Berry</td>
-                                <td>Chief Marketing Officer (CMO)</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-
-                        </tbody>
-                    </table>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="selectLote" class="btn btn-primary" data-dismiss="modal">Selecionar Lote</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-
-<!-- Modal erro de não selecionar nenhum item -->
+    <!-- Modal erro de não selecionar nenhum item -->
     <div class="modal fade bs-example-modal-sm " id="modalErroDeSelecao"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm vertical-centered " >
-    <div class="modal-content">
-      <div class="modal-header" style="background-color:#d9534f;">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-        <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Erro de Seleção</h4>
-      </div>
-      <div class="modal-body">
-        <p>Você deve selecionar um item.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<!-- Modal confirmação de salvamento -->
-        <div class="modal fade bs-example-modal-sm2" id="sucessoVenda"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
-          <div class="modal-dialog modal-sm vertical-centered " >
+        <div class="modal-dialog modal-sm vertical-centered " >
             <div class="modal-content">
-              <div class="modal-header" style="background-color:#5cb85c;">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-                <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-ok" style="color:white;"></span>&nbsp;&nbsp;Venda Efetuada com Sucesso</h4>
-              </div>
-              <div class="modal-body">
-                    <span>A venda foi efetuada com sucesso!</span>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" id="gerarRelatorio" ><span class="glyphicon glyphicon-book" style="color:white;"></span>&nbsp;Gerar Relatório</button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
-
-
-<div class="modal fade" id="relatorioVenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" >
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="relatorioTitle">Relatório de Vendas</h4>
+                <div class="modal-header" style="background-color:#d9534f;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Erro de Seleção</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-4 yes">
-                            <div class="input-group">
-                              <span class="input-group-addon"><b>Data da venda</b></span>
-                              <input type="text" id="dataVendaModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <hr width="90%">
-
-                    <span><b>Cliente</b></span>
-
-                    <div class="row">
-                        <div class="col-lg-6 yes">
-                            <div class="input-group">
-                                <span class="input-group-addon"><b>Nome</b></span>
-                                <input type="text" id="nomeClienteModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-1 yes">
-                            
-                        </div>
-
-                        <div class="col-lg-6 yes">
-                            <div class="input-group">
-                                <span class="input-group-addon"><b>CNPJ</b></span>
-                                <input type="text" id="cnpjClienteModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr width="60%">
-                        
-                    <span><b>Produto</b></span>
-                    <div class="row">
-                        <div class="col-lg-6 yes">
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Produto</b></span>
-                                <input type="text" id="nomeProdutoModal" class="form-control" value="" readonly>
-                            </div>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Tipo do produto</b></span>
-                                <input type="text" id="tipoProdutoModal" class="form-control" value="" readonly>
-                            </div>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Valor unitátio</b></span>
-                                <input type="text" id="valorUnitarioModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-1 yes">
-                            
-                        </div>
-
-                        <div class="col-lg-6 yes">
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Código do produto</b></span>
-                                <input type="text" id="codProdutoModal" class="form-control" value="" readonly>
-                            </div>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Quantidade unitária</b></span>
-                                <input type="text" id="quantidadeModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="loteRelatorio">
-                    <hr width="60%">
-
-
-                    <span><b>Lote</b></span>
-                    <div class="hidden row relatorioGerado">
-                        <div class="col-lg-6 yes">
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Código</b></span>
-                                <input type="text" id="codigoLoteModal" class="form-control" value="" readonly>
-                            </div>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Validade</b></span>
-                                <input type="text" id="dataValidadeModal" class="form-control" value="" readonly>
-                            </div>
-                            
-                        </div>
-
-                        <div class="col-lg-1 yes">
-                            
-                        </div>
-
-                        <div class="col-lg-6 yes">
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Quantidade</b></span>
-                                <input type="text" id="quantidadeProdutoModal" class="form-control" value="" readonly>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    </div>
-
-                    <!-- <hr width="60%"> -->
-
-                    <div class="row">
-                        <div class="col-lg-6 yes">
-                        </div>
-                        <div class="col-lg-1 yes">
-                        </div>
-                        <div class="col-lg-5 yes">
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Valor total da venda</b></span>
-                                <input type="text" id="valorTotalModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    <p>Você deve selecionar um item.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary" id="salvarRelatorio" ><span class="glyphicon glyphicon-floppy-disk" style="color:white;"></span>&nbsp;Salvar Relatório</button>
-                                        
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+
                 </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <!-- Modal confirmação de salvamento -->
-    <div class="modal fade bs-example-modal-sm2" id="salvarRelatorioComo"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
-  <div class="modal-dialog modal-sm vertical-centered " >
-    <div class="modal-content">
-      <div class="modal-header" style="background-color:#428bca;">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-        <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-exclamation-sign" style="color:white;"></span>&nbsp;&nbsp;Salvar Relatório</h4>
-      </div>
-      <div class="modal-body">
-
-        <div class="alert alert-danger" id="erroNomeVazio" style="display:none;">
-            <button type="button" class="close" id="closeErroNomeVazio" >&times;</button>
-            <span><b>Erro:</b> Insira o nome do arquivo</span>
-        </div>
-        <label>Salvar como: *</label>
-        <div class="form-group input-group " id="nomeRelatorioInputGroup">
-
-            <input class="form-control" id="nomeRelatorio" class="nomeRelatorio" name="nomeRelatorio" placeholder="Insira o nome do arquivo" >
-            <span class="input-group-addon" id="unidadeAddon">.pdf</span>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 
-
-        </div>
-        <div class="form-group input-group"  >
-            <small class="help-block" >*Somente letras, números e hífen (-)</small>
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary" id="salvarRelatorioNome"><span class="glyphicon glyphicon-floppy-disk" style="color:white;"></span>&nbsp;Salvar Relatório</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<!-- Modal erro de não selecionar nenhum item -->
-    <div class="modal fade bs-example-modal-sm " id="erroLoteInsuficiente"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm vertical-centered " >
-    <div class="modal-content">
-      <div class="modal-header" style="background-color:#d9534f;">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-        <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Falta de Produto em Estoque</h4>
-      </div>
-      <div class="modal-body">
-        <p>Não existem produtos suficientes em estoque para essa venda.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- Modal erro de não selecionar nenhum item -->
-    <div class="modal fade bs-example-modal-sm " id="erroVenda"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog vertical-centered " >
-    <div class="modal-content">
-      <div class="modal-header" style="background-color:#d9534f;">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-        <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Erro do Cadastro da venda</h4>
-      </div>
-      <div class="modal-body">
-        <p>Não foi possível inserir a venda na base de dados. Aparentemente já existe uma venda cadastrada com os mesmos parâmetros ou a base de dados pode estar com problemas de comunicação.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<div class="hidden" id="auxiliarParaRelatorio"></div>
+    <div class="hidden" id="auxiliarParaRelatorio"></div>
 
 
 
@@ -1617,8 +359,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
-    
-    
+
+
 </body>
 
 </html>
