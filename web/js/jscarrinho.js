@@ -20,7 +20,7 @@ $(document).ready(function() {
         
 
         var produto = sessionStorage.getItem( "dataProduto" );
-        if(produto == '[]'){
+        if(produto == '[]' || produto == null){
             rows = [];
             $('#total').val(0);
             $('#terminarCompra').prop("disabled",true);

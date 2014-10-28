@@ -527,7 +527,7 @@
     <div class="modal fade bs-example-modal-sm " id="modalExcuirProduto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm vertical-centered ">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:#d9534f;">
+                <div class="modal-header" style="background-color:#f0ad4e;">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
                     <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Excluir Produto</h4>
 
@@ -538,8 +538,8 @@
                 </div>
                 <!--/modal-body-collapse -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="btnDelteYes" href="#">Sim</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                    <button type="button" class="btn btn-primary" id="btnDelteYes" href="#">Sim</button>
                 </div>
                 <!--/modal-footer-collapse -->
             </div>

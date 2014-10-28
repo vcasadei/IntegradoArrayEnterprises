@@ -256,7 +256,8 @@
                                     <!-- Erro se não houver produtos cadastrados com o código -->
                                     <div class="alert alert-danger" id="erroPesquisaCodigo" style="display:none;">
                                         <button type="button" id="closeErroPesquisaCodigo" class="close">&times;</button>
-                                        <span><b>Erro:</b> Não existem produtos cadastrados com esse código.</span>
+                                        <span><b>Erro:</b> Não existem produtos cadastrados com esse código ou o item já foi adicionado à venda.</span>
+
                                     </div>
 
                                     <div class="panel-body">

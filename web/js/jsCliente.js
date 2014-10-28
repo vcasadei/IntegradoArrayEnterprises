@@ -107,6 +107,126 @@ $(document).ready(function() {
         limparFormulario();
     });
 
+    function pesquisarCNPJ() {
+
+        if($("#pesquisaCNPJCliente").val() != ""){
+            $.ajax({
+                type: "POST",
+                url: "BuscaClienteProdutoCNPJCod",
+                dataType: "html",
+                data: {CNPJ: $('#pesquisaCNPJCliente').val()}
+            }).done(function(data) {
+
+                if (data === "null") {
+                    //Criar mensagem que diz que o cliente com esse cnpj não existe
+
+                    $('#pesquisaCNPJCliente').val("");
+                    $('#erroPesquisaCNPJ').fadeIn("slow");
+                    $('#nomeCliente').val("");
+                    $('#cnpjCliente').val("");
+                    $('#codigoCliente').val("");
+                    $('#ramoCliente').val("");
+
+                    $('#buttonSelectProduto').attr("disabled", true);
+                    $('#buttonPesquisaNomeProduto').attr("disabled", true);
+                    $('#pesquisaNomeProduto').attr("disabled", true);
+                    $('#produtoPanel').fadeTo( "slow", 0.5 );
+                    $('#inserirVenda').attr("disabled", "true");
+                    $('#toProducts').attr("disabled", true);
+                    $('.addedPanel').remove();
+                    $('.addedRelatorio').remove();
+                    $('.addedPrint').remove();
+
+                    if($('#nomeClienteHidden').hasClass('hidden')){
+
+                    } else {
+                        $('#nomeClienteHidden').addClass('hidden');
+                    }
+                        
+
+                } else {
+
+                    var aux = "";
+                    aux = data.split(";");
+
+                    $('#nomeClienteHidden').removeClass('hidden');
+                    $('#nomeCliente').val(aux[0]);
+                    $('#cnpjCliente').val(aux[1]);
+                    console.log("codigo do cliente " + aux[2])
+                    $('#codigoCliente').val(aux[2]);
+                    $('#ramoCliente').val(aux[3]);
+                    $('#pesquisaCNPJCliente').val("");
+
+                    $('#buttonSelectProduto').removeAttr("disabled");
+                    $('#buttonPesquisaNomeProduto').removeAttr("disabled");
+                    $('#pesquisaNomeProduto').removeAttr("disabled");
+                    $('#produtoPanel').fadeTo( "slow", 1 );
+                    $('#toProducts').removeAttr("disabled");
+                    $('#erroPesquisaCNPJ').fadeOut(300);
+                }
+
+            });
+        } else {
+            $('#selecionarCliente').modal('show');
+            $('#erroPesquisaCNPJ').fadeOut("slow");
+
+            if($('#nomeClienteHidden').hasClass('hidden')){
+
+            } else {
+                $('#nomeClienteHidden').addClass('hidden');
+            }
+            
+            $('#nomeCliente').val("");
+            $('#cnpjCliente').val("");
+            $('#toProducts').attr("disabled", true);
+        } 
+         
+    }
+    //Pesquisa um cliente pelo CNPJ
+    $('#buttonpesquisaCNPJCliente').click(function() {
+        if($("#pesquisaCNPJCliente").val() != ""){
+            pesquisarCNPJ();
+        } else {
+            $('#selecionarCliente').modal('show');
+            $('#erroPesquisaCNPJ').fadeOut("slow");
+
+            if($('#nomeClienteHidden').hasClass('hidden')){
+
+            } else {
+                $('#nomeClienteHidden').addClass('hidden');
+            }
+            
+            $('#nomeCliente').val("");
+            $('#cnpjCliente').val("");
+            $('#toProducts').attr("disabled", true);
+        }
+        
+    });
+
+    $('#pesquisaCNPJCliente').keypress(function(e) {
+        if(e.which == 13) {
+            if($("#pesquisaCNPJCliente").val() != "" && $("#pesquisaCNPJCliente").val() != "__.___.___/____-__"){
+                console.log($("#pesquisaCNPJCliente").val())
+                pesquisarCNPJ();
+            } else {
+                $('#selecionarCliente').modal('show');
+                $('#erroPesquisaCNPJ').fadeOut("slow");
+
+                if($('#nomeClienteHidden').hasClass('hidden')){
+
+                } else {
+                    $('#nomeClienteHidden').addClass('hidden');
+                }
+                
+                $('#nomeCliente').val("");
+                $('#cnpjCliente').val("");
+                $('#toProducts').attr("disabled", true);
+            }
+        }
+    });
+
+
+
     function limparFormulario(){
         $('#dataVenda').val('');
         $('#buttonSelectCliente').prop("disabled",true);

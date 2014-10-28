@@ -18,6 +18,8 @@ $(document).ready(function () {
     console.log(clienteObj);
 
 
+
+
     $("tr.item").each(function(i, tr) {
         var value = $(tr + " span.value").html();
         var quantity = $(tr + " input.quantity").val();
@@ -91,6 +93,12 @@ $(document).ready(function () {
      var tamanho = 0;
      if(historyProduto != null){
         tamanho = historyProduto.length;
+     }
+
+     var codArr = [];
+
+     for(i = 0; i < tamanho; i++){
+        codArr.push(parseInt(historyProduto[i].codigoProduto));
      }
       
      var x = 0;
@@ -518,40 +526,78 @@ $(document).ready(function () {
                 } else {
 
 
+
+                    
+
                     var aux = data.split(";");
 
-                    $('#hid').removeClass('hidden');
-                    $('#nomeProduto').val(aux[0]);
-                    $('#codigoProduto').val(aux[1]);
+                    console.log("ostipo: " + aux[2] + " ramo: " + ramoCliente);
+                    if(jQuery.inArray(parseInt(aux[1]) ,codArr) == -1 && aux[2] == ramoCliente){
+                        $('#erroPesquisaCodigo').fadeOut("slow");
+                        $('#hid').removeClass('hidden');
+                        $('#nomeProduto').val(aux[0]);
+                        $('#codigoProduto').val(aux[1]);
+                        var auxValorUnitario = aux[3];
 
-                    var auxValorUnitario = aux[3];
-                    auxValorUnitario = auxValorUnitario.replace(/,/g, '.');
-                    auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
-                    $('#valorUnitario').val(auxValorUnitario);
-                    $('#pesquisaNomeProduto').val("");
-                    //Seta o rádio do tipo do produto
-                    var osRaio = $('input:radio[name=tipoProduto]');
-                    console.log(aux[2]);
-                    if (aux[2] === "alimentício") {
-                        $('#optionsAlimento').prop('checked', true);
-                        osRaio.filter('[value=alimento]').attr('checked', true);
+
+                        auxValorUnitario = auxValorUnitario.replace(/,/g, '.');
+                        auxValorUnitario = auxValorUnitario.replace(/\./g, ',');
+                        $('#valorUnitario').val(auxValorUnitario);
+                        $('#pesquisaNomeProduto').val("");
+                        //Seta o rádio do tipo do produto
+                        var osRaio = $('input:radio[name=tipoProduto]');
+                        console.log(aux[2]);
+                        if (aux[2] === "alimentício") {
+                            $('#optionsAlimento').prop('checked', true);
+                            osRaio.filter('[value=alimento]').attr('checked', true);
+                        } else {
+                            $('#optionsMedicamento').prop('checked', true);
+                            osRaio.filter('[value=medicamento]').attr('checked', true);
+                            console.log("medicamento");
+                        }
+                        if($('#produtoHidden').hasClass('hidden')){
+                            $('#produtoHidden').removeClass('hidden');
+                        } 
+
+                        setTimeout(
+                              function() 
+                              {
+                                //do something special
+                                $('#quantidadeProduto').prop('autofocus',true);
+                                $('#quantidadeProduto').delay(200).focus();
+                                $('#quantidadeProduto').tooltip({title : 'Insira a quantidade e clique em Lote Automático',
+                                placement : 'left',trigger: 'manual'}).tooltip('show');
+                                
+                              }, 500);   
                     } else {
-                        $('#optionsMedicamento').prop('checked', true);
-                        osRaio.filter('[value=medicamento]').attr('checked', true);
-                        console.log("medicamento");
+                        $('#erroPesquisaCodigo').fadeIn("slow");
+                        $('#pesquisaNomeProduto').val("");
+                        $('#nomeProduto').val("");
+                        $('#codigoProduto').val("");
+                        $('#valorUnitario').val("");
+                        if($('#optionsAlimento').is(':checked')){
+                            $('#optionsAlimento').prop('checked', false);
+                            console.log("Alimento esta selcionado")
+                        }
+                        if($('#optionsMedicamento').is(':checked')){
+                            $('#optionsMedicamento').prop('checked', false);
+                            console.log("Medicamento esta selcionado")
+                        }
+
+                        $('#addToCart').attr("disabled", "true");
+                        $('.addedPanel').remove();
+                        $('.addedRelatorio').remove();
+                        $('.addedPrint').remove();
+
+                        if($('#produtoHidden').hasClass('hidden')){
+
+                        } else {
+                            $('#produtoHidden').addClass('hidden');
+                        }
                     }
 
-                    setTimeout(
-                          function() 
-                          {
-                            //do something special
-                            $('#quantidadeProduto').prop('autofocus',true);
-                            $('#quantidadeProduto').delay(200).focus();
-                            $('#quantidadeProduto').tooltip({title : 'Insira a quantidade e clique em Lote Automático',
-                placement : 'left',trigger: 'manual'}).tooltip('show');
-                            
-                          }, 
-                    500);
+
+                    
 
 
                 }

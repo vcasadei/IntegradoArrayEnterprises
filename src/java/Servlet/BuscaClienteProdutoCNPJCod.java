@@ -92,10 +92,7 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
             }
             writer.close();
             }
-            
-            
-
-            
+           
 
         } catch (BdDAOException ex) {
             Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
