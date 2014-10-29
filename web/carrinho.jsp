@@ -115,6 +115,9 @@
                                 <li>
                                     <a class="active" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Resumo da Venda</a>
                                 </li>
+                                <li>
+                                    <a class="" href="BuscaTodasVendas"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Consultar Venda</a>
+                                </li>
 
                             </ul>
                             <!-- /.nav-second-level -->
