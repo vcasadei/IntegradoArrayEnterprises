@@ -67,21 +67,6 @@ public class BuscaTodasVendas extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
         response.setCharacterEncoding("UTF-8");
 
         ArrayList<Venda> vendas = new ArrayList<Venda>();
@@ -103,6 +88,22 @@ public class BuscaTodasVendas extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        
         
     }
 

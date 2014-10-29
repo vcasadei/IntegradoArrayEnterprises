@@ -69,7 +69,8 @@ public class VendaDAO {
             venda = new Venda();
             venda.setCliente(cliente);
             venda.setCodVenda(rs.getInt("codVenda"));
-            venda.setDataVenda(rs.getString("dataVenda"));
+            String auxData = rs.getString("dataVenda");
+            venda.setDataVenda(auxData.substring(8,10) + "/" + auxData.substring(5,7) + "/" + auxData.substring(0,4));
             venda.setValorTotal(rs.getFloat("valorTotal"));
 
             vendas.add(venda);
