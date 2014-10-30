@@ -350,6 +350,64 @@ $(document).ready(function () {
         $('#formVenda').bootstrapValidator('resetForm', true);
     }
 
+    $('#loteManual').click(function() {
+        console.log("clicou no lote manual");
+        pesquisarLotesManual();
+    });
+
+    function pesquisarLotesManual() {
+        console.log("entrou na funcao de lote manual");
+        var teste = $('#quantidadeProduto').val();
+        teste = parseInt(teste);
+
+        
+
+        if($('#quantidadeProduto').val() != "" && teste > 0){
+            console.log("verificou quantidade");
+            var codProduto =  $('#codigoProduto').val();
+            var dataVenda = $('#fixDataVenda').val();
+
+            var dataString;
+            dataString = "codigoProduto=" + codProduto + "&dataVenda=" + dataVenda;
+             $.ajax({
+                type: "POST",
+                url: "BuscaTodosLotesPorProduto",
+                dataType: "text",
+                data: dataString
+            }).done(function(data) {
+                testeData = data;
+
+                if (data === "0;") {
+                    // $('#erroLoteInsuficiente').modal('show');
+                    // $('#addToCart').attr("disabled", "true");
+                    console.log("deu erro " + data)
+                    
+                } else {
+                    console.log("parece que funfou: " + data)
+                    // $('#addToCart').removeAttr("disabled");
+                    // console.log("achou os lotes, sucesso " + data);
+
+                    // $('.addedPanel').remove();
+                    // $('.addedRelatorio').remove();
+                    // $('.addedPrint').remove();
+                    // buildLotes(data);
+                }
+
+            });
+
+        } else {
+            $('.addedPanel').remove();
+            $('.addedRelatorio').remove();
+            $('.addedPrint').remove();
+            $('#addToCart').attr("disabled", "true");
+            $('#formGroupQuantidadeProduto').addClass("has-error");
+            $('#formGroupQuantidadeProduto2').addClass("has-error");
+            $('#formGroupQuantidadeProduto2').fadeIn(200);
+
+        }
+        
+    }
+
     //Pesquisa um produto pelo código
     $('#loteAutomatico').click(function() {
         pesquisarLotesAutomatico();

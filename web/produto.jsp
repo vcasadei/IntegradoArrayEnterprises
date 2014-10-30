@@ -315,7 +315,7 @@
                                                             <button type="button" id="loteAutomatico" class="btn btn-primary">Lote Automático</button>
                                                         </div>
                                                         <div class="col-lg-4 yes">
-                                                            <button type="button" class="btn btn-primary" disabled>Lote Manual</button>
+                                                            <button type="button" id="loteManual" class="btn btn-primary" >Lote Manual</button>
                                                         </div>
                                                     </div>
                                                 </div>

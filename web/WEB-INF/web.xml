@@ -40,6 +40,10 @@
         <servlet-name>EfetuarVenda</servlet-name>
         <servlet-class>Servlet.EfetuarVenda</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BuscaTodosLotesPorProduto</servlet-name>
+        <servlet-class>Servlet.BuscaTodosLotesPorProduto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CadastrarVenda</servlet-name>
         <url-pattern>/CadastrarVenda</url-pattern>
@@ -83,6 +87,10 @@
     <servlet-mapping>
         <servlet-name>EfetuarVenda</servlet-name>
         <url-pattern>/EfetuarVenda</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BuscaTodosLotesPorProduto</servlet-name>
+        <url-pattern>/BuscaTodosLotesPorProduto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

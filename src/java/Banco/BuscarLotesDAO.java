@@ -6,6 +6,7 @@
 package Banco;
 
 import Bean.Lote;
+import Bean.Produto;
 import Servlet.BuscaLotesAutomatico;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -46,6 +47,34 @@ public class BuscarLotesDAO {
 
                 lotes.add(aux);
              }   
+
+             ConnectionBanco.close(bdConn, stat, rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscaLotesAutomatico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return lotes;
+    }
+    
+    public ArrayList<Lote> BuscaTodosLotes(int codigoProduto, String data) throws SQLException, BdDAOException
+    {
+        Statement stat = bdConn.createStatement();
+        ResultSet rs;
+        ArrayList<Lote> lotes = new ArrayList<Lote>();
+        Lote aux;
+        try{
+            
+            rs = stat.executeQuery("SELECT * FROM BuscaTodosLotes(" + codigoProduto + ", " + data + "');");
+            while (rs.next()){
+                aux = new Lote();
+                aux.setCodigoLote(rs.getString(1));
+                aux.setCodigoProduto(rs.getInt(2));
+                aux.setQntdInicial(rs.getInt(3));
+                aux.setQntdAtual(rs.getInt(4));
+                aux.setValidade(rs.getString(5));
+
+                lotes.add(aux);
+             }
 
              ConnectionBanco.close(bdConn, stat, rs);
         } catch (SQLException ex) {
