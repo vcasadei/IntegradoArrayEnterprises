@@ -138,8 +138,13 @@ public class ProdutosDAO {
         
         Statement stat = bdConn.createStatement();
         
-        int qtde = stat.executeUpdate("SELECT SUM(qntdatual) FROM lote l, produto p WHERE (l.codprod = " + codProd + ") AND (l.codprod = p.codprod)" +
+        ResultSet rs = stat.executeQuery("SELECT SUM(qntdatual) as qtdeEstoque FROM lote l, produto p WHERE (l.codprod = " + codProd + ") AND (l.codprod = p.codprod)" +
                                             "AND (current_date <= (l.validade - p.diaslim_validade))");
+        int qtde = 0;
+        if (rs.next()){
+            qtde = rs.getInt("qtdeestoque");
+        }
+
        
         return qtde;
     }

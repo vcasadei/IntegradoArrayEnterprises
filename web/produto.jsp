@@ -292,6 +292,16 @@
                                                         <input class="form-control" id="quantidadeProduto" class="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto" >
                                                     </div>
 
+                                                    <div class="form-group input-group" style="margin-top: 6%;">
+
+                                                        <div class="col-lg-6 yes">
+                                                            <button type="button" id="loteAutomatico" class="btn btn-primary">Lote Automático</button>
+                                                        </div>
+                                                        <div class="col-lg-4 yes">
+                                                            <button type="button" id="loteManual" class="btn btn-primary" >Lote Manual</button>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="form-group input-group" id="formGroupQuantidadeProduto2" style="display: none;">
                                                         <small class="help-block"  >Por favor, insira a quantidade do produto</small>
                                                     </div>
@@ -306,19 +316,19 @@
                                                     <label>Valor Unitário</label>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">R$</span>
-                                                        <input  class="form-control" id="valorUnitario" name="valorUnitario" placeholder="Insira o valor unitário do produto" readonly></textarea>
+                                                        <input  class="form-control" id="valorUnitario" name="valorUnitario" placeholder="Insira o valor unitário do produto" readonly>
                                                     </div>
 
-                                                    <div class="form-group input-group" style="margin-top: 6%;">
-
-                                                        <div class="col-lg-6 yes">
-                                                            <button type="button" id="loteAutomatico" class="btn btn-primary">Lote Automático</button>
-                                                        </div>
-                                                        <div class="col-lg-4 yes">
-                                                            <button type="button" id="loteManual" class="btn btn-primary" >Lote Manual</button>
-                                                        </div>
+                                                    <label>Quantidade em Estoque</label>
+                                                    <div class="form-group input-group">
+                                                        
+                                                        <input  class="form-control" id="qtdeEstoque" name="qtdeEstoque" placeholder="" readonly><span class="input-group-addon">unidades</span>
                                                     </div>
+
+                                                    
                                                 </div>
+
+
                                             </div>
 
 

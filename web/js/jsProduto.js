@@ -153,6 +153,40 @@ $(document).ready(function () {
         }
     });
 
+    function getQuantidadeEstoque(codProduto){
+        console.log("codigo do produto: " + codProduto)
+
+        var dataString;
+            dataString = "codProd=" + codProduto;
+             $.ajax({
+                type: "POST",
+                url: "BuscaProdutosEstoque",
+                dataType: "text",
+                data: dataString
+            }).done(function(data) {
+                testeData = data;
+
+                if (data === "0" || data == "") {
+                    // $('#erroLoteInsuficiente').modal('show');
+                    // $('#addToCart').attr("disabled", "true");
+                    console.log("deu erro " + data)
+                    $('#qtdeEstoque').val("0");
+                    
+                } else {
+                    console.log("parece que funfou: " + data)
+                    $('#qtdeEstoque').val(data);
+                    // $('#addToCart').removeAttr("disabled");
+                    // console.log("achou os lotes, sucesso " + data);
+
+                    // $('.addedPanel').remove();
+                    // $('.addedRelatorio').remove();
+                    // $('.addedPrint').remove();
+                    // buildLotes(data);
+                }
+
+            });
+    }
+
     // Camila - buguei o bang de produtos aqui
     $('#selectProduct').click(function () {
 
@@ -166,6 +200,7 @@ $(document).ready(function () {
             $('#modalErroDeSelecao').modal('show');
         } else {
             var auxCodProd = auxSplit[1];
+            getQuantidadeEstoque(auxCodProd);
             var auxNomeProd = auxSplit[2];
             var auxTipoProd = auxSplit[3];
             var auxValorUnitario = auxSplit[4];
@@ -554,11 +589,13 @@ $(document).ready(function () {
 
                 if (data === "null") {
                     //Criar mensagem que diz que o o produto com esse código não existe
+                    console.log("entrou aqui");
                     $('#erroPesquisaCodigo').fadeIn("slow");
                     $('#pesquisaNomeProduto').val("");
                     $('#nomeProduto').val("");
                     $('#codigoProduto').val("");
                     $('#valorUnitario').val("");
+                    $('#qtdeEstoque').val("");
                     if($('#optionsAlimento').is(':checked')){
                         $('#optionsAlimento').prop('checked', false);
                         console.log("Alimento esta selcionado")
@@ -582,17 +619,15 @@ $(document).ready(function () {
 
                 } else {
 
-
-
-                    
-
                     var aux = data.split(";");
 
                     console.log("ostipo: " + aux[2] + " ramo: " + ramoCliente);
-                    if(jQuery.inArray(parseInt(aux[1]) ,codArr) == -1 && aux[2] == ramoCliente){
+                    console.log(data);
+                    if((jQuery.inArray(parseInt(aux[1]) ,codArr) == -1) && (aux[2] == ramoCliente || ramoCliente == "ambos")){
                         $('#erroPesquisaCodigo').fadeOut("slow");
                         $('#hid').removeClass('hidden');
                         $('#nomeProduto').val(aux[0]);
+                        var auxCodProduto = aux[1];
                         $('#codigoProduto').val(aux[1]);
                         var auxValorUnitario = aux[3];
 
@@ -616,6 +651,8 @@ $(document).ready(function () {
                             $('#produtoHidden').removeClass('hidden');
                         } 
 
+                        getQuantidadeEstoque(auxCodProduto);
+
                         setTimeout(
                               function() 
                               {
@@ -629,6 +666,7 @@ $(document).ready(function () {
                     } else {
                         $('#erroPesquisaCodigo').fadeIn("slow");
                         $('#pesquisaNomeProduto').val("");
+                        $('#qtdeEstoque').val("");
                         $('#nomeProduto').val("");
                         $('#codigoProduto').val("");
                         $('#valorUnitario').val("");
