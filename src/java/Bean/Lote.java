@@ -16,8 +16,17 @@ public class Lote {
     private int qntdInicial;
     private int qntdAtual;
     private String validade;
+    private int qntdRetirar;
     
     public Lote(){}
+
+    public int getQntdRetirar() {
+        return qntdRetirar;
+    }
+
+    public void setQntdRetirar(int qntdRetirar) {
+        this.qntdRetirar = qntdRetirar;
+    }
     
     public String getCodigoLote() {
         return codigoLote;

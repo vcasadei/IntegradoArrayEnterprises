@@ -17,7 +17,6 @@ public class Venda {
     private String dataVenda;
     private ArrayList<Produto> produtos;
     private int codVenda;
-    private int quantidade;
     private float valorTotal;
 
     public Venda(){
@@ -66,13 +65,5 @@ public class Venda {
 
     public void setDataVenda(String dataVenda) {
         this.dataVenda = dataVenda;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
     }
 }

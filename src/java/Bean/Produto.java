@@ -17,11 +17,20 @@ public class Produto {
     private String descricao;
     private String ramo;
     private int diasLim_venda;
+    private int qntd;
     private float valorUnitario;
     private ArrayList<Lote> lotesVenda;
 
     public Produto(){
         lotesVenda = new ArrayList<Lote>();
+    }
+
+    public int getQntd() {
+        return qntd;
+    }
+
+    public void setQntd(int qntd) {
+        this.qntd = qntd;
     }
 
     public ArrayList<Lote> getLotesVenda() {

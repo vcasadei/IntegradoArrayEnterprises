@@ -7,10 +7,13 @@ package Servlet;
 
 import Banco.BdDAOException;
 import Banco.ProdutosDAO;
+import Banco.VendaDAO;
 import Bean.Cliente;
 import Bean.Lote;
 import Bean.Produto;
 import Bean.Venda;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -46,7 +49,7 @@ public class EfetuarVenda extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EfetuarVenda</title>");            
+            out.println("<title>Servlet EfetuarVenda</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet EfetuarVenda at " + request.getContextPath() + "</h1>");
@@ -84,9 +87,9 @@ public class EfetuarVenda extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
-        
+
         String dataVenda = "";
-        String clienteNome = "";
+        int clienteCod;
         String auxQtdeProdutos = "";
         int qtdeProdutos = 0;
         String codigosProdutos = "";
@@ -96,55 +99,109 @@ public class EfetuarVenda extends HttpServlet {
         String codProdutoDoLote = "";
         String codigosLotes = "";
         String quantidadeLotes = "";
-        String auxTotalVenda= "";
+        String auxTotalVenda = "";
         float totalVenda = 0;
-        
+
         Lote lote;
         Cliente cliente = new Cliente();
-        Venda venda;
+        Venda venda = new Venda();
         Produto produto;
         ArrayList<Produto> produtos = new ArrayList<Produto>();
         ArrayList<Lote> lotes = new ArrayList<Lote>();
-        
-        String codigo;
-        codigo = "1";
 
+        /*Seta a data da venda*/
         dataVenda = request.getParameter("dataVenda");
-        clienteNome = request.getParameter("clienteNome");
+        venda.setDataVenda(dataVenda);
+
+        /*Seta o cliente e coloca ele na venda*/
+        clienteCod = Integer.parseInt(request.getParameter("clienteCod"));
+        cliente.setCodCliente(clienteCod);
+        venda.setCliente(cliente);
+
+        /*Pega a quantidade de produtos*/
         auxQtdeProdutos = request.getParameter("quantosProdutos");
-        if(!auxQtdeProdutos.equals("")){
+        if (!auxQtdeProdutos.equals("")) {
             qtdeProdutos = Integer.parseInt(auxQtdeProdutos);
         }
+
+        /*Pega a lista de produtos e suas respectivas quantidades*/
         codigosProdutos = request.getParameter("listaProdCod");
         quantidadesProdutos = request.getParameter("listaProdQuant");
+
+        /*Pega a quantidade de lotes*/
         auxQtdeLotes = request.getParameter("quantosLotes");
-        if(!auxQtdeLotes.equals("")){
+        if (!auxQtdeLotes.equals("")) {
             qtdeLotes = Integer.parseInt(auxQtdeLotes);
         }
+
+        /*Pega as listas com os códigos dos lotes, seus respectivos cod de produto e a quantidade 
+         que será tirada de cada um desses lotes*/
         codProdutoDoLote = request.getParameter("listaLoteProdCod");
         codigosLotes = request.getParameter("listaLoteCod");
         quantidadeLotes = request.getParameter("listaLoteQuant");
+
+        /*Pega o valor total da venda e adiciona na venda*/
         auxTotalVenda = request.getParameter("totalVenda");
-        if(!auxTotalVenda.equals("")){
+        if (!auxTotalVenda.equals("")) {
             totalVenda = Float.parseFloat(auxTotalVenda);
         }
-        cliente.setNome(clienteNome);
+        venda.setValorTotal(totalVenda);
+
+        /*Coloca as informações dos lotes em vetores*/
         String[] auxLoteCodProd = codProdutoDoLote.split(";");
         String[] auxCodigosLotes = codigosLotes.split(";");
         String[] auxQuantidadeLotes = quantidadeLotes.split(";");
-        for(int i = 0; i < qtdeLotes; i++){
+        /*Faz um vetor com os códigos dos produtos e outro com suas respctivas quantidades*/
+        String[] auxCodProd = codigosProdutos.split(";");
+        String[] qntdProdutos = quantidadesProdutos.split(";");
+
+        /*Monta os lotes*/
+        for (int i = 0; i < qtdeLotes; i++) {
             lote = new Lote();
             lote.setCodigoProduto(Integer.parseInt(auxLoteCodProd[i]));
             lote.setCodigoLote(auxCodigosLotes[i]);
-            //auxQuantidadeLotes[i] --> Quantidade que deverá tirar de cada lote
+            lote.setQntdRetirar(Integer.parseInt(auxQuantidadeLotes[i]));
             lotes.add(lote);
         }
-        String[] auxCodProd = codigosProdutos.split(";");
-        for(int i = 0; i < qtdeProdutos; i++){
+
+        /*Monta os produtos com seus respctivos lotes*/
+        for (int i = 0; i < qtdeProdutos; i++) {
             produto = new Produto();
             produto.setCodProd(Integer.parseInt(auxCodProd[i]));
-            produto.setLotesVenda(lotes);
+            produto.setQntd(Integer.parseInt(qntdProdutos[i]));
+            System.out.println(produto.getQntd());
+            for (int j = 0; j < qtdeLotes; j++) {
+                if (lotes.get(j).getCodigoProduto() == produto.getCodProd()) {
+                    produto.addLoteVenda(lotes.get(j));
+                }
+            }
+
             produtos.add(produto);
+        }
+
+        /*coloca os produtos na venda*/
+        venda.setProdutos(produtos);
+
+        /*Cadastra a venda no banco*/
+        try {
+            VendaDAO daoVenda = new VendaDAO();
+
+            PrintWriter out = response.getWriter();
+            JsonObject myObj = new JsonObject();
+
+            if (daoVenda.CadastrarVenda(venda)) {
+                myObj.addProperty("success", true);
+            } else {
+                myObj.addProperty("success", false);
+            }
+
+            out.println(myObj.toString());
+            out.close();
+
+        } catch (BdDAOException ex) {
+            Logger.getLogger(CadastrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
