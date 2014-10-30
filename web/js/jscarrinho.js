@@ -276,14 +276,15 @@ $(document).ready(function() {
     });
 
     $('#terminarCompra').click(function() {
-        var sessao = sessionStorage.getItem( "dataCliente" );
-        var clienteObj = JSON.parse( sessao );
-        auxDataVenda = clienteObj[0].dataVenda;
-        auxDataVenda = auxDataVenda.replace(/\//g, "-");
+        // var sessao = sessionStorage.getItem( "dataCliente" );
+        // var clienteObj = JSON.parse( sessao );
+        // auxDataVenda = clienteObj[0].dataVenda;
+        // auxDataVenda = auxDataVenda.replace(/\//g, "-");
 
-        $('#nomeRelatorio').val('RelatorioVendas' + auxDataVenda);
-        $('#salvarRelatorioComo').modal('show');
+        // $('#nomeRelatorio').val('RelatorioVendas' + auxDataVenda);
+        // $('#salvarRelatorioComo').modal('show');
         console.log("clicou para salvar");
+        salvarCompra();
     });
 
     $('#cancelarVenda').click(function() {
@@ -296,6 +297,85 @@ $(document).ready(function() {
         sessionStorage.removeItem('dataCliente');
         window.location.href = "/ArrayEnterprises/index.html";
     });
+
+    function salvarCompra(){
+        var salvarSessao = sessionStorage.getItem( "dataCliente" );
+        salvarSessao = JSON.parse(salvarSessao);
+
+        var salvarClienteNome = salvarSessao[0].codCliente;
+
+        var salvarClienteData = salvarSessao[0].dataVenda;
+
+
+        salvarSessao = JSON.parse(sessionStorage.getItem( "dataProduto" ));
+        var salvarQtdeProdutos = "";
+        var salvarProdutoCodigo = "";
+        var salvarQuantidadeProduto = "";
+        var totalCompra = 0;
+        var auxQuan = 0;
+        var auxTotal = 0;
+        var auxVal = 0;
+
+        if(salvarSessao != null && salvarSessao.length > 0){
+            var salvarQtdeProdutos = salvarSessao.length + "";
+            for(var i = 0; i < salvarSessao.length; i++){
+                salvarProdutoCodigo = salvarProdutoCodigo + salvarSessao[i].codigoProduto + ";";
+                salvarQuantidadeProduto = salvarQuantidadeProduto + salvarSessao[i].quantidadeProduto + ";";
+
+                auxQuan = salvarSessao[i].quantidadeProduto.replace(/ /g, '');
+                auxTotal = salvarSessao[i].valorUnitario.replace(/ /g, '');
+                auxQuan = parseInt(auxQuan);
+                auxTotal = parseInt(auxTotal);
+                auxVal = auxQuan * auxTotal;
+                totalCompra = totalCompra + auxVal;
+
+            }
+        }
+
+        salvarSessao = JSON.parse(sessionStorage.getItem( "dataLote" ));
+        var salvarQtdeLotes = "";
+        var salvarLoteProdCod = "";
+        var salvarLoteCod = "";
+        var salvarQuantidadeLote = "";
+        if(salvarSessao != null && salvarSessao.length > 0){
+            salvarQtdeLotes = salvarSessao.length + "";
+            for(var i = 0; i < salvarSessao.length; i++){
+                salvarLoteProdCod = salvarLoteProdCod + salvarSessao[i].codProduto + ";";
+                salvarLoteCod = salvarLoteCod + salvarSessao[i].codLote + ";";
+                salvarQuantidadeLote = salvarQuantidadeLote + salvarSessao[i].quantidade + ";";
+            }
+        }
+
+        var dataString;
+        dataString = "dataVenda=" + salvarClienteData + "&clienteNome=" + salvarClienteNome
+            + "&quantosProdutos=" + salvarQtdeProdutos + "&listaProdCod=" + salvarProdutoCodigo 
+            + "&listaProdQuant=" + salvarQuantidadeProduto + "&quantosLotes=" + salvarQtdeLotes
+            + "&listaLoteProdCod=" + salvarLoteProdCod + "&listaLoteCod=" + salvarLoteCod
+            + "&listaLoteQuant=" + salvarQuantidadeLote + "&totalVenda=" + totalCompra;
+
+            console.log(dataString);
+             $.ajax({
+                type: "POST",
+                url: "EfetuarVenda",
+                dataType: "text",
+                data: dataString
+            }).done(function(data) {
+                console.log("recebeu do servlet");
+                testeData = data;
+
+                if (data === "0;") {
+                    
+                    
+                } else {
+                    
+                }
+
+            });
+
+        
+
+
+    }
     
 
 });

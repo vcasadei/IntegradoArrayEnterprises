@@ -13,10 +13,6 @@
         <servlet-class>Servlet.BuscaClienteProdutoCNPJCod</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FazerLogin</servlet-name>
-        <servlet-class>Servlet.FazerLogin</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AlteraDataLimiteValidade</servlet-name>
         <servlet-class>Servlet.AlteraDataLimiteValidade</servlet-class>
     </servlet>
@@ -36,6 +32,14 @@
         <servlet-name>BuscaTodosProdutos</servlet-name>
         <servlet-class>Servlet.BuscaTodosProdutos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FazerLogin</servlet-name>
+        <servlet-class>Servlet.FazerLogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EfetuarVenda</servlet-name>
+        <servlet-class>Servlet.EfetuarVenda</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CadastrarVenda</servlet-name>
         <url-pattern>/CadastrarVenda</url-pattern>
@@ -52,10 +56,6 @@
         <servlet-name>EfetuarLogin</servlet-name>
         <servlet-class>Servlet.EfetuarLogin</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>FazerLogin</servlet-name>
-        <url-pattern>/FazerLogin</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AlteraDataLimiteValidade</servlet-name>
         <url-pattern>/AlteraDataLimiteValidade</url-pattern>
@@ -75,6 +75,14 @@
     <servlet-mapping>
         <servlet-name>BuscaTodosProdutos</servlet-name>
         <url-pattern>/BuscaTodosProdutos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FazerLogin</servlet-name>
+        <url-pattern>/FazerLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EfetuarVenda</servlet-name>
+        <url-pattern>/EfetuarVenda</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
