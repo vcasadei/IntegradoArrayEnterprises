@@ -7,11 +7,14 @@ package Servlet;
 
 import Banco.BdDAOException;
 import Banco.ProdutosDAO;
+import Bean.Produto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +67,30 @@ public class BuscaProdutosEstoque extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setCharacterEncoding("UTF-8");
+        
+        /*Variáveis para buscar e armazenar os produtos*/
+        ArrayList<Produto> produtos = new ArrayList<Produto>();
+        ProdutosDAO produtosDAO;
+
+        try {
+           
+            
+            /*Faz a busca dos produtos*/
+            produtosDAO = new ProdutosDAO();
+            produtos = produtosDAO.BuscaTodosProdutos();
+
+            request.setAttribute("listaProdutos", produtos);
+            
+            RequestDispatcher rd = null;
+            rd = request.getRequestDispatcher("/AlteraLimiteVenda.jsp");
+            rd.forward(request, response);
+
+        } catch (BdDAOException ex) {
+            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscaClientesProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

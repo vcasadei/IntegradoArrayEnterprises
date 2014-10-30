@@ -81,26 +81,22 @@ public class AlteraDataLimiteValidade extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int limiteNovo = Integer.parseInt(request.getParameter("NOMECAMPO"));
-        int codProd = Integer.parseInt(request.getParameter("NOMECAMPO"));
+        int limiteNovo = Integer.parseInt(request.getParameter("diasLim"));
+        int codProd = Integer.parseInt(request.getParameter("codProd"));
 
         try {
 
-            PrintWriter out = response.getWriter();
-            Gson gson = new Gson();
-            JsonObject myObj = new JsonObject();
-
             ProdutosDAO daoProdutos = new ProdutosDAO();
-
+            PrintWriter writer = response.getWriter();
+            
             /*Altera o limite e retorna a mensagem de sucesso ou falha*/
             if (daoProdutos.alteraLimiteDias(limiteNovo, codProd)) {
-                myObj.addProperty("success", true);
+                writer.print("success");
+               
             } else {
-                myObj.addProperty("success", false);
+                writer.print("error");
             }
-
-            out.println(myObj.toString());
-            out.close();
+            writer.close();
 
         } catch (BdDAOException ex) {
             Logger.getLogger(AlteraDataLimiteValidade.class.getName()).log(Level.SEVERE, null, ex);

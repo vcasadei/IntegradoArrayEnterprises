@@ -115,6 +115,9 @@
                         <li class="somenteAdm">
                             <a href="novousuario.jsp"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
                         </li>
+                        <li class="somenteAdm">
+                            <a  href="BuscaProdutosEstoque"><i class="glyphicon glyphicon-saved fa-fw"></i> Alterar Limite de Validade</a>
+                        </li>
 
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Vendas<span class="fa arrow"></span></a>

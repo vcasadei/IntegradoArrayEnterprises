@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
-<%@page import="Bean.Cliente"%>
-<%@page import="Bean.Venda"%>
+<%@page import="Bean.Produto"%>
 <!DOCTYPE html>
 <html lang="pt-br" class="wf-sourcecodepro-n4-active wf-sourcecodepro-n7-active wf-active">
 
@@ -42,12 +41,12 @@
 
         <script src="js/salvarVenda.js"></script>
 
-        <script src="js/jsRelatorios.js"></script>
+        <script src="js/jsLimiteVenda.js"></script>
         <script src="js/jsGeral.js"></script>
 
 
 
-        <title>Consultar Venda - ArrayEnterprises</title>
+        <title>Alterar Limite de Validade - ArrayEnterprises</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="datepicker/css/datepicker.css" rel="stylesheet">
@@ -93,7 +92,7 @@
         <!-- Pega o que veio do request-->
         <%
             
-            List<Venda> vendas = (List<Venda>) request.getAttribute("listaVendas");
+            List<Produto> produtos = (List<Produto>) request.getAttribute("listaProdutos");
         %>
 
 
@@ -114,12 +113,12 @@
                             <a href="novousuario.jsp"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
                         </li>
                         <li class="somenteAdm">
-                            <a  href="BuscaProdutosEstoque"><i class="glyphicon glyphicon-saved fa-fw"></i> Alterar Limite de Validade</a>
+                            <a class="active" href="BuscaProdutosEstoque"><i class="glyphicon glyphicon-saved fa-fw"></i> Alterar Limite de Validade</a>
                         </li>
 
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Vendas<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse in">
+                            <ul class="nav nav-second-level collapse out">
                                 <li>
                                     <a class="" href="BuscaClientesProdutos"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Efetuar Venda</a>
                                 </li>
@@ -127,7 +126,7 @@
                                     <a class="" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Resumo da Venda</a>
                                 </li>
                                 <li>
-                                    <a class="active" href="BuscaTodasVendas"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Consultar Venda</a>
+                                    <a  href="BuscaTodasVendas"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Consultar Venda</a>
                                 </li>
 
                             </ul>
@@ -153,11 +152,8 @@
                     <li>
                         <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Painel de Controle</a>
                     </li>
-                    <li>
-                        <i class="glyphicon glyphicon-share-alt"></i> Vendas
-                    </li>
                     <li class="active">
-                        <i class="glyphicon glyphicon-list-alt"></i> Consultar Venda
+                        <i class="glyphicon glyphicon-saved"></i> Alterar Limite de Validade
                     </li>
 
                 </ol>
@@ -170,41 +166,45 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <b>As vendas efetuadas estão listadas abaixo: </b>
+                        <b>Os produtos são Listados abaixo: </b>
                     </div>
                     <div class="panel-body">
 
+
                             <div class="col-lg-16" >
-                                <table id="loadVenda" class="display table-bordered" cellspacing="0" width="100%" style="">
+                                <table id="loadProduto" class="display table-bordered" cellspacing="0" width="100%" style="">
                                     <thead >
                                         <tr >
-                                            <th style="text-align: center;" class="hidden">codVenda</th>
-                                            <th style="text-align: center;" >Data da Venda</th>
-                                            <th style="text-align: center;">Cliente</th>
-                                            <th style="text-align: center;">Valor Total (R$)</th>
-                                            <th style="text-align: center;">Relatório</th>
+                                            <th style="text-align: center;" >Código</th>
+                                            <th style="text-align: center;" >Produto</th>
+                                            <th style="text-align: center;">Ramo</th>
+                                            <th style="text-align: center;">Valor unitário (R$)</th>
+                                            <th style="text-align: center;">Limite para venda (dias)</th>
+                                            <th style="text-align: center;">Alterar limite</th>
                                         </tr>
                                     </thead >
 
                                     <tfoot >
                                         <tr>
-                                            <th class="hidden">codVenda</th>
-                                            <th style="text-align: center;">Data da Venda</th>
-                                            <th style="text-align: center;">Cliente</th>
-                                            <th style="text-align: center;">Valor Total (R$)</th>
-                                            <th style="text-align: center;">Relatório</th>
+                                            <th style="text-align: center;" >Código</th>
+                                            <th style="text-align: center;" >Produto</th>
+                                            <th style="text-align: center;">Ramo</th>
+                                            <th style="text-align: center;">Valor unitário (R$)</th>
+                                            <th style="text-align: center;">Limite para venda (dias)</th>
+                                            <th style="text-align: center;">Alterar limite</th>
                                         </tr>
                                     </tfoot>
 
                                     <tbody style="text-align: center;">
-                                        <% for (int i = 0; i < vendas.size(); i++) {
+                                        <% for (int i = 0; i < produtos.size(); i++) {
                                         %>
                                         <tr>
-                                            <td class="hidden"> <%=vendas.get(i).getCodVenda()%> </td>
-                                            <td> <%=vendas.get(i).getDataVenda()%> </td>
-                                            <td> <%=vendas.get(i).getCliente().getNome()%> </td> 
-                                            <td> <%=vendas.get(i).getValorTotal()%> </td>
-                                            <td> <button class="btn btn-primary"><span class="glyphicon glyphicon-file"> Gerar Relatório</button></td>
+                                            <td > <%=produtos.get(i).getCodProd()%> </td>
+                                            <td > <%=produtos.get(i).getNome()%> </td>
+                                            <td > <%=produtos.get(i).getRamo()%> </td>
+                                            <td > <%=produtos.get(i).getValorUnitario()%> </td>
+                                            <td ><b> <%=produtos.get(i).getDiasLim_venda()%> </b></td>
+                                            <td> <button class="btn btn-primary"><span class="glyphicon glyphicon-pencil"> Alterar</button></td>
 
                                         </tr>
                                         <%
@@ -218,19 +218,6 @@
 
 
                             
-
-                            <div class="row">
-                                <div class="col-lg-3">
-                                </div>
-                                <div class="col-lg-4">
-                                </div>
-                                <div class="col-lg-5">
-                                    <!-- Button Limp3r Campos -->
-                                    <button type="reset" id="resetVenda" class="btn btn-danger"><span class="glyphicon glyphicon-repeat" style="color:white;"></span>&nbsp; Limpar Campos</button>
-
-                                    <button id="toProducts" type="button" class="btn btn-primary"  disabled><span class="glyphicon glyphicon-plus-sign" style="color:white;"></span>&nbsp; Adicionar Produtos</button>
-                                </div>
-                            </div>
 
 
                     </div>
@@ -246,17 +233,82 @@
 
     </div>
     
+    
+
 
     <!-- Modal erro de não selecionar nenhum item -->
-    <div class="modal fade bs-example-modal-sm " id="modalErroDeSelecao"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal fade bs-example-modal-sm " id="modalErroAlterar"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm vertical-centered " >
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#d9534f;">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Erro de Seleção</h4>
+                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-exclamation-sign" style="color:white;"></span>&nbsp;&nbsp;Erro na Alteração</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Você deve selecionar um item.</p>
+                    <p>Um erro ocorreu durante a alteração do limite de dias.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    
+
+
+    <!-- Modal erro de não selecionar nenhum item -->
+    <div class="modal fade " id="modalAlterarLimite"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog vertical-centered " >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#428bca;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Alterar Limite de Venda</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" id="erroDiasVazio" style="display:none;">
+                        <button type="button" class="close" id="closeErroNomeVazio" >&times;</button>
+                        <span><b>Erro:</b> Insira um valor válido</span>
+                    </div>
+
+                    <input class="hidden" id="hidCodProd">
+
+                    <p>O tempo limite para a venda do produto <b><span id="modalProdNone"></span></b> é de <b><span id="modalProdDias"></span></b> dias.</p>
+                    <p>Para alterar, insira o novo limite no campo abaixo e clique em <b>Alterar</b></p>
+
+                    
+                    <label>Novo limite de dias: *</label>
+                    <div class="form-group input-group " id="nomeRelatorioInputGroup">
+
+                        <input class="form-control" id="newLimiteDias" class="newLimiteDias" name="newLimiteDias" placeholder="Insira o novo limite de dias" >
+                        <span class="input-group-addon" id="unidadeAddon">dias</span>
+
+                    </div>
+                    <div class="form-group input-group"  >
+                        <small class="help-block" >* Somente números positivos</small>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="alterarSim" class="btn btn-primary" >Alterar</button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Modal erro de não selecionar nenhum item -->
+    <div class="modal fade bs-example-modal-sm " id="modalSucessoAlterar"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm vertical-centered " >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#5cb85c;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-ok" style="color:white;"></span>&nbsp;&nbsp;Sucesso na Alteração</h4>
+                </div>
+                <div class="modal-body">
+                    <p>O Limite de dias foi alterado com sucesso!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>

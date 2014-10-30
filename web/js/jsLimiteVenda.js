@@ -36,7 +36,7 @@ $(document).ready(function() {
     //Quando um cliente é selecionado no modal
     $('#selectClient').click(function() {
                 
-        if ($('#loadVenda tbody tr').hasClass('selected')) {
+        if ($('#loadProduto tbody tr').hasClass('selected')) {
             $('#load tbody tr').removeClass('selected');
         }
 
@@ -74,19 +74,92 @@ $(document).ready(function() {
         $('#erroPesquisaCNPJ').fadeOut(300);
     });
 
-    //Para a produção do Relatório
-   $('#loadVenda tbody').on( 'click', 'button', function () {
+    $('#newLimiteDias').keypress(function (e) {
+        var allowedChars = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (allowedChars.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    }).keyup(function() {
+        // the addition, which whill check the value after a keyup (triggered by Ctrl+V)
+        // We take the same regex as for allowedChars, but we add ^ after the first bracket : it means "all character BUT these"
+        var forbiddenChars = new RegExp("[^0-9]", 'g');
+        if (forbiddenChars.test($(this).val())) {
+            $(this).val($(this).val().replace(forbiddenChars, ''));
+        }
+    });
+
+    //Para alterar o limite de vendas, chama MODAL
+   $('#loadProduto tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        var codVenda = data[0];
-        var dataVenda = data[1];
-        var clienteNome = data[2];
-        var totalvenda = data[3];
+        var codProduto = data[0];
+        var prodNome = data[1];
+        var diasLimite = data[4];
+        $('#modalProdNone').html(prodNome);
+        $('#modalProdDias').html(diasLimite);
+        $('#hidCodProd').val(codProduto);
+
+        $('#modalAlterarLimite').modal('show');
+
         //Implementar chamada AJAX
-        console.log("clicou!");
-    } );
+    });
+
+    function alterarLimiteDias(dias){
+
+        var dataString;
+            dataString = "codProd=" + $('#hidCodProd').val().replace(/ /g, '') + "&diasLim=" + dias;
+             $.ajax({
+                type: "POST",
+                url: "AlteraDataLimiteValidade",
+                dataType: "text",
+                data: dataString
+            }).done(function(data) {
+                testeData = data;
+
+                if (data === "error" || data == "") {
+                    console.log("deu erro " + data)
+                    $('#qtdeEstoque').val("0");
+                    $('#modalAlterarLimite').fadeTo( "fast", 0.2 );
+                    $('#modalErroAlterar').modal('show');
+                    
+                } else {
+                    console.log("parece que funfou: " + data)
+                    $('#qtdeEstoque').val(data);
+                    $('#modalAlterarLimite').fadeTo( "fast", 0.2 );
+                    $('#modalSucessoAlterar').modal('show');
+                }
+
+            });
+        }
+
+    $('#modalErroAlterar').on('hidden.bs.modal', function () {
+        $('#modalAlterarLimite').modal('hide');
+    });
+
+    $('#modalSucessoAlterar').on('hidden.bs.modal', function () {
+        $('#modalAlterarLimite').modal('hide');
+        window.location = "BuscaProdutosEstoque";
+    });
+    
+    $('#alterarSim').click(function(){
+
+        if( $('#newLimiteDias').val() != "" ){
+            $('#erroDiasVazio').fadeOut(200);
+            $('#nomeRelatorioInputGroup').removeClass('has-error');
+            //chamada AJAX
+
+            alterarLimiteDias($('#newLimiteDias').val().replace(/ /g, ''));
+            
+        } else {
+            $('#erroDiasVazio').fadeIn(200);
+            $('#nomeRelatorioInputGroup').addClass('has-error');
+        }
+    });
 
     //Inicia dataTable para clientes
-    var table = $('#loadVenda').DataTable( {
+    var table = $('#loadProduto').DataTable( {
         language: {
             url: 'localisation/Portuguese-Brasil.json'
         }
@@ -276,12 +349,15 @@ $(document).ready(function() {
         // original object
         window.location.href = "/ArrayEnterprises/BuscaTodosProdutos";
     });
+
     $('#cancelarVenda').click(function() {
         sessionStorage.removeItem('dataProduto');
         sessionStorage.removeItem('dataLote');
         sessionStorage.removeItem('dataCliente');
         window.location.href = "/ArrayEnterprises/index.html";
     });
+
+
 
 
 

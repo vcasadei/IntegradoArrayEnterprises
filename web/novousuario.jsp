@@ -265,6 +265,9 @@ $( document ).ready(function() {
                         <li>
                             <a href="novousuario.jsp" class="active"><i class="fa fa-edit fa-fw"></i> Cadastro de usuário</a>
                         </li>
+                        <li class="somenteAdm">
+                            <a c href="BuscaProdutosEstoque"><i class="glyphicon glyphicon-saved fa-fw"></i> Alterar Limite de Validade</a>
+                        </li>
 
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Vendas<span class="fa arrow"></span></a>
