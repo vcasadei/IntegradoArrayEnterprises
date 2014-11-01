@@ -171,7 +171,102 @@ public class VendaDAO {
         return vendas;
     }
 
-    public Venda buscaDadosVenda() {
-        return null;
+    public Venda buscaDadosVenda(int codVenda) throws SQLException, BdDAOException {
+
+        Statement stat = bdConn.createStatement();
+        Venda retorno = null;
+
+        /*Faz a consulta que pega os dados da venda na tabela Venda*/
+        ResultSet rs = stat.executeQuery("SELECT * FROM Venda WHERE codVenda = " + codVenda + ";");
+
+        if (rs.next()) {
+            retorno = new Venda();
+            ArrayList<Produto> produtos = new ArrayList<Produto>();
+
+            /*Seta o valor total, a data da venda e o código do cliente*/
+            retorno.setCodVenda(codVenda);
+            retorno.setDataVenda(rs.getString("dataVenda"));
+            retorno.setValorTotal(rs.getFloat("valorTotal"));
+            Cliente cliente = new Cliente();
+            cliente.setCodCliente(rs.getInt("codCliente"));
+
+            /*Fecha o result set pra poder usá-lo na próxima consulta*/
+            ConnectionBanco.close(null, null, rs);
+
+            /*Faz a consulta que pega os dados do cliente associado a venda*/
+            rs = stat.executeQuery("SELECT * FROM Cliente WHERE codCliente = " + cliente.getCodCliente() + ";");
+
+            if (rs.next()) {
+                /*Seta os dados do cliente e o add a venda*/
+                cliente.setCNPJ(rs.getString("CNPJ"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setRamo(rs.getString("ramo"));
+                /*Adiciona o cliente a venda*/
+                retorno.setCliente(cliente);
+            }
+
+            /*Fecha o result set pra poder usá-lo na próxima consulta*/
+            ConnectionBanco.close(null, null, rs);
+
+            /*Monta a consulta que pega o código dos produtos*/
+            rs = stat.executeQuery("SELECT * FROM ProdVenda WHERE codVenda = " + codVenda + ";");
+
+            Produto p;
+            while (rs.next()) {
+                p = new Produto();
+                p.setCodProd(rs.getInt("codProd"));
+                p.setQntd(rs.getInt("qntd"));
+                produtos.add(p);
+            }
+
+            /*Fecha o result set pra poder usá-lo na próxima consulta*/
+            ConnectionBanco.close(null, null, rs);
+
+            /*Busca os dados completos de todos os produtos inseridos na venda*/
+            for (Produto pAux : produtos) {
+                rs = stat.executeQuery("SELECT * FROM Produto WHERE codProd = " + pAux.getCodProd() + ";");
+                if (rs.next()) {
+                    pAux.setDescricao(rs.getString("descProd"));
+                    pAux.setDiasLim_venda(rs.getInt("diasLim_validade"));
+                    pAux.setNome(rs.getString("nomeProd"));
+                    pAux.setRamo(rs.getString("ramo"));
+                    pAux.setValorUnitario(rs.getFloat("valorUnitario"));
+                }
+
+                /*Fecha o result set pra poder usá-lo na próxima consulta*/
+                ConnectionBanco.close(null, null, rs);
+            }
+
+            /*Pega os lotes utilizados na venda de cada produto inserido na mesma*/
+            Lote l;
+            for (Produto pAux : produtos) {
+                
+                l = new Lote();
+                
+                rs = stat.executeQuery("SELECT l.codLote, l.codProd, qntdInicial, qntdAtual, validade, "
+                        + "qntdRetirar FROM Lote as l, ProdVendaLote as pvl WHERE codVenda = " + codVenda
+                        + "AND pvl.codProd = " + pAux.getCodProd() + "AND pvl.codLote = l.codLote;");
+                
+                /*Seta as informações do lote*/
+                while (rs.next()){
+                    l.setCodigoLote(rs.getString(1));
+                    l.setCodigoProduto(rs.getInt(2));
+                    l.setQntdInicial(rs.getInt(3));
+                    l.setQntdRetirar(rs.getInt(6));
+                    l.setQntdAtual((rs.getInt(4) + l.getQntdRetirar()));
+                    l.setValidade(rs.getString(5));
+                }
+                /*Adiciona o lote ao produto*/
+                pAux.addLoteVenda(l);
+                
+                /*Fecha o result set pra poder usá-lo na próxima consulta*/
+                ConnectionBanco.close(null, null, rs);
+            }
+
+            /*Adiciona os produtos a venda*/
+            retorno.setProdutos(produtos);
+        }
+
+        return retorno;
     }
 }

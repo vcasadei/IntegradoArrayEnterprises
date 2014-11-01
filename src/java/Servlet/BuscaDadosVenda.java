@@ -5,8 +5,14 @@
  */
 package Servlet;
 
+import Banco.BdDAOException;
+import Banco.VendaDAO;
+import Bean.Venda;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -73,7 +79,22 @@ public class BuscaDadosVenda extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        try {
+            
+            int codVenda = Integer.parseInt(request.getParameter("codVenda"));
+            
+            VendaDAO vendaDAO = new VendaDAO();
+            
+            Venda dadosVenda = vendaDAO.buscaDadosVenda(codVenda);
+            
+        } catch (BdDAOException ex) {
+            Logger.getLogger(BuscaDadosVenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscaDadosVenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
 
     /**
