@@ -79,6 +79,9 @@
 
         <!-- Custom Fonts -->
         <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="css/bootstrap-table.css">
+        <script src="js/bootstrap-table.js"></script>
+        <script src="js/bootstrap-table-pt-BR.min.js"></script>
 
 
 
@@ -294,6 +297,7 @@
 
                                                         <input class="form-control" id="quantidadeProduto" class="quantidadeProduto" name="quantidadeProduto" placeholder="Insira a quantidade do produto" >
                                                     </div>
+                                                    <input class="hidden" id="hidQtdeFaltando">
 
                                                     <div class="form-group input-group" style="margin-top: 6%;">
 
@@ -334,7 +338,39 @@
 
                                             </div>
 
+                                            <div class="col-lg-16">
 
+                                                <table class="hidden" id="table-methods-table"  >
+                                                    <thead>
+                                                        <tr >
+                                                            <th class="status" data-field="state" data-checkbox="true" data-events="operateEvents"></th>
+                                                            <th data-field="codigoLote" data-halign="center" data-align="center" >Código</th>
+                                                            <th data-field="qtdeEstoque" data-halign="center" data-align="center">Quantidade em Estoque</th>
+                                                            <th data-field="validade" data-halign="center" data-align="center">Validade</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+
+                                                <div class="col-lg-2">
+
+                                                </div>
+                                                <div class="col-lg-3">
+
+                                                </div>
+                                                <div class="col-lg-5" style="margin-top: 10px;">
+                                                    <div class="form-group" id="groupUnidadesFalta" style="display:none;">
+                                                        <label >Unidades Faltantes</label>
+                                                        <input class="form-control" id="unidadesFalta" name="unidadesFalta" placeholder="" readonly>
+                                                        <span id="erroUnidadesFaltantes" style="display:none; color:red"><b>Erro:</b> Você selecionou muitos lotes.</span>
+
+                                                    </div>
+
+                                                </div>
+                                                
+
+                                            </div>
+                                            
 
                                             <div class="panel-group" id="accordion">
                                                 <div class="hidden panel panel-default template" >
@@ -396,12 +432,11 @@
                                             </button>
                                         </div>
 
+
+
+                                        </div>
+
                                     </div>
-
-
-
-
-
 
                                 </div>
 
@@ -548,7 +583,7 @@
     <!-- /.modal -->
 
     <!-- Modal Selecionar Lote -->
-    <div class="modal fade" id="selecionarLote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalSelecionarLote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -556,12 +591,12 @@
                     <h4 class="modal-title" id="myModalLabel">Selecionar Lote</h4>
                 </div>
                 <div class="modal-body">
-                    <table id="loadLote" class="hover table table-striped table-bordered" cellspacing="0" width="100%" style="cursor: pointer;">
+                    <table id="loadLote" class="display table-bordered" cellspacing="0" width="100%" style="cursor: pointer;">
+
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th>Unidades</th>
-                                <th>Data de Fabricação</th>
+                                <th>Quantidade Estoque</th>
                                 <th>Data de Validade</th>
 
                             </tr>
@@ -570,170 +605,12 @@
                         <tfoot>
                             <tr>
                                 <th>Código</th>
-                                <th>Unidades</th>
-                                <th>Data de Fabricação</th>
+                                <th>Quantidade Estoque</th>
                                 <th>Data de Validade</th>
 
                             </tr>
                         </tfoot>
-
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Brielle Williamson</td>
-                                <td>Integration Specialist</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Herrod Chandler</td>
-                                <td>Sales Assistant</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Rhona Davidson</td>
-                                <td>Integration Specialist</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Colleen Hurst</td>
-                                <td>Javascript Developer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Sonya Frost</td>
-                                <td>Software Engineer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Jena Gaines</td>
-                                <td>Office Manager</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Quinn Flynn</td>
-                                <td>Support Lead</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Charde Marshall</td>
-                                <td>Regional Director</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Haley Kennedy</td>
-                                <td>Senior Marketing Designer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Tatyana Fitzpatrick</td>
-                                <td>Regional Director</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Michael Silva</td>
-                                <td>Marketing Designer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Paul Byrd</td>
-                                <td>Chief Financial Officer (CFO)</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Gloria Little</td>
-                                <td>Systems Administrator</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Bradley Greer</td>
-                                <td>Software Engineer</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Dai Rios</td>
-                                <td>Personnel Lead</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Jenette Caldwell</td>
-                                <td>Development Lead</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-                            <tr>
-                                <td>Yuri Berry</td>
-                                <td>Chief Marketing Officer (CMO)</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-
-                            </tr>
-
-                        </tbody>
+                        
                     </table>
 
                 </div>

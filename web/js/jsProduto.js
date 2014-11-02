@@ -14,10 +14,15 @@ $(document).ready(function () {
     $("#cnpjCliente").val(cnpjCliente);
     $("#codigoCliente").val(codigoCliente);
     $("#ramoCliente").val(ramoCliente);
+    $loteTable = $('#table-methods-table');
 
     console.log(clienteObj);
 
+    var qtdeFaltando;
+    var rowsSelecionados = [];
 
+
+    var rows = [];
 
 
     $("tr.item").each(function(i, tr) {
@@ -33,9 +38,16 @@ $(document).ready(function () {
         $('#erroNomeVazio').fadeOut(300);
     });
 
+    $('#closeErroNomeVazio').click(function (e) {
+        $('#erroUnidadesFaltantes').fadeOut(300);
+    });
+
+
 
     $('#buttonSelectProduto').click(function () {
         $('#selecionarProduto').modal('show');
+        $loteTable.bootstrapTable('destroy');
+        $('#groupUnidadesFalta').fadeOut('fast');
 
         $('#erroPesquisaCodigo').fadeOut("slow");
         $('#pesquisaNomeProduto').val("");
@@ -144,10 +156,12 @@ $(document).ready(function () {
         else {
             table.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
+            aux2 = "";
 
             $(this).find("td").each(function () {
                 aux2 = aux2 + "#/" + $(this).text();
             });
+            console.log("%%%% Clicou em algum " + aux2);
 
             auxSplit = aux2.split("#/");
         }
@@ -164,7 +178,7 @@ $(document).ready(function () {
                 dataType: "text",
                 data: dataString
             }).done(function(data) {
-                testeData = data;
+                
 
                 if (data === "0" || data == "") {
                     // $('#erroLoteInsuficiente').modal('show');
@@ -199,6 +213,7 @@ $(document).ready(function () {
             console.log("Nada foi Selecionado");
             $('#modalErroDeSelecao').modal('show');
         } else {
+            console.log("------------ SELECIONADO: " + auxSplit);
             var auxCodProd = auxSplit[1];
             getQuantidadeEstoque(auxCodProd);
             var auxNomeProd = auxSplit[2];
@@ -242,11 +257,8 @@ $(document).ready(function () {
         $('#erroPesquisaCodigo').fadeOut(300);
     });
 
-    $('#loadLote').dataTable();
 
-    $('#selectLote').click(function () {
-        $('#loteHidden').removeClass('hidden');
-    });
+    
 
     var $template = $(".template");
 
@@ -263,15 +275,25 @@ $(document).ready(function () {
 
     //called when key is pressed in textbox
     $("#quantidadeProduto").keypress(function (e) {
+        if($("#quantidadeProduto").val() == ""){
+            if($('#formGroupQuantidadeProduto2').hasClass( "has-error" )){
+                $('#formGroupQuantidadeProduto2').removeClass("has-error");
+                $('#formGroupQuantidadeProduto2').fadeOut(200);
+                qtdeFaltando = $('#quantidadeProduto').val();
+            }
+        }
+
         //if the letter is not digit then display error and don't type anything
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
             //display error message
             //$("#errmsg").html("Digits Only").show().fadeOut("slow");
             return false;
         } else {
+
             $('#formGroupQuantidadeProduto').removeClass("has-error");
             $('#formGroupQuantidadeProduto2').removeClass("has-error");
             $('#formGroupQuantidadeProduto2').fadeOut(200);
+            qtdeFaltando = $('#quantidadeProduto').val();
         }
     });
 
@@ -285,8 +307,19 @@ $(document).ready(function () {
     });
 
     $("#quantidadeProduto").click(function (e) {
+        if($("#quantidadeProduto").val() == ""){
+            if($('#formGroupQuantidadeProduto2').hasClass( "has-error" )){
+                $('#formGroupQuantidadeProduto2').removeClass("has-error");
+                $('#formGroupQuantidadeProduto2').fadeOut(200);
+                qtdeFaltando = $('#quantidadeProduto').val();
+            }
+            
+        }
         console.log("clicou");
+        $loteTable.bootstrapTable('destroy');
+        $('#groupUnidadesFalta').fadeOut('fast');
         $('#addToCart').attr("disabled", "true");
+        $('#unidadesFalta').val("");
         $('.addedPanel').remove();
         $('.addedRelatorio').remove();
         $('.addedPrint').remove();
@@ -297,6 +330,7 @@ $(document).ready(function () {
         //if the letter is not digit then display error and don't type anything
 
         var value = document.getElementById('quantidadeProduto').value;
+        qtdeFaltando = value;
         var valueUnity = document.getElementById('valorUnitario').value;
         if (valueUnity == "") {
             valueUnity = 0;
@@ -314,6 +348,10 @@ $(document).ready(function () {
             $('.addedPanel').remove();
             $('.addedRelatorio').remove();
             $('.addedPrint').remove();
+            if($('#formGroupQuantidadeProduto2').hasClass( "has-error" )){
+                $('#formGroupQuantidadeProduto2').removeClass("has-error");
+                $('#formGroupQuantidadeProduto2').fadeOut(200);
+            }
         }
     });
 
@@ -385,10 +423,28 @@ $(document).ready(function () {
         $('#formVenda').bootstrapValidator('resetForm', true);
     }
 
+    
+
+
     $('#loteManual').click(function() {
-        console.log("clicou no lote manual");
+        $loteTable.bootstrapTable('destroy');
+        rows = [];
+        row = [];
+        rowsSelecionados.length = 0;
+        rowsSelecionados = [];
+        $('#groupUnidadesFalta').fadeOut('fast');
+        $('#unidadesFalta').val("");
+        $('.addedPanel').remove();
+        $('.addedRelatorio').remove();
+        $('.addedPrint').remove();
+        $('#addToCart').prop('disabled', true);
+        $('#formGroupQuantidadeProduto').removeClass("has-error");
+        $('#formGroupQuantidadeProduto2').removeClass("has-error");
+        $('#formGroupQuantidadeProduto2').fadeOut(200);
         pesquisarLotesManual();
     });
+
+
 
     function pesquisarLotesManual() {
         console.log("entrou na funcao de lote manual");
@@ -418,7 +474,8 @@ $(document).ready(function () {
                     console.log("deu erro " + data)
                     
                 } else {
-                    console.log("parece que funfou: " + data)
+                    console.log("parece que funfou: " + data);
+                    montaLoteManual(data);
                     // $('#addToCart').removeAttr("disabled");
                     // console.log("achou os lotes, sucesso " + data);
 
@@ -435,18 +492,249 @@ $(document).ready(function () {
             $('.addedRelatorio').remove();
             $('.addedPrint').remove();
             $('#addToCart').attr("disabled", "true");
-            $('#formGroupQuantidadeProduto').addClass("has-error");
-            $('#formGroupQuantidadeProduto2').addClass("has-error");
-            $('#formGroupQuantidadeProduto2').fadeIn(200);
+            if(!($('#formGroupQuantidadeProduto').hasClass( "has-error" ))){
+                $('#formGroupQuantidadeProduto').addClass("has-error");
+                $('#formGroupQuantidadeProduto2').addClass("has-error");
+                $('#formGroupQuantidadeProduto2').fadeIn(200);
+            }
 
         }
         
     }
 
+    function estaNaSelecao(selecionado, selecionadosFinal){
+        var inseriu = false;
+            for(var j = 0; j < selecionadosFinal.length; j++){
+                if(selecionado.codigoLote == selecionadosFinal[j].codigoLote){
+                    inseriu = true;
+                }
+            }
+            return inseriu;
+    }
+
+    function montaLoteManual(data){
+        rows = [];
+        row = null;
+        rowsSelecionados.length = 0;
+        rowsSelecionados = []; 
+        var auxData = data.split(";");
+        var qtos = parseInt(auxData[0]);
+        var auxRow = null;
+        var indice = 1;
+        $('#groupUnidadesFalta').fadeIn('fast');
+        $('#table-methods-table').bootstrapTable('destroy');
+        $loteTable = $('#table-methods-table');
+        $loteTable.bootstrapTable('destroy');
+
+        for(var i = 0; i < qtos; i++){
+            var auxValidade = auxData[indice + 4];
+            auxValidade = auxValidade.split("-");
+            auxValidade = auxValidade[2] + "/" + auxValidade[1] + "/" + auxValidade[0];
+            auxRow = {
+                codigoLote: auxData[indice],
+                qtdeEstoque: auxData[indice + 3],
+                validade: auxValidade
+            };
+            console.log(auxRow);
+            rows.push(auxRow);
+            indice = indice + 5;
+        }
+        $('#unidadesFalta').val(parseInt($('#quantidadeProduto').val()));
+        console.log(rows);
+        $('#groupUnidadesFalta').fadeIn('fast');
+
+        $loteTable.bootstrapTable({
+            data: rows
+                        
+        }).on('check.bs.table', function (e, row) {
+            rowsSelecionados = [];
+            var selection = [];
+
+            selection = $loteTable.bootstrapTable('getSelections');
+            console.log("$$$$$$$$$$$ selecionados: " + JSON.stringify(selection));
+            var quantidadeForm = parseInt($('#quantidadeProduto').val());
+            $('#unidadesFalta').val(quantidadeForm);
+            var quantidadeObjetivo = quantidadeForm;
+            var quantosFalta = 1;
+            var jaPassou = false;
+            var liberaToCart = false;
+            for(var i = 0; i < selection.length; i++){
+                rowsSelecionados.push(selection[i]);
+                if(quantosFalta > 0){
+                    if(quantidadeObjetivo - selection[i].qtdeEstoque > 0){
+                        quantidadeObjetivo = quantidadeObjetivo - selection[i].qtdeEstoque;
+                        quantosFalta = quantidadeObjetivo;
+                        liberaToCart = false;
+                    } else {
+                        quantidadeObjetivo = selection[i].qtdeEstoque - quantidadeObjetivo;
+                        quantidadeObjetivo = selection[i].qtdeEstoque - quantidadeObjetivo;
+                        quantosFalta = 0;
+                        liberaToCart = true;
+                    }
+                } else {
+                    jaPassou = true;
+                    quantosFalta = 0;
+                    liberaToCart = false;
+                }
+                
+            }
+
+            if(jaPassou){
+                $('#erroUnidadesFaltantes').fadeIn('fast');
+                $('#groupUnidadesFalta').addClass('has-error');
+                $('#addToCart').prop('disabled', true);
+                $('#unidadesFalta').val(0);
+                console.log('Já passou!!!')
+            } else {
+                console.log("Deu Certo!! " + JSON.stringify(rowsSelecionados))
+                if(selection.length == 0){
+                    $('#unidadesFalta').val(parseInt($('#quantidadeProduto').val()));
+                } else {
+                    $('#unidadesFalta').val(quantosFalta);
+                }
+                
+                $('#erroUnidadesFaltantes').fadeOut('fast');
+                $('#groupUnidadesFalta').removeClass('has-error');
+                if(liberaToCart){
+                    $('#addToCart').prop('disabled', false);
+                } else {
+                    $('#addToCart').prop('disabled', true);
+                }
+                var auxTesteData = "";
+                var auxQuantidadeForm = 0;
+                auxTesteData = rowsSelecionados.length + ";";
+                for(var i = 0; i < rowsSelecionados.length; i++){
+                    auxTesteData = auxTesteData + rowsSelecionados[i].codigoLote + ";";
+                    auxTesteData = auxTesteData + $('#codigoProduto').val() + ";";
+                    auxTesteData = auxTesteData + rowsSelecionados[i].qtdeEstoque + ";";
+                    if(quantidadeForm - rowsSelecionados[i].qtdeEstoque >= 0){
+                        auxTesteData = auxTesteData + rowsSelecionados[i].qtdeEstoque + ";";
+                        quantidadeForm = quantidadeForm - rowsSelecionados[i].qtdeEstoque;
+                    } else {
+                        quantidadeForm = rowsSelecionados[i].qtdeEstoque - quantidadeForm;
+                        quantidadeForm = rowsSelecionados[i].qtdeEstoque - quantidadeForm;
+                        auxTesteData = auxTesteData + quantidadeForm + ";";
+                    }
+                    var auxDataManip = rowsSelecionados[i].validade.split("/");
+                    auxTesteData = auxTesteData + auxDataManip[2] + "-" + auxDataManip[1] + "-" 
+                    + auxDataManip[0] + ";"; 
+
+                }
+                testeData = auxTesteData;
+                console.log("####### " + testeData);
+            } 
+  
+        }).on('uncheck.bs.table', function (e, row) {
+
+            rowsSelecionados = [];
+            var selection = [];
+            selection = $loteTable.bootstrapTable('getSelections');
+            console.log("$$$$$$$$$$$ selecionados: " + JSON.stringify(selection));
+            var quantidadeForm = parseInt($('#quantidadeProduto').val());
+            $('#unidadesFalta').val(quantidadeForm);
+            var quantidadeObjetivo = quantidadeForm;
+            var quantosFalta = 1;
+            var jaPassou = false;
+            var liberaToCart = false;
+            for(var i = 0; i < selection.length; i++){
+                rowsSelecionados.push(selection[i]);
+                if(quantosFalta > 0){
+                    if(quantidadeObjetivo - selection[i].qtdeEstoque > 0){
+                        quantidadeObjetivo = quantidadeObjetivo - selection[i].qtdeEstoque;
+                        quantosFalta = quantidadeObjetivo;
+                        liberaToCart = false;
+
+                    } else {
+                        quantidadeObjetivo = selection[i].qtdeEstoque - quantidadeObjetivo;
+                        quantidadeObjetivo = selection[i].qtdeEstoque - quantidadeObjetivo;
+                        quantosFalta = 0;
+                        liberaToCart = true;
+                    }
+                } else {
+                    jaPassou = true;
+                    quantosFalta = 0;
+                    liberaToCart = false;
+                }
+                
+            }
+
+            if(jaPassou){
+                $('#erroUnidadesFaltantes').fadeIn('fast');
+                $('#groupUnidadesFalta').addClass('has-error');
+                $('#addToCart').prop('disabled', true);
+                $('#unidadesFalta').val(0);
+                console.log('Já passou!!!')
+            } else {
+                console.log("Deu Certo!! " + JSON.stringify(rowsSelecionados))
+                if(selection.length == 0){
+                    $('#unidadesFalta').val(parseInt($('#quantidadeProduto').val()));
+                } else {
+                    $('#unidadesFalta').val(quantosFalta);
+                }
+                $('#erroUnidadesFaltantes').fadeOut('fast');
+                $('#groupUnidadesFalta').removeClass('has-error');
+                if(liberaToCart){
+                    $('#addToCart').prop('disabled', false);
+                } else {
+                    $('#addToCart').prop('disabled', true);
+                }
+                
+                var auxQuantidadeForm = 0;
+                auxTesteData = rowsSelecionados.length + ";";
+                for(var i = 0; i < rowsSelecionados.length; i++){
+                    auxTesteData = auxTesteData + rowsSelecionados[i].codigoLote + ";";
+                    auxTesteData = auxTesteData + $('#codigoProduto').val() + ";";
+                    auxTesteData = auxTesteData + rowsSelecionados[i].qtdeEstoque + ";";
+                    if(quantidadeForm - rowsSelecionados[i].qtdeEstoque >= 0){
+                        auxTesteData = auxTesteData + rowsSelecionados[i].qtdeEstoque + ";";
+                        quantidadeForm = quantidadeForm - rowsSelecionados[i].qtdeEstoque;
+                    } else {
+                        quantidadeForm = rowsSelecionados[i].qtdeEstoque - quantidadeForm;
+                        quantidadeForm = rowsSelecionados[i].qtdeEstoque - quantidadeForm;
+                        auxTesteData = auxTesteData + quantidadeForm + ";";
+                    }
+                    var auxDataManip = rowsSelecionados[i].validade.split("/");
+                    auxTesteData = auxTesteData + auxDataManip[2] + "-" + auxDataManip[1] + "-" 
+                    + auxDataManip[0] + ";"; 
+
+                }
+                testeData = auxTesteData;
+                console.log("####### " + testeData);
+            }
+        }).on('check-all.bs.table', function (e) {
+                console.log('Event: check-all.bs.table ' + JSON.stringify($loteTable.bootstrapTable('getData')));
+                rowsSelecionados = $loteTable.bootstrapTable('getData');
+        }).on('uncheck-all.bs.table', function (e) {
+                rowsSelecionados.length = 0;
+                console.log('Event: uncheck-all.bs.table ' + JSON.stringify($loteTable.bootstrapTable('getData')));
+        });
+
+        $('#table-methods-table').removeClass('hidden');
+        $('#addLoteManual').removeClass('hidden');
+
+        $('[name="btSelectAll"]').prop('disabled', true);
+    }
+
     //Pesquisa um produto pelo código
     $('#loteAutomatico').click(function() {
+        rows = [];
+        row = null;
+        rowsSelecionados.length = 0;
+        $('#unidadesFalta').val("");
+        $('#table-methods-table').bootstrapTable('destroy');
+        rows = [];
+        row = [];
+        rowsSelecionados.length = 0; 
+        $loteTable.bootstrapTable('destroy');
+        $('#groupUnidadesFalta').fadeOut('fast');
+        $('#formGroupQuantidadeProduto').removeClass("has-error");
+        $('#formGroupQuantidadeProduto2').removeClass("has-error");
+        $('#formGroupQuantidadeProduto2').fadeOut(200);
         pesquisarLotesAutomatico();
     });
+
+    
+
 
     var testeData;
 
@@ -492,9 +780,12 @@ $(document).ready(function () {
             $('.addedRelatorio').remove();
             $('.addedPrint').remove();
             $('#addToCart').attr("disabled", "true");
-            $('#formGroupQuantidadeProduto').addClass("has-error");
-            $('#formGroupQuantidadeProduto2').addClass("has-error");
-            $('#formGroupQuantidadeProduto2').fadeIn(200);
+            if(!($('#formGroupQuantidadeProduto').hasClass( "has-error" ))){
+                $('#formGroupQuantidadeProduto').addClass("has-error");
+                $('#formGroupQuantidadeProduto2').addClass("has-error");
+                $('#formGroupQuantidadeProduto2').fadeIn(200);
+            }
+            
 
         }
         
@@ -704,6 +995,8 @@ $(document).ready(function () {
 
     //Pesquisa um produto pelo código
     $('#buttonPesquisaNomeProduto').click(function() {
+        $loteTable.bootstrapTable('destroy');
+        $('#groupUnidadesFalta').fadeOut('fast');
         if($("#pesquisaNomeProduto").val() != ""){
             pesquisarCodigo();
         } else {
@@ -743,6 +1036,8 @@ $(document).ready(function () {
 
     $('#pesquisaNomeProduto').keypress(function(e) {
             if(e.which == 13) {
+                $loteTable.bootstrapTable('destroy');
+                $('#groupUnidadesFalta').fadeOut('fast');
                 if($("#pesquisaNomeProduto").val() != ""){
                     pesquisarCodigo();
                 } else {
@@ -781,7 +1076,7 @@ $(document).ready(function () {
         // console.log(testeData);
         var qtdeTotal2 = 0;
         qtdeTotal2 = parseInt($('#quantidadeProduto').val());
-
+        console.log(testeData);
         var auxLote = testeData.split(';');
 
         var quantidadeLotes = auxLote[0];
@@ -881,6 +1176,10 @@ $(document).ready(function () {
         auxJson = sessionStorage.getItem( "dataLote" );
         // console.log(auxJson);
         vendaObj = JSON.parse( auxJson );
+        console.log("------ Vou imprimir os lotes -------");
+        for(var i = 0; i < vendaObj.length; i++){
+            console.log("** " + JSON.stringify(vendaObj[i]));
+        }
         // console.log(vendaObj);
         
         window.location.href = "/ArrayEnterprises/carrinho.jsp";

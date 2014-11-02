@@ -64,7 +64,8 @@ public class BuscarLotesDAO {
         Lote aux;
         try{
             
-            rs = stat.executeQuery("SELECT * FROM BuscaTodosLotes(" + codigoProduto + ", " + data + "');");
+            rs = stat.executeQuery("SELECT * FROM BuscaTodosLotes(" + codigoProduto + ", '" + data + "');");
+            System.out.println(rs);
             while (rs.next()){
                 aux = new Lote();
                 aux.setCodigoLote(rs.getString(1));
