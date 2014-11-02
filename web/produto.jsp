@@ -404,7 +404,7 @@
                                                             </div>
                                                             <!-- /.col-lg-6 (nested) -->
                                                             <div class="col-lg-6">
-                                                                <label>Unidades de Produto</label>
+                                                                <label>Unidades a Retirar</label>
                                                                 <div class="form-group input-group">
 
                                                                     <input class="form-control" id="quantidadeProduto" name="quantidadeProduto"  readonly><span class="input-group-addon" id="unidadeAddon">unidades</span>
@@ -468,7 +468,7 @@
 
                             
 
-                            <div class="row">
+                            <div class="row" style="margin-bottom: 10px;">
                                 <div class="col-lg-2">
                                 </div>
                                 <div class="col-lg-3">
