@@ -470,6 +470,7 @@
 
                             <div class="row" style="margin-bottom: 10px;">
                                 <div class="col-lg-2">
+                                    <button id="alterarCliente" type="button" class="btn btn-primary" style="margin-left: 15px;"><span class="glyphicon glyphicon-arrow-left" style="color:white; "></span>&nbsp; Alterar Cliente</button>
                                 </div>
                                 <div class="col-lg-3">
                                 </div>

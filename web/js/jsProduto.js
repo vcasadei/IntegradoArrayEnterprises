@@ -1203,6 +1203,10 @@ $(document).ready(function () {
         window.location.href = "/ArrayEnterprises/carrinho.jsp";
     });
 
+    $('#alterarCliente').click(function() {
+        window.location.href = "/ArrayEnterprises/BuscaClientesProdutos";
+    });
+
 });
 
 
