@@ -203,13 +203,13 @@
                                             <div class="col-lg-6 yes">
                                                 <div class="form-group" >
                                                     <label>Nome do Cliente</label>
-                                                    <input class="form-control" id="nomeCliente" name="nomeCliente" placeholder="Insira o nome do cliente" readonly>
+                                                    <input class="form-control" id="nomeCliente" name="nomeCliente"  readonly>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 yes" >
                                                 <div class="form-group">
                                                     <label>CNPJ do cliente</label>
-                                                    <input class="form-control" id="cnpjCliente" name="cnpjCliente" placeholder="Insira o CNPJ do cliente" data-mask="99.999.999/9999-99" readonly>
+                                                    <input class="form-control" id="cnpjCliente" name="cnpjCliente"  data-mask="99.999.999/9999-99" readonly>
                                                     <input id="codigoCliente" class="hidden" value="0">
                                                     <input id="ramoCliente" class="hidden" value="0">
                                                 </div>
