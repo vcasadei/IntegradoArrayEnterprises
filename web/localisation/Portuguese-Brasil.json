@@ -1,7 +1,7 @@
 {
     "sEmptyTable": "Nenhum registro encontrado",
-    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+    "sInfo": "Exibindo todos os registros",
+    "sInfoEmpty": "Nenhum registro a ser exibido",
     "sInfoFiltered": "(Filtrados de _MAX_ registros)",
     "sInfoPostFix": "",
     "sInfoThousands": ".",

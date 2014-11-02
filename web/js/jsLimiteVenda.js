@@ -102,6 +102,14 @@ $(document).ready(function() {
         $('#hidCodProd').val(codProduto);
 
         $('#modalAlterarLimite').modal('show');
+        setTimeout(
+            function ()
+            {
+                //do something special
+                $('#newLimiteDias').prop('autofocus', true);
+                $('#newLimiteDias').delay(200).focus();
+            },
+        500);
 
         //Implementar chamada AJAX
     });

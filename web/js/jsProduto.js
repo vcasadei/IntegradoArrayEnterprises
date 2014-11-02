@@ -87,7 +87,7 @@ $(document).ready(function () {
     var auxSplit = "none";
 
     $('#quantidadeProduto').tooltip({
-        title: 'Insira a quantidade e clique em Lote Automático',
+        title: 'Insira a quantidade e clique em Lote Automático ou Lote Manual',
         placement: 'left'
     });
 
@@ -247,7 +247,7 @@ $(document).ready(function () {
                     //do something special
                     $('#quantidadeProduto').prop('autofocus', true);
                     $('#quantidadeProduto').delay(200).focus();
-                    $('#quantidadeProduto').tooltip({title: 'Insira a quantidade e clique em Lote Automático',
+                    $('#quantidadeProduto').tooltip({title: 'Insira a quantidade e clique em Lote Automático ou Lote Manual',
                         placement: 'left', trigger: 'manual'}).tooltip('show');
 
                 },

@@ -170,7 +170,7 @@
 		 		doc.text(25, loteX, 'Data de Validade:');
 		 		doc.setFontType("normal");
 		 		doc.setFontSize(14);
-		 		doc.text(71, loteX, auxDados[oLote + 5]);			
+		 		doc.text(71, loteX, validadeLote);			
 		 		doc.line(30, loteX + 3, 175, loteX + 3);
 
 		 		loteX = loteX + 3;
