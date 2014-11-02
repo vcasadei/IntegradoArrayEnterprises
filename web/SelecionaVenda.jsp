@@ -29,20 +29,18 @@
         <script src="js/jsPDF/jspdf.min.js"></script>
 
 
-        <script src="js/generatePDF.js"></script>
+       
 
 
         <link rel="stylesheet" href="css/jasny-bootstrap.css">
         <script src="js/jasny-bootstrap.js"></script>
         <script type="text/javascript" src="js/jspdf.plugin.autoprint.js"></script> 
-        <script src="js/printPDF.js"></script>
+        
 
         <!-- Pesquisa produto/Cliente -->
-        <script src="js/PesquisaCNPJProduto.js"></script>
 
-        <script src="js/salvarVenda.js"></script>
-
-        <script src="js/jsRelatorios.js"></script>
+        <script src="js/jsSelecionarVenda.js"></script>
+        <script src="js/openRelatorio.js"></script>
         <script src="js/jsGeral.js"></script>
 
 
@@ -127,7 +125,7 @@
                                     <a class="" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Resumo da Venda</a>
                                 </li>
                                 <li>
-                                    <a class="active" href="BuscaTodasVendas"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Consultar Venda</a>
+                                    <a class="active" href="BuscaTodasVendas"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Consultar Vendas</a>
                                 </li>
 
                             </ul>
@@ -148,7 +146,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Consultar Venda</h1>
+                <h1 class="page-header">Consultar Vendas</h1>
                 <ol class="breadcrumb">
                     <li>
                         <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Painel de Controle</a>
@@ -157,7 +155,7 @@
                         <i class="glyphicon glyphicon-share-alt"></i> Vendas
                     </li>
                     <li class="active">
-                        <i class="glyphicon glyphicon-list-alt"></i> Consultar Venda
+                        <i class="glyphicon glyphicon-list-alt"></i> Consultar Vendas
                     </li>
 
                 </ol>
@@ -216,23 +214,6 @@
                                 
                             </div>
 
-
-                            
-
-                            <div class="row">
-                                <div class="col-lg-3">
-                                </div>
-                                <div class="col-lg-4">
-                                </div>
-                                <div class="col-lg-5">
-                                    <!-- Button Limp3r Campos -->
-                                    <button type="reset" id="resetVenda" class="btn btn-danger"><span class="glyphicon glyphicon-repeat" style="color:white;"></span>&nbsp; Limpar Campos</button>
-
-                                    <button id="toProducts" type="button" class="btn btn-primary"  disabled><span class="glyphicon glyphicon-plus-sign" style="color:white;"></span>&nbsp; Adicionar Produtos</button>
-                                </div>
-                            </div>
-
-
                     </div>
                     <!-- /.panel -->
                 </div>
@@ -248,19 +229,18 @@
     
 
     <!-- Modal erro de não selecionar nenhum item -->
-    <div class="modal fade bs-example-modal-sm " id="modalErroDeSelecao"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm vertical-centered " >
+    <div class="modal fade bs-example-modal-sm " id="erroRelatorio"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog vertical-centered " >
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#d9534f;">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Erro de Seleção</h4>
+                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Erro na geração de relatório</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Você deve selecionar um item.</p>
+                    <p>Não foi possível gerar o relatório de vendas por conta de um erro de comunicação com o servidor. Contate o suporte.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

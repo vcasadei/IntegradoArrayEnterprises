@@ -108,7 +108,7 @@ $(document).ready(function() {
 
     $('#btnDelteYes').click(function () {
         var id = $('#modalExcuirProduto').data('id');
-        alert('current data: ' + JSON.stringify($table.bootstrapTable('getData')));
+        
         $('#table-methods-table').bootstrapTable('remove', {
             field: 'id',
             values: [id]
@@ -183,10 +183,10 @@ $(document).ready(function() {
 
 
             $('#get-selections').click(function () {
-                alert('Selected values: ' + JSON.stringify($table.bootstrapTable('getSelections')));
+                
             });
             $('#get-data').click(function () {
-                alert('current data: ' + JSON.stringify($table.bootstrapTable('getData')));
+                
             });
             // This demonstrates utilizing the data-method attribute to use one 
             //     jQuery handler to execute multiple methods. 
@@ -263,11 +263,7 @@ $(document).ready(function() {
 
     $('#salvarRelatorio').click(function() {
 
-        var auxDataVenda = $('#dataVenda').val();
-        auxDataVenda = auxDataVenda.replace(/\//g, "-");
-
-        $('#nomeRelatorio').val('RelatorioVendas' + auxDataVenda);
-        $('#salvarRelatorioComo').modal('show');
+        
 
     });
 
@@ -276,13 +272,7 @@ $(document).ready(function() {
     });
 
     $('#terminarCompra').click(function() {
-        // var sessao = sessionStorage.getItem( "dataCliente" );
-        // var clienteObj = JSON.parse( sessao );
-        // auxDataVenda = clienteObj[0].dataVenda;
-        // auxDataVenda = auxDataVenda.replace(/\//g, "-");
-
-        // $('#nomeRelatorio').val('RelatorioVendas' + auxDataVenda);
-        // $('#salvarRelatorioComo').modal('show');
+        
         console.log("clicou para salvar");
         salvarCompra();
     });
@@ -347,7 +337,7 @@ $(document).ready(function() {
         }
 
         var dataString;
-        dataString = "dataVenda=" + salvarClienteData + "&clienteNome=" + salvarClienteNome
+        dataString = "dataVenda=" + salvarClienteData + "&clienteCod=" + salvarClienteNome
             + "&quantosProdutos=" + salvarQtdeProdutos + "&listaProdCod=" + salvarProdutoCodigo 
             + "&listaProdQuant=" + salvarQuantidadeProduto + "&quantosLotes=" + salvarQtdeLotes
             + "&listaLoteProdCod=" + salvarLoteProdCod + "&listaLoteCod=" + salvarLoteCod
@@ -363,11 +353,13 @@ $(document).ready(function() {
                 console.log("recebeu do servlet");
                 testeData = data;
 
-                if (data === "0;") {
-                    
+                if (data === "erro") {
+                    //Deu erro
+                    console.log("erro");
+                    $('#erroVenda').modal('show');
                     
                 } else {
-                    
+                    $('#sucessoVenda').modal('show');
                 }
 
             });
@@ -376,6 +368,24 @@ $(document).ready(function() {
 
 
     }
-    
+
+    $('#erroVenda').on('hidden.bs.modal', function () {
+        window.location.href = "/ArrayEnterprises/index.html";
+    })
+
+    $('#sucessoVenda').on('hidden.bs.modal', function () {
+        var sessao = sessionStorage.getItem( "dataCliente" );
+        var clienteObj = JSON.parse( sessao );
+        auxDataVenda = clienteObj[0].dataVenda;
+        auxDataVenda = auxDataVenda.replace(/\//g, "-");
+
+        $('#nomeRelatorio').val('RelatorioVendas' + auxDataVenda);
+        $('#salvarRelatorioComo').modal('show');
+    })
+
+    $('#salvarRelatorioComo').on('hidden.bs.modal', function () {
+        window.location.href = "/ArrayEnterprises/index.html";
+        
+    })
 
 });

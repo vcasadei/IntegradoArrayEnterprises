@@ -119,7 +119,7 @@
                                     <a class="active" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Resumo da Venda</a>
                                 </li>
                                 <li>
-                                    <a class="" href="BuscaTodasVendas"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Consultar Venda</a>
+                                    <a class="" href="BuscaTodasVendas"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Consultar Vendas</a>
                                 </li>
 
                             </ul>
@@ -314,163 +314,7 @@
     </div><!-- /.modal -->
 
 
-    <!-- Modal confirmação de salvamento -->
-    <div class="modal fade bs-example-modal-sm2" id="sucessoVenda"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
-        <div class="modal-dialog modal-sm vertical-centered " >
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#5cb85c;">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-ok" style="color:white;"></span>&nbsp;&nbsp;Venda Efetuada com Sucesso</h4>
-                </div>
-                <div class="modal-body">
-                    <span>A venda foi efetuada com sucesso!</span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary" id="gerarRelatorio" ><span class="glyphicon glyphicon-book" style="color:white;"></span>&nbsp;Gerar Relatório</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 
-
-
-    <div class="modal fade" id="relatorioVenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" >
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="relatorioTitle">Relatório de Vendas</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-4 yes">
-                            <div class="input-group">
-                                <span class="input-group-addon"><b>Data da venda</b></span>
-                                <input type="text" id="dataVendaModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <hr width="90%">
-
-                    <span><b>Cliente</b></span>
-
-                    <div class="row">
-                        <div class="col-lg-6 yes">
-                            <div class="input-group">
-                                <span class="input-group-addon"><b>Nome</b></span>
-                                <input type="text" id="nomeClienteModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-1 yes">
-
-                        </div>
-
-                        <div class="col-lg-6 yes">
-                            <div class="input-group">
-                                <span class="input-group-addon"><b>CNPJ</b></span>
-                                <input type="text" id="cnpjClienteModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr width="60%">
-
-                    <span><b>Produto</b></span>
-                    <div class="row">
-                        <div class="col-lg-6 yes">
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Produto</b></span>
-                                <input type="text" id="nomeProdutoModal" class="form-control" value="" readonly>
-                            </div>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Tipo do produto</b></span>
-                                <input type="text" id="tipoProdutoModal" class="form-control" value="" readonly>
-                            </div>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Valor unitátio</b></span>
-                                <input type="text" id="valorUnitarioModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-1 yes">
-
-                        </div>
-
-                        <div class="col-lg-6 yes">
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Código do produto</b></span>
-                                <input type="text" id="codProdutoModal" class="form-control" value="" readonly>
-                            </div>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Quantidade unitária</b></span>
-                                <input type="text" id="quantidadeModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="loteRelatorio">
-                        <hr width="60%">
-
-
-                        <span><b>Lote</b></span>
-                        <div class="hidden row relatorioGerado">
-                            <div class="col-lg-6 yes">
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon"><b>Código</b></span>
-                                    <input type="text" id="codigoLoteModal" class="form-control" value="" readonly>
-                                </div>
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon"><b>Validade</b></span>
-                                    <input type="text" id="dataValidadeModal" class="form-control" value="" readonly>
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-1 yes">
-
-                            </div>
-
-                            <div class="col-lg-6 yes">
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon"><b>Quantidade</b></span>
-                                    <input type="text" id="quantidadeProdutoModal" class="form-control" value="" readonly>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- <hr width="60%"> -->
-
-                    <div class="row">
-                        <div class="col-lg-6 yes">
-                        </div>
-                        <div class="col-lg-1 yes">
-                        </div>
-                        <div class="col-lg-5 yes">
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Valor total da venda</b></span>
-                                <input type="text" id="valorTotalModal" class="form-control" value="" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary" id="salvarRelatorio" ><span class="glyphicon glyphicon-floppy-disk" style="color:white;"></span>&nbsp;Salvar Relatório</button>
-
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
 
     <!-- Modal confirmação de salvamento -->
     <div class="modal fade bs-example-modal-sm2" id="salvarRelatorioComo"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
@@ -509,7 +353,22 @@
     </div><!-- /.modal -->
 
 
-
+    <div class="modal fade bs-example-modal-sm2" id="sucessoVenda"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
+      <div class="modal-dialog modal-sm vertical-centered " >
+        <div class="modal-content">
+          <div class="modal-header" style="background-color:#5cb85c;">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+            <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-ok" style="color:white;"></span>&nbsp;&nbsp;Venda Efetuada com Sucesso</h4>
+          </div>
+          <div class="modal-body">
+                <span>A venda foi efetuada com sucesso!</span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <!-- Modal erro de não selecionar nenhum item -->
     <div class="modal fade bs-example-modal-sm " id="erroVenda"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

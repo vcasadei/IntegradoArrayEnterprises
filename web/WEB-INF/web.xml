@@ -28,7 +28,7 @@
         <servlet-name>BuscaDadosVenda</servlet-name>
         <servlet-class>Servlet.BuscaDadosVenda</servlet-class>
     </servlet>
-    <servlet>
+   <servlet>
         <servlet-name>BuscaTodosProdutos</servlet-name>
         <servlet-class>Servlet.BuscaTodosProdutos</servlet-class>
     </servlet>
@@ -47,6 +47,10 @@
     <servlet>
         <servlet-name>BuscaProdutosEstoque</servlet-name>
         <servlet-class>Servlet.BuscaProdutosEstoque</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BuscaDadosRelatorio</servlet-name>
+        <servlet-class>Servlet.BuscaDadosRelatorio</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CadastrarVenda</servlet-name>
@@ -100,9 +104,15 @@
         <servlet-name>BuscaProdutosEstoque</servlet-name>
         <url-pattern>/BuscaProdutosEstoque</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BuscaDadosRelatorio</servlet-name>
+        <url-pattern>/BuscaDadosRelatorio</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-</web-app>
+
+=
+   </web-app>

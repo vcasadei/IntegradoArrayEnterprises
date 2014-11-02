@@ -175,16 +175,18 @@ public class VendaDAO {
 
         Statement stat = bdConn.createStatement();
         Venda retorno = null;
-
+        System.out.println("var fazer a pesquisa");
         /*Faz a consulta que pega os dados da venda na tabela Venda*/
         ResultSet rs = stat.executeQuery("SELECT * FROM Venda WHERE codVenda = " + codVenda + ";");
-
+        System.out.println("Result set " + rs);
         if (rs.next()) {
+            System.out.println("Entrou na query");
             retorno = new Venda();
             ArrayList<Produto> produtos = new ArrayList<Produto>();
 
             /*Seta o valor total, a data da venda e o código do cliente*/
             retorno.setCodVenda(codVenda);
+            System.out.println("Entrou na query a " + rs.getString("dataVenda"));
             retorno.setDataVenda(rs.getString("dataVenda"));
             retorno.setValorTotal(rs.getFloat("valorTotal"));
             Cliente cliente = new Cliente();
@@ -241,23 +243,26 @@ public class VendaDAO {
             Lote l;
             for (Produto pAux : produtos) {
                 
-                l = new Lote();
                 
+                //Dando exception aqui
                 rs = stat.executeQuery("SELECT l.codLote, l.codProd, qntdInicial, qntdAtual, validade, "
                         + "qntdRetirar FROM Lote as l, ProdVendaLote as pvl WHERE codVenda = " + codVenda
                         + "AND pvl.codProd = " + pAux.getCodProd() + "AND pvl.codLote = l.codLote;");
                 
                 /*Seta as informações do lote*/
                 while (rs.next()){
+                    l = new Lote();
                     l.setCodigoLote(rs.getString(1));
+                    System.out.println("codLote " + rs.getString(1));
                     l.setCodigoProduto(rs.getInt(2));
                     l.setQntdInicial(rs.getInt(3));
                     l.setQntdRetirar(rs.getInt(6));
                     l.setQntdAtual((rs.getInt(4) + l.getQntdRetirar()));
                     l.setValidade(rs.getString(5));
+                    /*Adiciona o lote ao produto*/
+                    pAux.addLoteVenda(l);
                 }
-                /*Adiciona o lote ao produto*/
-                pAux.addLoteVenda(l);
+                
                 
                 /*Fecha o result set pra poder usá-lo na próxima consulta*/
                 ConnectionBanco.close(null, null, rs);

@@ -2,7 +2,7 @@ $(document).ready(function() {
 	$('#header2').load('header.html');
 
 	$('#logout').click(function(e){
-		alert("clicou pra sair");
+		
         sessionStorage.clear();
         window.location = "login.html";
     });

@@ -1147,14 +1147,14 @@ $(document).ready(function () {
         // historyProdutoAux.push(JSON.stringify( jsonProduto ));
         if(historyProduto != null){
             historyProduto.push(jsonProduto);
-            alert(historyProduto);
+            
             console.log(historyProduto);
 
             sessionStorage.setItem('dataProduto', JSON.stringify(historyProduto));
         } else {
             historyProduto = [];
             historyProduto.push(jsonProduto);
-            alert(historyProduto);
+            
             console.log(historyProduto);
 
             sessionStorage.setItem('dataProduto', JSON.stringify(historyProduto));

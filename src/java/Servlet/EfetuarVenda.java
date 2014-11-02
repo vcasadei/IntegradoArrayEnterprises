@@ -87,6 +87,7 @@ public class EfetuarVenda extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/plain");
 
         String dataVenda = "";
         int clienteCod;
@@ -186,17 +187,15 @@ public class EfetuarVenda extends HttpServlet {
         try {
             VendaDAO daoVenda = new VendaDAO();
 
-            PrintWriter out = response.getWriter();
-            JsonObject myObj = new JsonObject();
+
 
             if (daoVenda.CadastrarVenda(venda)) {
-                myObj.addProperty("success", true);
+                response.getWriter().write("sucesso");
             } else {
-                myObj.addProperty("success", false);
+                response.getWriter().write("erro");
             }
 
-            out.println(myObj.toString());
-            out.close();
+            response.getWriter().close();
 
         } catch (BdDAOException ex) {
             Logger.getLogger(CadastrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
