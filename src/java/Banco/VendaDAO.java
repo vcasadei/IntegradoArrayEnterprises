@@ -186,15 +186,27 @@ public class VendaDAO {
             stat = bdConn.createStatement();
             ResultSet prodVendas = stat.executeQuery("SELECT p.codprod, nomeprod FROM produto p, prodvenda pv WHERE pv.codprod = p.codprod AND pv.codvenda = "+ venda.getCodVenda() +";");
             produtos = new ArrayList<Produto>();
+            String auxCodProd = "";
+            String auxNomeProd = "";
             while(prodVendas.next()) {
-                produto = new Produto();
-                produto.setCodProd(prodVendas.getInt("codprod"));
-                produto.setDescricao(prodVendas.getString("nomeprod"));
-                             
-                produtos.add(produto);
+//                produto = new Produto();
+                
+                auxCodProd = auxCodProd + prodVendas.getInt("codprod");
+//                produto.setCodProd(prodVendas.getInt("codprod"));
+//                produto.setDescricao(prodVendas.getString("nomeprod"));
+                auxNomeProd = auxNomeProd + prodVendas.getString("nomeprod");
+                if(!prodVendas.isLast()){
+                    auxCodProd = auxCodProd + ", ";
+                    auxNomeProd = auxNomeProd + ", ";
+                }          
+//                produtos.add(produto);
             }
+            Produto prod = new Produto();
+            prod.setCodProds(auxCodProd);
+            prod.setNome(auxNomeProd);
+            
             // Adiciona a lista de produtos na venda
-            venda.setProdutos(produtos);  
+            venda.setProduto(prod);  
                       
             venda.setDataVenda(auxData.substring(8, 10) + "/" + auxData.substring(5, 7) + "/" + auxData.substring(0, 4));
             venda.setValorTotal(rs.getFloat("valorTotal"));

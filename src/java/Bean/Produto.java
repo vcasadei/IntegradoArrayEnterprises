@@ -20,6 +20,15 @@ public class Produto {
     private int qntd;
     private float valorUnitario;
     private ArrayList<Lote> lotesVenda;
+    private String codProds;
+
+    public String getCodProds() {
+        return codProds;
+    }
+
+    public void setCodProds(String codProds) {
+        this.codProds = codProds;
+    }
 
     public Produto(){
         lotesVenda = new ArrayList<Lote>();

@@ -179,6 +179,8 @@
                                             <th style="text-align: center;" class="hidden">codVenda</th>
                                             <th style="text-align: center;" >Data da Venda</th>
                                             <th style="text-align: center;">Cliente</th>
+                                            <th class="hidden" style="text-align: center;">Código Produtos</th>
+                                            <th style="text-align: center;">Produtos</th>
                                             <th style="text-align: center;" class="hidden">Valor Total (R$)</th>
                                             <th style="text-align: center;">Relatório</th>
                                         </tr>
@@ -189,6 +191,8 @@
                                             <th class="hidden">codVenda</th>
                                             <th style="text-align: center;">Data da Venda</th>
                                             <th style="text-align: center;">Cliente</th>
+                                            <th  class="hidden" style="text-align: center;">Código Produtos</th>
+                                            <th style="text-align: center;">Produtos</th>
                                             <th style="text-align: center;" class="hidden">Valor Total (R$)</th>
                                             <th style="text-align: center;">Relatório</th>
                                         </tr>
@@ -201,6 +205,8 @@
                                             <td class="hidden"> <%=vendas.get(i).getCodVenda()%> </td>
                                             <td> <%=vendas.get(i).getDataVenda()%> </td>
                                             <td> <%=vendas.get(i).getCliente().getNome()%> </td> 
+                                            <td class="hidden" > <%=vendas.get(i).getProduto().getCodProds()%> </td>
+                                            <td> <%=vendas.get(i).getProduto().getNome()%> </td> 
                                             <td class="hidden"> <%=vendas.get(i).getValorTotal()%> </td>
                                             <td> <button class="btn btn-primary"><span class="glyphicon glyphicon-file"> Gerar Relatório</button></td>
 

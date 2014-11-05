@@ -18,6 +18,15 @@ public class Venda {
     private ArrayList<Produto> produtos;
     private int codVenda;
     private float valorTotal;
+    private Produto produto;
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
 
     public Venda(){
         produtos = new ArrayList<Produto>();
