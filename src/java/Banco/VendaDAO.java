@@ -23,6 +23,24 @@ public class VendaDAO {
 
     private Connection bdConn;
 
+/*
+    public static void main(String[] args) throws BdDAOException, SQLException {
+        VendaDAO dao = new VendaDAO();
+        ArrayList<Venda> vendas = new ArrayList<Venda>();
+        
+        vendas = dao.getAllVendaRelatorio();  
+        
+        for(Venda v: vendas) {
+            ArrayList<Produto> produtos = v.getProdutos();
+            System.out.println("Venda " + v.getCodVenda());
+            for(Produto p: produtos) {
+                System.out.println("Produto " + p.getDescricao());
+            }
+            System.out.println();
+        }
+                
+    }
+*/   
     public VendaDAO() throws BdDAOException, SQLException {
         this.bdConn = ConnectionBanco.getConnection();
     }
@@ -153,21 +171,39 @@ public class VendaDAO {
 
         Cliente cliente;
         Venda venda;
+        Produto produto;
+        ArrayList<Produto> produtos;
 
         while (rs.next()) {
             cliente = new Cliente();
             cliente.setNome(rs.getString("nome"));
-
             venda = new Venda();
             venda.setCliente(cliente);
             venda.setCodVenda(rs.getInt("codVenda"));
             String auxData = rs.getString("dataVenda");
+            
+            // Pega produtos das vendas
+            stat = bdConn.createStatement();
+            ResultSet prodVendas = stat.executeQuery("SELECT p.codprod, nomeprod FROM produto p, prodvenda pv WHERE pv.codprod = p.codprod AND pv.codvenda = "+ venda.getCodVenda() +";");
+            produtos = new ArrayList<Produto>();
+            while(prodVendas.next()) {
+                produto = new Produto();
+                produto.setCodProd(prodVendas.getInt("codprod"));
+                produto.setDescricao(prodVendas.getString("nomeprod"));
+                             
+                produtos.add(produto);
+            }
+            // Adiciona a lista de produtos na venda
+            venda.setProdutos(produtos);  
+                      
             venda.setDataVenda(auxData.substring(8, 10) + "/" + auxData.substring(5, 7) + "/" + auxData.substring(0, 4));
             venda.setValorTotal(rs.getFloat("valorTotal"));
 
             vendas.add(venda);
         }
 
+        ConnectionBanco.close(null, stat, rs);
+        
         return vendas;
     }
 
