@@ -114,11 +114,11 @@
 			doc.setFontType("bold");
 			doc.setFontSize(14);
 			doc.text(25, produtoX, 'Valor Unitário:');
-			doc.text(122, produtoX, 'Valor Total:');
+			
 			doc.setFontType("normal");
 			doc.setFontSize(14);
 			doc.text(62, produtoX, 'R$ ' +  auxDados[o + 5]);
-			doc.text(158, produtoX, 'R$ ' + auxDados[o + 6]);
+			
 
 
 
@@ -151,7 +151,7 @@
 		 		doc.setFontType("bold");
 		 		doc.setFontSize(14);
 		 		doc.text(25, loteX, 'Código do Lote:');
-		 		doc.text(136, loteX, 'Quantidade:');
+		 		doc.text(116, loteX, 'Quantidade retirada:');
 		 		doc.setFontType("normal");
 		 		doc.setFontSize(14);						 
 		 		doc.text(62, loteX, auxDados[oLote + 1]);

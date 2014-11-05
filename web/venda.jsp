@@ -104,27 +104,27 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="index.html"><i class="glyphicon glyphicon-home fa-fw"></i> Painel de Controle</a>
+                            <a href="index.html"><i class=" fa-fw"></i> Painel de Controle</a>
                         </li>
 
                         <li class="somenteAdm">
-                            <a href="novousuario.jsp"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
+                            <a href="novousuario.jsp"><i class=" fa-fw"></i> Cadastro de Usuário</a>
                         </li>
                         <li class="somenteAdm">
-                            <a  href="BuscaProdutosEstoque"><i class="glyphicon glyphicon-saved fa-fw"></i> Alterar Limite de Validade</a>
+                            <a  href="BuscaProdutosEstoque"><i class=" fa-fw"></i> Alterar Limite de Validade</a>
                         </li>
 
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Vendas<span class="fa arrow"></span></a>
+                            <a href="#"><i class=" fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse in">
                                 <li>
-                                    <a class="active" href="BuscaClientesProdutos"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Efetuar Venda</a>
+                                    <a class="active" href="BuscaClientesProdutos"><i class=" fa-fw"></i> Efetuar Venda</a>
                                 </li>
                                 <li>
-                                    <a class="" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Resumo da Venda</a>
+                                    <a class="" href="carrinho.jsp"><i class=" fa-fw"></i> Resumo da Venda</a>
                                 </li>
                                 <li>
-                                    <a class="" href="BuscaTodasVendas"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Consultar Vendas</a>
+                                    <a class="" href="BuscaTodasVendas"><i class=" fa-fw"></i> Relatórios de Vendas</a>
                                 </li>
 
                             </ul>
@@ -148,16 +148,16 @@
                 <h1 class="page-header">Efetuar Venda</h1>
                 <ol class="breadcrumb">
                     <li>
-                        <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Painel de Controle</a>
+                        <i class=""></i>  <a href="index.html">Painel de Controle</a>
                     </li>
                     <li>
-                        <i class="glyphicon glyphicon-share-alt"></i> Vendas
+                        <i class=""></i> Vendas
                     </li>
                     <li class="">
-                        <i class="glyphicon glyphicon-share-alt"></i> <a href="BuscaClientesProdutos">Efetuar Venda</a>
+                        <i class=""></i> <a href="BuscaClientesProdutos">Efetuar Venda</a>
                     </li>
                     <li class="active">
-                        <i class="glyphicon glyphicon-user"></i> Selecionar Cliente
+                        <i class=""></i> Selecionar Cliente
                     </li>
 
                 </ol>

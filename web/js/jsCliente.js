@@ -6,6 +6,7 @@ $(document).ready(function() {
         sessionStorage.removeItem('dataLote');
         sessionStorage.removeItem('dataCliente');
     
+    $('#dataVenda').val("");
 
     //Controle da Seleção da data da venda
     $('#dataVenda').datepicker().on('changeDate', function (ev) {

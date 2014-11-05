@@ -506,7 +506,7 @@
         if (this.options.showToggle) {
             html.push(sprintf('<button class="btn btn-default" type="button" name="toggle" title="%s">',
                 this.options.formatToggle()),
-                '<i class="glyphicon glyphicon glyphicon-list-alt icon-list-alt"></i>',
+                '<i class="glyphicon  icon-list-alt"></i>',
                 '</button>');
         }
 

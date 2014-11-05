@@ -87,10 +87,14 @@ $(document).ready(function() {
              console.log(rows);
              $('#total').val(compraTotal);
              $('#terminarCompra').prop("disabled",false);
+             $('#cancelarVenda').prop("disabled",false);
+            $('#newProduct').prop("disabled",false);
         }
     } else {
         var rows = [];
         $('#terminarCompra').prop("disabled",true);
+        $('#cancelarVenda').prop("disabled",true);
+        $('#newProduct').prop("disabled",true);
     }
     
 

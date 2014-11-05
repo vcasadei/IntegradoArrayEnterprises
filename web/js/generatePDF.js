@@ -121,11 +121,11 @@ $(document).ready(function() {
 				doc.setFontType("bold");
 				doc.setFontSize(14);
 				doc.text(25, produtoX, 'Valor Unitário:');
-				doc.text(122, produtoX, 'Valor Total:');
+				
 				doc.setFontType("normal");
 				doc.setFontSize(14);
 				doc.text(62, produtoX, 'R$ ' +  valor.toString());
-				doc.text(158, produtoX, 'R$ ' + total.toString());
+				
 
 				var loteData = sessionStorage.getItem('dataLote');
 				loteData = JSON.parse(loteData);
@@ -161,7 +161,7 @@ $(document).ready(function() {
 				 		doc.setFontType("bold");
 				 		doc.setFontSize(14);
 				 		doc.text(25, loteX, 'Código do Lote:');
-				 		doc.text(136, loteX, 'Quantidade:');
+				 		doc.text(116, loteX, 'Quantidade retirada:');
 				 		doc.setFontType("normal");
 				 		doc.setFontSize(14);						 
 				 		doc.text(62, loteX, loteData[y].codLote);

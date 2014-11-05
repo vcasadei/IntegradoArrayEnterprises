@@ -106,27 +106,27 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="index.html"><i class="glyphicon glyphicon-home fa-fw"></i> Painel de Controle</a>
+                            <a href="index.html"><i class=" fa-fw"></i> Painel de Controle</a>
                         </li>
 
                         <li class="somenteAdm">
-                            <a href="novousuario.jsp"><i class="fa fa-edit fa-fw"></i> Cadastro de Usuário</a>
+                            <a href="novousuario.jsp"><i class=" fa-fw"></i> Cadastro de Usuário</a>
                         </li>
                         <li class="somenteAdm">
-                            <a class="active" href="BuscaProdutosEstoque"><i class="glyphicon glyphicon-saved fa-fw"></i> Alterar Limite de Validade</a>
+                            <a class="active" href="BuscaProdutosEstoque"><i class=" fa-fw"></i> Alterar Limite de Validade</a>
                         </li>
 
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Vendas<span class="fa arrow"></span></a>
+                            <a href="#"><i class=" fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse out">
                                 <li>
-                                    <a class="" href="BuscaClientesProdutos"><i class="glyphicon glyphicon-share-alt fa-fw"></i> Efetuar Venda</a>
+                                    <a class="" href="BuscaClientesProdutos"><i class=" fa-fw"></i> Efetuar Venda</a>
                                 </li>
                                 <li>
-                                    <a class="" href="carrinho.jsp"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Resumo da Venda</a>
+                                    <a class="" href="carrinho.jsp"><i class=" fa-fw"></i> Resumo da Venda</a>
                                 </li>
                                 <li>
-                                    <a  href="BuscaTodasVendas"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Consultar Vendas</a>
+                                    <a  href="BuscaTodasVendas"><i class=" fa-fw"></i> Relatórios de Vendas</a>
                                 </li>
 
                             </ul>
@@ -150,10 +150,10 @@
                 <h1 class="page-header">Consultar Venda</h1>
                 <ol class="breadcrumb">
                     <li>
-                        <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Painel de Controle</a>
+                        <i class=""></i>  <a href="index.html">Painel de Controle</a>
                     </li>
                     <li class="active">
-                        <i class="glyphicon glyphicon-saved"></i> Alterar Limite de Validade
+                        <i class=""></i> Alterar Limite de Validade
                     </li>
 
                 </ol>
@@ -178,7 +178,7 @@
                                             <th style="text-align: center;" >Código</th>
                                             <th style="text-align: center;" >Produto</th>
                                             <th style="text-align: center;">Ramo</th>
-                                            <th style="text-align: center;">Valor unitário (R$)</th>
+                                            <th class="hidden" style="text-align: center;">Valor unitário (R$)</th>
                                             <th style="text-align: center;">Limite para venda (dias)</th>
                                             <th style="text-align: center;">Alterar limite</th>
                                         </tr>
@@ -189,7 +189,7 @@
                                             <th style="text-align: center;" >Código</th>
                                             <th style="text-align: center;" >Produto</th>
                                             <th style="text-align: center;">Ramo</th>
-                                            <th style="text-align: center;">Valor unitário (R$)</th>
+                                            <th class="hidden" style="text-align: center;">Valor unitário (R$)</th>
                                             <th style="text-align: center;">Limite para venda (dias)</th>
                                             <th style="text-align: center;">Alterar limite</th>
                                         </tr>
@@ -202,7 +202,7 @@
                                             <td > <%=produtos.get(i).getCodProd()%> </td>
                                             <td > <%=produtos.get(i).getNome()%> </td>
                                             <td > <%=produtos.get(i).getRamo()%> </td>
-                                            <td > <%=produtos.get(i).getValorUnitario()%> </td>
+                                            <td class="hidden"> <%=produtos.get(i).getValorUnitario()%> </td>
                                             <td ><b> <%=produtos.get(i).getDiasLim_venda()%> </b></td>
                                             <td> <button class="btn btn-primary"><span class="glyphicon glyphicon-pencil"> Alterar</button></td>
 
@@ -258,7 +258,7 @@
                     <label>Novo limite de dias: *</label>
                     <div class="form-group input-group " id="nomeRelatorioInputGroup">
 
-                        <input class="form-control" id="newLimiteDias" class="newLimiteDias" name="newLimiteDias" placeholder="Insira o novo limite de dias" >
+                        <input class="form-control" id="newLimiteDias" class="newLimiteDias" name="newLimiteDias" placeholder="Insira o novo limite de dias" maxlength="2">
                         <span class="input-group-addon" id="unidadeAddon">dias</span>
 
                     </div>

@@ -11,7 +11,9 @@ $(document).ready(function () {
     ramoCliente = clienteObj[0].ramoCliente;
     $("#fixDataVenda").val(dataVenda);
     $("#nomeCliente").val(nomeCliente);
+    $("#spanNomeCliente").html(nomeCliente);
     $("#cnpjCliente").val(cnpjCliente);
+    $("#spanCNPJCliente").html(cnpjCliente);
     $("#codigoCliente").val(codigoCliente);
     $("#ramoCliente").val(ramoCliente);
     $loteTable = $('#table-methods-table');
@@ -335,6 +337,7 @@ $(document).ready(function () {
         if (valueUnity == "") {
             valueUnity = 0;
         }
+        valueUnity = valueUnity.replace(/,/g, '.');
         valueUnity = parseFloat(valueUnity);
         var total = value * valueUnity;
         var totalString = "";
