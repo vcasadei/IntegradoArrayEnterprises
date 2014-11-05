@@ -106,27 +106,27 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="index.html"><i class=" fa-fw"></i> Painel de Controle</a>
+                            <a href="index.html"><i class="glyphicon glyphicon-home fa-fw"></i> Painel de Controle</a>
                         </li>
 
                         <li class="somenteAdm">
-                            <a href="novousuario.jsp"><i class=" fa-fw"></i> Cadastro de Usuário</a>
+                            <a href="novousuario.jsp"><i class="glyphicon glyphicon-edit fa-fw"></i> Cadastro de Usuário</a>
                         </li>
                         <li class="somenteAdm">
-                            <a class="active" href="BuscaProdutosEstoque"><i class=" fa-fw"></i> Alterar Limite de Validade</a>
+                            <a class="active" href="BuscaProdutosEstoque"><i class="glyphicon glyphicon-calendar fa-fw"></i> Alterar Limite de Validade</a>
                         </li>
 
                         <li>
-                            <a href="#"><i class=" fa-fw"></i> Vendas<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Vendas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse out">
                                 <li>
-                                    <a class="" href="BuscaClientesProdutos"><i class=" fa-fw"></i> Efetuar Venda</a>
+                                    <a class="" href="BuscaClientesProdutos"><i class="glyphicon glyphicon-shopping-cart fa-fw"></i> Efetuar Venda</a>
                                 </li>
                                 <li>
-                                    <a class="" href="carrinho.jsp"><i class=" fa-fw"></i> Resumo da Venda</a>
+                                    <a class="" href="carrinho.jsp"><i class="glyphicon glyphicon-list-alt fa-fw"></i> Resumo da Venda</a>
                                 </li>
                                 <li>
-                                    <a  href="BuscaTodasVendas"><i class=" fa-fw"></i> Relatórios de Vendas</a>
+                                    <a  href="BuscaTodasVendas"><i class="glyphicon glyphicon-file fa-fw"></i> Relatórios de Vendas</a>
                                 </li>
 
                             </ul>
@@ -147,13 +147,13 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Consultar Venda</h1>
+                <h1 class="page-header">Alterar Limite de Validade</h1>
                 <ol class="breadcrumb">
                     <li>
-                        <i class=""></i>  <a href="index.html">Painel de Controle</a>
+                        <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Painel de Controle</a>
                     </li>
                     <li class="active">
-                        <i class=""></i> Alterar Limite de Validade
+                        <i class="glyphicon glyphicon-calendar"></i> Alterar Limite de Validade
                     </li>
 
                 </ol>
