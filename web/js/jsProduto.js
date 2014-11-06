@@ -434,7 +434,7 @@ $(document).ready(function () {
         qtdEst = parseInt(qtdEst);
         var qtdSele = $('#quantidadeProduto').val().replace(/ /g, '');
         qtdSele = parseInt(qtdSele);
-        if(qtdSele < qtdEst){
+        if(qtdSele <= qtdEst){
             $loteTable.bootstrapTable('destroy');
             rows = [];
             row = [];
