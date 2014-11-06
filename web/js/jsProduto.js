@@ -430,21 +430,32 @@ $(document).ready(function () {
 
 
     $('#loteManual').click(function() {
-        $loteTable.bootstrapTable('destroy');
-        rows = [];
-        row = [];
-        rowsSelecionados.length = 0;
-        rowsSelecionados = [];
-        $('#groupUnidadesFalta').fadeOut('fast');
-        $('#unidadesFalta').val("");
-        $('.addedPanel').remove();
-        $('.addedRelatorio').remove();
-        $('.addedPrint').remove();
-        $('#addToCart').prop('disabled', true);
-        $('#formGroupQuantidadeProduto').removeClass("has-error");
-        $('#formGroupQuantidadeProduto2').removeClass("has-error");
-        $('#formGroupQuantidadeProduto2').fadeOut(200);
-        pesquisarLotesManual();
+        var qtdEst = $('#qtdeEstoque').val().replace(/ /g, '');
+        qtdEst = parseInt(qtdEst);
+        var qtdSele = $('#quantidadeProduto').val().replace(/ /g, '');
+        qtdSele = parseInt(qtdSele);
+        if(qtdSele < qtdEst){
+            $loteTable.bootstrapTable('destroy');
+            rows = [];
+            row = [];
+            rowsSelecionados.length = 0;
+            rowsSelecionados = [];
+            $('#groupUnidadesFalta').fadeOut('fast');
+            $('#unidadesFalta').val("");
+            $('.addedPanel').remove();
+            $('.addedRelatorio').remove();
+            $('.addedPrint').remove();
+            $('#addToCart').prop('disabled', true);
+            $('#formGroupQuantidadeProduto').removeClass("has-error");
+            $('#formGroupQuantidadeProduto2').removeClass("has-error");
+            $('#formGroupQuantidadeProduto2').fadeOut(200);
+            pesquisarLotesManual();
+        } else {
+            $('#erroLoteInsuficiente').modal('show');
+            $('#addToCart').attr("disabled", "true");
+
+        }
+        
     });
 
 
