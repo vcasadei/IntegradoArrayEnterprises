@@ -6,16 +6,34 @@ $(document).ready(function() {
         sessionStorage.removeItem('dataLote');
         sessionStorage.removeItem('dataCliente');
     
-    $('#dataVenda').val("");
+var startDate = new Date('01/07/2014');
+var FromEndDate = new Date();
+var ToEndDate = new Date();
 
-    //Controle da Seleção da data da venda
-    $('#dataVenda').datepicker().on('changeDate', function (ev) {
-        $('#buttonSelectCliente').removeAttr("disabled");
-        $('#buttonpesquisaCNPJCliente').removeAttr("disabled");
-        $('#pesquisaCNPJCliente').removeAttr("disabled");
-        $('#clientePanel').fadeTo( "slow", 1 );
-        $(this).datepicker('hide');
-    });
+var fullDate = new Date();
+var twoDigitMonth = fullDate.getMonth()+1+"";
+if(twoDigitMonth.length==1)  twoDigitMonth="0" +twoDigitMonth;
+var twoDigitDate = fullDate.getDate()+"";
+if(twoDigitDate.length==1) twoDigitDate="0" +twoDigitDate;
+var currentDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();console.log(currentDate);
+
+ToEndDate.setDate(ToEndDate.getDate()+365);
+
+
+//    Controle da Seleção da data da venda
+     $('#dataVenda').datepicker({weekStart: 1,
+     startDate: startDate,
+     endDate: currentDate, 
+     autoclose: true
+ }).on('changeDate', function (ev) {
+         $('#buttonSelectCliente').removeAttr("disabled");
+         $('#buttonpesquisaCNPJCliente').removeAttr("disabled");
+         $('#pesquisaCNPJCliente').removeAttr("disabled");
+         $('#clientePanel').fadeTo( "slow", 1 );
+         $(this).datepicker('hide');
+     });
+
+
 
     //Quando um Cliente é Selecionado
     $('#buttonSelectCliente').click(function() {
