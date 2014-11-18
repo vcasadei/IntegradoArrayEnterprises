@@ -6,10 +6,14 @@ package Banco;
 
 import Bean.Produto;
 import java.sql.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -134,12 +138,15 @@ public class ProdutosDAO {
     }
     
     /* Busca a quantidade de produtos QUE RESPEITAM O LIMITE DE DIAS */
-    public int buscaQuantidadeProd(int codProd, String dataVenda) throws SQLException, BdDAOException { 
+    public int buscaQuantidadeProd(int codProd, String dataVenda) throws SQLException, BdDAOException, ParseException { 
         
         Statement stat = bdConn.createStatement();
+       
+ 
+	
         
         ResultSet rs = stat.executeQuery("SELECT SUM(qntdatual) as qtdeEstoque FROM lote l, produto p WHERE (l.codprod = " + codProd + ") AND (l.codprod = p.codprod)" +
-                                            "AND (" + dataVenda + " <= (l.validade - p.diaslim_validade))");
+                                            "AND ((to_date('" + dataVenda + "','DD/MM/YYYY') <= (l.validade - p.diaslim_validade)))");
         int qtde = 0;
         if (rs.next()){
             qtde = rs.getInt("qtdeestoque");

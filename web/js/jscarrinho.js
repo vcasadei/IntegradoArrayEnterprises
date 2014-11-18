@@ -374,6 +374,9 @@ $(document).ready(function() {
     }
 
     $('#erroVenda').on('hidden.bs.modal', function () {
+        sessionStorage.removeItem('dataProduto');
+        sessionStorage.removeItem('dataLote');
+        sessionStorage.removeItem('dataCliente');
         window.location.href = "/ArrayEnterprises/index.html";
     })
 
@@ -388,6 +391,9 @@ $(document).ready(function() {
     })
 
     $('#salvarRelatorioComo').on('hidden.bs.modal', function () {
+        sessionStorage.removeItem('dataProduto');
+        sessionStorage.removeItem('dataLote');
+        sessionStorage.removeItem('dataCliente');
         window.location.href = "/ArrayEnterprises/index.html";
         
     })
