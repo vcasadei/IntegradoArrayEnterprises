@@ -291,12 +291,21 @@ $(document).ready(function () {
             //$("#errmsg").html("Digits Only").show().fadeOut("slow");
             return false;
         } else {
+             
+                $('#formGroupQuantidadeProduto').removeClass("has-error");
+                $('#formGroupQuantidadeProduto2').removeClass("has-error");
+                $('#formGroupQuantidadeProduto2').fadeOut(200);
+                qtdeFaltando = $('#quantidadeProduto').val();
+            
 
-            $('#formGroupQuantidadeProduto').removeClass("has-error");
-            $('#formGroupQuantidadeProduto2').removeClass("has-error");
-            $('#formGroupQuantidadeProduto2').fadeOut(200);
-            qtdeFaltando = $('#quantidadeProduto').val();
+            
         }
+        if($('#quantidadeProduto').val() > $('#qtdeEstoque').val()){
+                $('#formGroupQuantidadeProduto2').removeClass("has-success");
+                $('#formGroupQuantidadeProduto').removeClass("has-success");
+                $('#formGroupQuantidadeProduto').addClass("has-error");
+                qtdeFaltando = $('#quantidadeProduto').val();
+            }
     });
 
     $("#valorUnitario").keypress(function (e) {
@@ -356,6 +365,11 @@ $(document).ready(function () {
                 $('#formGroupQuantidadeProduto2').fadeOut(200);
             }
         }
+        if($('#quantidadeProduto').val() > $('#qtdeEstoque').val()){
+                $('#formGroupQuantidadeProduto').removeClass("has-success");
+                $('#formGroupQuantidadeProduto').addClass("has-error");
+                qtdeFaltando = $('#quantidadeProduto').val();
+            }
     });
 
 

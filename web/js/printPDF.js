@@ -157,9 +157,15 @@ $(document).ready(function() {
 			doc.output('dataurlnewwindow');
 
 			$('#salvarRelatorioComo').modal('hide');
+			sessionStorage.removeItem('dataProduto');
+	        sessionStorage.removeItem('dataLote');
+	        sessionStorage.removeItem('dataCliente');
     	} else {
     		$('#erroNomeVazio').fadeIn(200);
             $('#nomeRelatorioInputGroup').addClass('has-error');
+            sessionStorage.removeItem('dataProduto');
+	        sessionStorage.removeItem('dataLote');
+	        sessionStorage.removeItem('dataCliente');
     	}
 
         
