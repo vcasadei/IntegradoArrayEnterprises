@@ -11,6 +11,7 @@ import Bean.Produto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,6 +127,8 @@ public class BuscaProdutosEstoque extends HttpServlet {
     }   catch (BdDAOException ex) {
             Logger.getLogger(BuscaProdutosEstoque.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            Logger.getLogger(BuscaProdutosEstoque.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(BuscaProdutosEstoque.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
