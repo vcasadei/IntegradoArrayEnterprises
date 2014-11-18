@@ -319,7 +319,7 @@ $( document ).ready(function() {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <b>Items obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk "></span>
+                    <b>Itens obrigatórios estão marcados com </b><span class="glyphicon glyphicon-asterisk "></span>
                 </div>
                 <div class="panel-body">
                     <!-- Form de Cliente -->
@@ -328,8 +328,8 @@ $( document ).ready(function() {
                             <div class="col-lg-6 yes">
                                 <!-- Campos do Formulário -->
                                 <div class="form-group">
-                                    <label>Nome do usuário <span class="glyphicon glyphicon-asterisk "></span></label>
-                                    <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" placeholder="Insira o nome do usuário" autofocus />
+                                    <label>Username <span class="glyphicon glyphicon-asterisk "></span></label>
+                                    <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" placeholder="Insira o username a ser utilizado" autofocus />
                                     
                                 </div>
 

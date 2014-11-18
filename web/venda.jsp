@@ -199,7 +199,7 @@
                                         <div class="row"  >
                                             <div class="col-lg-9" >
                                                 <div class="form-group input-group" >
-                                                    <input type="text" class="form-control" id="pesquisaCNPJCliente" name="pesquisaCNPJCliente" data-mask="99.999.999/9999-99" placeholder="Pesquise pelo CNPJ do Cliente (apenas números)" disabled>
+                                                    <input type="text" class="form-control" id="pesquisaCNPJCliente" name="pesquisaCNPJCliente" data-mask="99.999.999/9999-99" placeholder="Digite o CNPJ do cliente e clique na lupa para inseri-lo" disabled>
                                                     <span class="input-group-btn" >
                                                         <button class="btn btn-default" id="buttonpesquisaCNPJCliente" type="button" disabled><i class="fa fa-search" ></i>
                                                         </button>

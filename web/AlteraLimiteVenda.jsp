@@ -264,11 +264,12 @@
                     </div>
                     <div class="form-group input-group"  >
                         <small class="help-block" >* Somente números positivos</small>
+                        <small class="help-block" >* Limite máximo, 99 dias</small>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="cancelarLimiteSim" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     <button type="button" id="alterarSim" class="btn btn-primary" >Alterar</button>
 
                 </div>

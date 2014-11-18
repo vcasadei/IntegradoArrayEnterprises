@@ -165,6 +165,10 @@ $(document).ready(function() {
             $('#nomeRelatorioInputGroup').addClass('has-error');
         }
     });
+    
+    $('#cancelarLimiteSim').click(function(){
+        $('#newLimiteDias').val("");
+    });
 
     //Inicia dataTable para clientes
     var table = $('#loadProduto').DataTable( {
