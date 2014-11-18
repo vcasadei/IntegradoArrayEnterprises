@@ -160,7 +160,6 @@ $(document).ready(function () {
             table.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
             aux2 = "";
-
             $(this).find("td").each(function () {
                 aux2 = aux2 + "#/" + $(this).text();
             });

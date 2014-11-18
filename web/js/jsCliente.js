@@ -108,19 +108,24 @@ ToEndDate.setDate(ToEndDate.getDate()+365);
     $('#loadCliente tbody').on('click', 'tr', function() {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
+            auxSplit = "";
             auxSplit = "none";
         }
         else {
             table.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
-
+            auxSplit = "";
+            aux2 = "";
             $(this).find("td").each(function() {
+                console.log(aux2);
                 aux2 = aux2 + "#/" + $(this).text();
             });
 
             auxSplit = aux2.split("#/");
         }
     });
+
+   
 
     $("#resetVenda").click(function() {
         limparFormulario();
