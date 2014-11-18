@@ -566,12 +566,17 @@ $(document).ready(function () {
 
             selection = $loteTable.bootstrapTable('getSelections');
             console.log("$$$$$$$$$$$ selecionados: " + JSON.stringify(selection));
+            console.log(selection);
             var quantidadeForm = parseInt($('#quantidadeProduto').val());
             $('#unidadesFalta').val(quantidadeForm);
             var quantidadeObjetivo = quantidadeForm;
             var quantosFalta = 1;
             var jaPassou = false;
             var liberaToCart = false;
+            var auxSelec = selection;
+            var auxSelec = selection.reverse();
+            selection = auxSelec;
+            console.log("vamo ve ver ver ver: " + JSON.stringify(selection));
             for(var i = 0; i < selection.length; i++){
                 rowsSelecionados.push(selection[i]);
                 if(quantosFalta > 0){
@@ -650,6 +655,9 @@ $(document).ready(function () {
             var quantosFalta = 1;
             var jaPassou = false;
             var liberaToCart = false;
+            var auxSelec = selection;
+            var auxSelec = selection.reverse();
+            selection = auxSelec;
             for(var i = 0; i < selection.length; i++){
                 rowsSelecionados.push(selection[i]);
                 if(quantosFalta > 0){
