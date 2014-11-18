@@ -3,8 +3,27 @@ $(document).ready(function() {
     
 
     sessionStorage.removeItem('dataProduto');
-        sessionStorage.removeItem('dataLote');
+    sessionStorage.removeItem('dataLote');
+    
+
+    var sessao = sessionStorage.getItem( "dataCliente" );
+    if(sessao != null){
+        var clienteObj = JSON.parse( sessao );
+        dataVenda = clienteObj[0].dataVenda;
+        codCliente = clienteObj[0].codCliente;
+        ramoCliente = clienteObj[0].ramoCliente;
+        nomeCliente = clienteObj[0].nomeCliente;
+        cnpjCliente = clienteObj[0].cnpjCliente;
+        ramoCliente = clienteObj[0].ramoCliente;
+        $("#dataVenda").val(dataVenda);
+
         sessionStorage.removeItem('dataCliente');
+        $('#buttonSelectCliente').removeAttr("disabled");
+         $('#buttonpesquisaCNPJCliente').removeAttr("disabled");
+         $('#pesquisaCNPJCliente').removeAttr("disabled");
+         $('#clientePanel').fadeTo( "slow", 1 );
+    }
+    
     
 var startDate = new Date('01/07/2014');
 var FromEndDate = new Date();

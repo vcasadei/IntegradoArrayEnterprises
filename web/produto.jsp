@@ -191,7 +191,7 @@
                                 <div class="col-lg-8 yes">
                                     <label>Data da Venda </label>
                                     <div class="form-group input-group"  data-date-format="dd-mm-yyyy" >
-                                        <input class="form-control" id="fixDataVenda" name="fixDataVenda" data-date-format="dd/mm/yyyy" readonly="readonly" >
+                                        <input class="noInput" id="fixDataVenda" name="fixDataVenda" data-date-format="dd/mm/yyyy" readonly="readonly" >
                                     </div>
 
                                 </div>
@@ -224,13 +224,13 @@
                                             <div class="col-lg-6 yes">
                                                 <div class="form-group" >
                                                     <label>Nome do Cliente</label>
-                                                    <input class="form-control" id="nomeCliente" name="nomeCliente" placeholder="Insira o nome do cliente" readonly>
+                                                    <input class="noInput" id="nomeCliente" name="nomeCliente" placeholder="Insira o nome do cliente" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 yes" >
                                                 <div class="form-group">
                                                     <label>CNPJ do cliente</label>
-                                                    <input class="form-control" id="cnpjCliente" name="cnpjCliente" placeholder="Insira o CNPJ do cliente" data-mask="99.999.999/9999-99" readonly >
+                                                    <input class="noInput" id="cnpjCliente" name="cnpjCliente" placeholder="Insira o CNPJ do cliente" data-mask="99.999.999/9999-99" readonly >
                                                     <input id="codigoCliente" class="hidden" value="0">
                                                     <input id="ramoCliente" class="hidden" value="0">
                                                 </div>
@@ -280,7 +280,7 @@
                                                 <div class="col-lg-6 yes">
                                                     <div class="form-group">
                                                         <label>Nome do Produto</label>
-                                                        <input class="form-control" id="nomeProduto" placeholder="Insira o Nome do Produto" readonly>
+                                                        <input class="noInput" id="nomeProduto" placeholder="Insira o Nome do Produto" readonly>
                                                     </div>
 
                                                     <div class="form-group" >
@@ -321,18 +321,18 @@
                                                 <div class="col-lg-6 yes">
                                                     <div class="form-group">
                                                         <label>Código do Produto</label>
-                                                        <input class="form-control" id="codigoProduto" name="codigoProduto" placeholder="Insira o código do produto" readonly>
+                                                        <input class="noInput" id="codigoProduto" name="codigoProduto" placeholder="Insira o código do produto" readonly>
                                                     </div>
                                                     <label>Valor Unitário</label>
                                                     <div class="form-group input-group">
-                                                        <span class="input-group-addon">R$</span>
-                                                        <input  class="form-control" id="valorUnitario" name="valorUnitario" placeholder="Insira o valor unitário do produto" readonly>
+                                                        <span style="display: table-cell">R$</span>
+                                                        <input  class="noInput" id="valorUnitario" name="valorUnitario" placeholder="Insira o valor unitário do produto" readonly>
                                                     </div>
 
                                                     <label>Quantidade em Estoque</label>
                                                     <div class="form-group input-group">
                                                         
-                                                        <input  class="form-control" id="qtdeEstoque" name="qtdeEstoque" placeholder="" readonly><span class="input-group-addon">unidades</span>
+                                                        <input  class="noInput" id="qtdeEstoque" name="qtdeEstoque" placeholder="" readonly>
                                                     </div>
 
                                                     
@@ -358,13 +358,13 @@
                                                 <div class="col-lg-2">
 
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-5">
 
                                                 </div>
                                                 <div class="col-lg-5" style="margin-top: 10px;">
-                                                    <div class="form-group" id="groupUnidadesFalta" style="display:none;">
+                                                    <div class="form-group input-group" id="groupUnidadesFalta" style="display:none;">
                                                         <label >Unidades Faltantes</label>
-                                                        <input class="form-control" id="unidadesFalta" name="unidadesFalta" placeholder="" readonly>
+                                                        <input class="noInput" id="unidadesFalta" name="unidadesFalta" placeholder="" readonly>
                                                         <span id="erroUnidadesFaltantes" style="display:none; color:red"><b>Erro:</b> Você selecionou muitos lotes.</span>
 
                                                     </div>
@@ -392,7 +392,7 @@
 
                                                                 <div class="form-group">
                                                                     <label>Código do Lote</label>
-                                                                    <input class="form-control" id="codigoLote" name="codigoLote" placeholder="Insira o código do lote" readonly>
+                                                                    <input class="noInput" id="codigoLote" name="codigoLote" placeholder="Insira o código do lote" readonly>
 
                                                                 </div>
 
@@ -400,7 +400,7 @@
 
                                                                 <div class="form-group " >
                                                                     <label>Data de Validade</label>
-                                                                    <input class="form-control" id="validade" name="validade" style="width: 130px;" readonly>
+                                                                    <input class="noInput" id="validade" name="validade" style="width: 130px;" readonly>
                                                                 </div>
 
 
@@ -458,8 +458,8 @@
                                     <label>Valor Total</label>
 
                                     <div class="form-group input-group">
-                                        <span class="input-group-addon">R$</span>
-                                        <input type="text" class="form-control" id="valorTotal" name="valorTotal" placeholder="Valor total da venda" readonly>
+                                        <span style="display: table-cell">R$</span>
+                                        <input type="text"  class="noInput" id="valorTotal" name="valorTotal" placeholder="0,0" readonly>
                                     </div>
 
                                 </div>

@@ -300,12 +300,29 @@ $(document).ready(function () {
 
             
         }
-        if($('#quantidadeProduto').val() > $('#qtdeEstoque').val()){
+        
+        if($('#quantidadeProduto').val() != ""){
+            if(parseInt($('#quantidadeProduto').val()) > parseInt ($('#qtdeEstoque').val())){
                 $('#formGroupQuantidadeProduto2').removeClass("has-success");
                 $('#formGroupQuantidadeProduto').removeClass("has-success");
                 $('#formGroupQuantidadeProduto').addClass("has-error");
                 qtdeFaltando = $('#quantidadeProduto').val();
+            } else {
+                if(parseInt($('#quantidadeProduto').val()) > 0){
+                    $('#formGroupQuantidadeProduto').removeClass("has-error");
+                    $('#formGroupQuantidadeProduto').addClass("has-success");
+                    qtdeFaltando = $('#quantidadeProduto').val();
+                } else {
+                    $('#formGroupQuantidadeProduto2').removeClass("has-success");
+                    $('#formGroupQuantidadeProduto').removeClass("has-success");
+                    $('#formGroupQuantidadeProduto').addClass("has-error");
+                    qtdeFaltando = $('#quantidadeProduto').val();
+
+                }
+                
             }
+        }
+        
     });
 
     $("#valorUnitario").keypress(function (e) {
@@ -365,11 +382,27 @@ $(document).ready(function () {
                 $('#formGroupQuantidadeProduto2').fadeOut(200);
             }
         }
-        if($('#quantidadeProduto').val() > $('#qtdeEstoque').val()){
+        if($('#quantidadeProduto').val() != ""){
+            if(parseInt($('#quantidadeProduto').val()) > parseInt ($('#qtdeEstoque').val())){
+                $('#formGroupQuantidadeProduto2').removeClass("has-success");
                 $('#formGroupQuantidadeProduto').removeClass("has-success");
                 $('#formGroupQuantidadeProduto').addClass("has-error");
                 qtdeFaltando = $('#quantidadeProduto').val();
+            } else {
+                if(parseInt($('#quantidadeProduto').val()) > 0){
+                    $('#formGroupQuantidadeProduto').removeClass("has-error");
+                    $('#formGroupQuantidadeProduto').addClass("has-success");
+                    qtdeFaltando = $('#quantidadeProduto').val();
+                } else {
+                    $('#formGroupQuantidadeProduto2').removeClass("has-success");
+                    $('#formGroupQuantidadeProduto').removeClass("has-success");
+                    $('#formGroupQuantidadeProduto').addClass("has-error");
+                    qtdeFaltando = $('#quantidadeProduto').val();
+
+                }
+                
             }
+        }
     });
 
 

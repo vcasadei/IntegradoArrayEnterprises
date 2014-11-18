@@ -172,7 +172,7 @@
                                 <div class="col-lg-8 yes">
                                     <label>Data da Venda </label>
                                     <div class="form-group input-group"  data-date-format="dd-mm-yyyy" >
-                                        <input class="form-control" id="fixDataVenda" name="fixDataVenda" data-date-format="dd/mm/yyyy" readonly="readonly" >
+                                        <input class="noInput" id="fixDataVenda" name="fixDataVenda" data-date-format="dd/mm/yyyy" readonly="readonly" >
                                     </div>
 
                                 </div>
@@ -203,13 +203,13 @@
                                             <div class="col-lg-6 yes">
                                                 <div class="form-group" >
                                                     <label>Nome do Cliente</label>
-                                                    <input class="form-control" id="nomeCliente" name="nomeCliente"  readonly>
+                                                    <input class="noInput" id="nomeCliente" name="nomeCliente"  readonly>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 yes" >
                                                 <div class="form-group">
                                                     <label>CNPJ do cliente</label>
-                                                    <input class="form-control" id="cnpjCliente" name="cnpjCliente"  data-mask="99.999.999/9999-99" readonly>
+                                                    <input class="noInput" id="cnpjCliente" name="cnpjCliente"  data-mask="99.999.999/9999-99" readonly>
                                                     <input id="codigoCliente" class="hidden" value="0">
                                                     <input id="ramoCliente" class="hidden" value="0">
                                                 </div>
@@ -251,8 +251,8 @@
                                 <div class="col-lg-4">
                                     <h3><b>Total:</b>
                                         <div class="form-group input-group">
-                                            <span class="input-group-addon">R$</span>
-                                            <input type="text" class="form-control input-lg" id="total" name="total" placeholder="" readonly>
+                                            <span style="display: table-cell">R$</span>
+                                            <b><input type="text" class="noInput input-lg" id="total" name="total" placeholder="0,0" readonly></b>
                                         </div>
                                      </h3>
                                 </div>
