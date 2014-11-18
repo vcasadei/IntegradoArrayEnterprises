@@ -173,7 +173,7 @@ $(document).ready(function () {
         console.log("codigo do produto: " + codProduto)
 
         var dataString;
-            dataString = "codProd=" + codProduto;
+            dataString = "codProd=" + codProduto + "&dataVenda=" + $("#fixDataVenda").val();
              $.ajax({
                 type: "POST",
                 url: "BuscaProdutosEstoque",

@@ -106,6 +106,7 @@ public class BuscaProdutosEstoque extends HttpServlet {
             throws ServletException, IOException {
         ProdutosDAO produtosDAO;
         int codProduto, quantidadeEstoque = 0;
+        String dataVenda = "";
         
          try {
 
@@ -113,9 +114,10 @@ public class BuscaProdutosEstoque extends HttpServlet {
             
             /*Pega o código do produto da aplicação*/
             codProduto = Integer.parseInt(request.getParameter("codProd"));
-
+            dataVenda = request.getParameter("dataVenda");
+            
             /*Busca a quantidade de dias limite no banco*/
-            quantidadeEstoque = produtosDAO.buscaQuantidadeProd(codProduto);
+            quantidadeEstoque = produtosDAO.buscaQuantidadeProd(codProduto, dataVenda);
 
             /*Manda de volta pra aplicação*/
             PrintWriter writer = response.getWriter();

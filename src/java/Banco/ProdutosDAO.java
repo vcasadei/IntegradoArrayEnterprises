@@ -134,12 +134,12 @@ public class ProdutosDAO {
     }
     
     /* Busca a quantidade de produtos QUE RESPEITAM O LIMITE DE DIAS */
-    public int buscaQuantidadeProd(int codProd) throws SQLException, BdDAOException { 
+    public int buscaQuantidadeProd(int codProd, String dataVenda) throws SQLException, BdDAOException { 
         
         Statement stat = bdConn.createStatement();
         
         ResultSet rs = stat.executeQuery("SELECT SUM(qntdatual) as qtdeEstoque FROM lote l, produto p WHERE (l.codprod = " + codProd + ") AND (l.codprod = p.codprod)" +
-                                            "AND (current_date <= (l.validade - p.diaslim_validade))");
+                                            "AND (" + dataVenda + " <= (l.validade - p.diaslim_validade))");
         int qtde = 0;
         if (rs.next()){
             qtde = rs.getInt("qtdeestoque");
