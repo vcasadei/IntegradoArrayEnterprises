@@ -603,6 +603,8 @@ $(document).ready(function () {
         $('#unidadesFalta').val(parseInt($('#quantidadeProduto').val()));
         console.log(rows);
         $('#groupUnidadesFalta').fadeIn('fast');
+        console.log("ROWSS");
+        console.log(JSON.stringify(rows));
 
         $loteTable.bootstrapTable({
             data: rows
@@ -620,9 +622,26 @@ $(document).ready(function () {
             var quantosFalta = 1;
             var jaPassou = false;
             var liberaToCart = false;
-            var auxSelec = selection;
-            var auxSelec = selection.reverse();
-            selection = auxSelec;
+
+            function bubbles(vetor) {
+                    var n = vetor.length;
+                    var temp;
+                   
+                    for(var i=0; i < n; i++){
+                            for(var j=1; j < (n-i); j++){
+                                   
+                                    if(parseInt(vetor[j-1].qtdeEstoque) > parseInt(vetor[j].qtdeEstoque)){
+                                            temp = vetor[j-1];
+                                            vetor[j-1] = vetor[j];
+                                            vetor[j] = temp;
+                                    }
+                                   
+                            }
+                    }
+                    return vetor;
+            };
+
+            selection = bubbles(selection);
             console.log("vamo ve ver ver ver: " + JSON.stringify(selection));
             for(var i = 0; i < selection.length; i++){
                 rowsSelecionados.push(selection[i]);
@@ -702,9 +721,27 @@ $(document).ready(function () {
             var quantosFalta = 1;
             var jaPassou = false;
             var liberaToCart = false;
-            var auxSelec = selection;
-            var auxSelec = selection.reverse();
-            selection = auxSelec;
+            
+            function bubbles(vetor) {
+                    var n = vetor.length;
+                    var temp;
+                   
+                    for(var i=0; i < n; i++){
+                            for(var j=1; j < (n-i); j++){
+                                   
+                                    if(parseInt(vetor[j-1].qtdeEstoque) > parseInt(vetor[j].qtdeEstoque)){
+                                            temp = vetor[j-1];
+                                            vetor[j-1] = vetor[j];
+                                            vetor[j] = temp;
+                                    }
+                                   
+                            }
+                    }
+                    return vetor;
+            };
+
+            selection = bubbles(selection);
+            
             for(var i = 0; i < selection.length; i++){
                 rowsSelecionados.push(selection[i]);
                 if(quantosFalta > 0){
