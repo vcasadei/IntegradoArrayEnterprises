@@ -44,7 +44,6 @@
         <!-- Pesquisa produto/Cliente -->
         <!-- <script src="js/PesquisaCNPJProduto.js"></script> -->
 
-        <script src="js/salvarVenda.js"></script>
 
         <script src="js/jsProduto.js"></script>
         <script src="js/jsGeral.js"></script>
@@ -640,6 +639,25 @@
                 </div>
                 <div class="modal-body">
                     <p>Você deve selecionar um item.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Modal erro de não selecionar nenhum item -->
+    <div class="modal fade bs-example-modal-sm " id="modalQuantidade0"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm vertical-centered " >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#d9534f;">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+                    <h4 class="modal-title " style="color:white;"><span class="glyphicon glyphicon-warning-sign" style="color:white;"></span>&nbsp;&nbsp;Quantidade Inválida</h4>
+                </div>
+                <div class="modal-body">
+                    <p>A quantidade deve ser maior que 0.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>

@@ -301,28 +301,6 @@ $(document).ready(function () {
             
         }
         
-        if($('#quantidadeProduto').val() != ""){
-            if(parseInt($('#quantidadeProduto').val()) > parseInt ($('#qtdeEstoque').val())){
-                $('#formGroupQuantidadeProduto2').removeClass("has-success");
-                $('#formGroupQuantidadeProduto').removeClass("has-success");
-                $('#formGroupQuantidadeProduto').addClass("has-error");
-                qtdeFaltando = $('#quantidadeProduto').val();
-            } else {
-                if(parseInt($('#quantidadeProduto').val()) > 0){
-                    $('#formGroupQuantidadeProduto').removeClass("has-error");
-                    $('#formGroupQuantidadeProduto').addClass("has-success");
-                    qtdeFaltando = $('#quantidadeProduto').val();
-                } else {
-                    $('#formGroupQuantidadeProduto2').removeClass("has-success");
-                    $('#formGroupQuantidadeProduto').removeClass("has-success");
-                    $('#formGroupQuantidadeProduto').addClass("has-error");
-                    qtdeFaltando = $('#quantidadeProduto').val();
-
-                }
-                
-            }
-        }
-        
     });
 
     $("#valorUnitario").keypress(function (e) {
@@ -382,30 +360,46 @@ $(document).ready(function () {
                 $('#formGroupQuantidadeProduto2').fadeOut(200);
             }
         }
-        if($('#quantidadeProduto').val() != ""){
-            if(parseInt($('#quantidadeProduto').val()) > parseInt ($('#qtdeEstoque').val())){
-                $('#formGroupQuantidadeProduto2').removeClass("has-success");
-                $('#formGroupQuantidadeProduto').removeClass("has-success");
-                $('#formGroupQuantidadeProduto').addClass("has-error");
-                qtdeFaltando = $('#quantidadeProduto').val();
-            } else {
-                if(parseInt($('#quantidadeProduto').val()) > 0){
-                    $('#formGroupQuantidadeProduto').removeClass("has-error");
-                    $('#formGroupQuantidadeProduto').addClass("has-success");
-                    qtdeFaltando = $('#quantidadeProduto').val();
-                } else {
-                    $('#formGroupQuantidadeProduto2').removeClass("has-success");
-                    $('#formGroupQuantidadeProduto').removeClass("has-success");
-                    $('#formGroupQuantidadeProduto').addClass("has-error");
-                    qtdeFaltando = $('#quantidadeProduto').val();
-
-                }
-                
-            }
-        }
     });
 
+    
+    $('#formVenda').bootstrapValidator({
 
+                fields: {
+                    dataVenda: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Por favor, informe a data da venda'
+                            }
+                        }
+                    },
+                    qtdeEstoque: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Por favor, informe a data da venda'
+                            }
+                        }
+                    },
+                    quantidadeProduto: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Por favor, insira a quantidade do produto'
+                            },
+                            between: {
+                                min: 1,
+                                max:  'qtdeEstoque',
+                                message: 'A quantidade deve ser maior que 0 e menor que a quantidade em estoque'
+                            }
+                        }
+                    }
+                },
+                submitHandler: function(validator, form, submitButton) {
+                    
+                }
+            }).on('success.form.bv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
+        });
     //Pesquisa pelo código do Prod que só aceita números
     $("#pesquisaNomeProduto").keypress(function (e) {
         //if the letter is not digit then display error and don't type anything
@@ -477,6 +471,11 @@ $(document).ready(function () {
 
 
     $('#loteManual').click(function() {
+        $('#erroUnidadesFaltantes').fadeOut('fast');
+        $('#groupUnidadesFalta').removeClass('has-error');
+        $('#addToCart').prop('disabled', true);
+        $('#unidadesFalta').val(0);
+        console.log('Já passou!!!')
         var qtdEst = $('#qtdeEstoque').val().replace(/ /g, '');
         qtdEst = parseInt(qtdEst);
         var qtdSele = $('#quantidadeProduto').val().replace(/ /g, '');
@@ -493,10 +492,13 @@ $(document).ready(function () {
             $('.addedRelatorio').remove();
             $('.addedPrint').remove();
             $('#addToCart').prop('disabled', true);
-            $('#formGroupQuantidadeProduto').removeClass("has-error");
-            $('#formGroupQuantidadeProduto2').removeClass("has-error");
-            $('#formGroupQuantidadeProduto2').fadeOut(200);
-            pesquisarLotesManual();
+            if(parseInt($('#quantidadeProduto').val()) <= 0){
+                $('#modalQuantidade0').modal('show');
+                $('#addToCart').attr("disabled", "true");
+            } else {
+                pesquisarLotesManual();
+            }
+            //pesquisarLotesManual();
         } else {
             $('#erroLoteInsuficiente').modal('show');
             $('#addToCart').attr("disabled", "true");
@@ -553,11 +555,6 @@ $(document).ready(function () {
             $('.addedRelatorio').remove();
             $('.addedPrint').remove();
             $('#addToCart').attr("disabled", "true");
-            if(!($('#formGroupQuantidadeProduto').hasClass( "has-error" ))){
-                $('#formGroupQuantidadeProduto').addClass("has-error");
-                $('#formGroupQuantidadeProduto2').addClass("has-error");
-                $('#formGroupQuantidadeProduto2').fadeIn(200);
-            }
 
         }
         
@@ -741,7 +738,7 @@ $(document).ready(function () {
             };
 
             selection = bubbles(selection);
-            
+
             for(var i = 0; i < selection.length; i++){
                 rowsSelecionados.push(selection[i]);
                 if(quantosFalta > 0){
@@ -833,10 +830,13 @@ $(document).ready(function () {
         rowsSelecionados.length = 0; 
         $loteTable.bootstrapTable('destroy');
         $('#groupUnidadesFalta').fadeOut('fast');
-        $('#formGroupQuantidadeProduto').removeClass("has-error");
-        $('#formGroupQuantidadeProduto2').removeClass("has-error");
-        $('#formGroupQuantidadeProduto2').fadeOut(200);
-        pesquisarLotesAutomatico();
+        if(parseInt($('#quantidadeProduto').val()) <= 0){
+            $('#modalQuantidade0').modal('show');
+            $('#addToCart').attr("disabled", "true");
+        } else {
+            pesquisarLotesAutomatico();
+        }
+        
     });
 
     
@@ -886,11 +886,7 @@ $(document).ready(function () {
             $('.addedRelatorio').remove();
             $('.addedPrint').remove();
             $('#addToCart').attr("disabled", "true");
-            if(!($('#formGroupQuantidadeProduto').hasClass( "has-error" ))){
-                $('#formGroupQuantidadeProduto').addClass("has-error");
-                $('#formGroupQuantidadeProduto2').addClass("has-error");
-                $('#formGroupQuantidadeProduto2').fadeIn(200);
-            }
+
             
 
         }

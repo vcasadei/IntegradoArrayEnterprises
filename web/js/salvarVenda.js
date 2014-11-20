@@ -82,6 +82,10 @@
                             greaterThan: {
                                 value: 1.0,
                                 message: 'A quantidade deve ser maior que 0'
+                            },
+                            greaterThan: {
+                                value: parseInt($('#qtdeEstoque').val()),
+                                message: 'A quantidade deve ser maior que a quantidade em estoque.'
                             }
                         }
                     }
