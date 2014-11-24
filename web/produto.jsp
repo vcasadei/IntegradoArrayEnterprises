@@ -247,7 +247,7 @@
                                         <div class="row" >
                                             <div class="col-lg-9" >
                                                 <div class="form-group input-group">
-                                                    <input type="text" class="form-control" id="pesquisaNomeProduto" name="pesquisaNomeProduto" placeholder="Pesquise pelo código do Produto (apenas números)" >
+                                                    <input type="text" class="form-control" id="pesquisaNomeProduto" name="pesquisaNomeProduto" placeholder="Digite o código do Produto e clique na lupa para inseri-lo (apenas números)" >
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default" id="buttonPesquisaNomeProduto" type="button" ><i class="fa fa-search"></i>
                                                         </button>
