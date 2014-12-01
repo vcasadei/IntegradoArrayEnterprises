@@ -41,7 +41,7 @@ $(document).ready(function () {
     });
 
     $('#closeErroNomeVazio').click(function (e) {
-        $('#erroUnidadesFaltantes').fadeOut(300);
+        $('#erroLotesManual').fadeOut(300);
     });
 
 
@@ -471,7 +471,7 @@ $(document).ready(function () {
 
 
     $('#loteManual').click(function() {
-        $('#erroUnidadesFaltantes').fadeOut('fast');
+        $('#erroLotesManual').fadeOut('fast');
         $('#groupUnidadesFalta').removeClass('has-error');
         $('#addToCart').prop('disabled', true);
         $('#unidadesFalta').val(0);
@@ -662,7 +662,7 @@ $(document).ready(function () {
             }
 
             if(jaPassou){
-                $('#erroUnidadesFaltantes').fadeIn('fast');
+                $('#erroLotesManual').fadeIn('fast');
                 $('#groupUnidadesFalta').addClass('has-error');
                 $('#addToCart').prop('disabled', true);
                 $('#unidadesFalta').val(0);
@@ -675,7 +675,7 @@ $(document).ready(function () {
                     $('#unidadesFalta').val(quantosFalta);
                 }
                 
-                $('#erroUnidadesFaltantes').fadeOut('fast');
+                $('#erroLotesManual').fadeOut('fast');
                 $('#groupUnidadesFalta').removeClass('has-error');
                 if(liberaToCart){
                     $('#addToCart').prop('disabled', false);
@@ -762,7 +762,7 @@ $(document).ready(function () {
             }
 
             if(jaPassou){
-                $('#erroUnidadesFaltantes').fadeIn('fast');
+                $('#erroLotesManual').fadeIn('fast');
                 $('#groupUnidadesFalta').addClass('has-error');
                 $('#addToCart').prop('disabled', true);
                 $('#unidadesFalta').val(0);
@@ -774,7 +774,7 @@ $(document).ready(function () {
                 } else {
                     $('#unidadesFalta').val(quantosFalta);
                 }
-                $('#erroUnidadesFaltantes').fadeOut('fast');
+                $('#erroLotesManual').fadeOut('fast');
                 $('#groupUnidadesFalta').removeClass('has-error');
                 if(liberaToCart){
                     $('#addToCart').prop('disabled', false);
@@ -835,8 +835,7 @@ $(document).ready(function () {
             $('#addToCart').attr("disabled", "true");
         } else {
             pesquisarLotesAutomatico();
-        }
-        
+        }        
     });
 
     
@@ -886,6 +885,8 @@ $(document).ready(function () {
             $('.addedRelatorio').remove();
             $('.addedPrint').remove();
             $('#addToCart').attr("disabled", "true");
+
+            $('#erroLoteInsuficiente').modal('show');
 
             
 

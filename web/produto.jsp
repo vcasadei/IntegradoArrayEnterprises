@@ -364,7 +364,11 @@
                                                     <div class="form-group input-group" id="groupUnidadesFalta" style="display:none;">
                                                         <label >Unidades Faltantes</label>
                                                         <input class="noInput" id="unidadesFalta" name="unidadesFalta" placeholder="" readonly>
-                                                        <span id="erroUnidadesFaltantes" style="display:none; color:red"><b>Erro:</b> Você selecionou muitos lotes.</span>
+                                                        <div class="alert alert-danger" id="erroLotesManual" style="display:none;">
+                                                            
+                                                            <span><b>Erro:</b> Você selecionou muitos lotes.</span>
+                                                        </div>
+
 
                                                     </div>
 
