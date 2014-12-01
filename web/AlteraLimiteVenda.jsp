@@ -184,16 +184,7 @@
                                         </tr>
                                     </thead >
 
-                                    <tfoot >
-                                        <tr>
-                                            <th style="text-align: center;" >Código</th>
-                                            <th style="text-align: center;" >Produto</th>
-                                            <th style="text-align: center;">Ramo</th>
-                                            <th class="hidden" style="text-align: center;">Valor unitário (R$)</th>
-                                            <th style="text-align: center;">Limite para venda (dias)</th>
-                                            <th style="text-align: center;">Alterar limite</th>
-                                        </tr>
-                                    </tfoot>
+                                    
 
                                     <tbody style="text-align: center;">
                                         <% for (int i = 0; i < produtos.size(); i++) {

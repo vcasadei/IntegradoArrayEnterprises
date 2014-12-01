@@ -186,17 +186,7 @@
                                         </tr>
                                     </thead >
 
-                                    <tfoot >
-                                        <tr>
-                                            <th class="hidden">codVenda</th>
-                                            <th style="text-align: center;">Data da Venda</th>
-                                            <th style="text-align: center;">Cliente</th>
-                                            <th  class="hidden" style="text-align: center;">Código Produtos</th>
-                                            <th style="text-align: center;">Produtos</th>
-                                            <th style="text-align: center;" class="hidden">Valor Total (R$)</th>
-                                            <th style="text-align: center;">Relatório</th>
-                                        </tr>
-                                    </tfoot>
+                                    
 
                                     <tbody style="text-align: center;">
                                         <% for (int i = 0; i < vendas.size(); i++) {

@@ -413,7 +413,7 @@
                                                                 <label>Unidades a Retirar</label>
                                                                 <div class="form-group input-group">
 
-                                                                    <input class="form-control" id="quantidadeProduto" name="quantidadeProduto"  readonly><span class="input-group-addon" id="unidadeAddon">unidades</span>
+                                                                    <input class="noInput" id="quantidadeProduto" name="quantidadeProduto"  readonly>
                                                                 </div>
 
                                                             </div>
@@ -549,16 +549,6 @@
                             </tr>
                         </thead>
 
-                        <tfoot>
-                            <tr>
-                                <th>Código</th>
-                                <th>Nome do Produto</th>
-                                <th>Tipo</th>
-                                <th hidden="">Valor Unitário</th>
-
-                            </tr>
-                        </tfoot>
-
                         <tbody>
                             <%
                                 for (int i = 0; i < produtos.size(); i++) {
@@ -609,15 +599,6 @@
                             </tr>
                         </thead>
 
-                        <tfoot>
-                            <tr>
-                                <th>Código</th>
-                                <th>Quantidade Estoque</th>
-                                <th>Data de Validade</th>
-
-                            </tr>
-                        </tfoot>
-                        
                     </table>
 
                 </div>
