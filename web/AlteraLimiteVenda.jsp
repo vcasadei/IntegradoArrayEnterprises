@@ -175,7 +175,7 @@
                                 <table id="loadProduto" class="display table-bordered" cellspacing="0" width="100%" style="">
                                     <thead >
                                         <tr >
-                                            <th style="text-align: center;" >Código</th>
+                                            <th style="text-align: center;" >Código do Produto</th>
                                             <th style="text-align: center;" >Produto</th>
                                             <th style="text-align: center;">Ramo</th>
                                             <th class="hidden" style="text-align: center;">Valor unitário (R$)</th>

@@ -70,6 +70,8 @@ public class BuscaTodosProdutos extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
+        String data = request.getParameter("dataVenda");
+
         
         /*Variáveis para buscar e armazenar os produtos*/
         ArrayList<Produto> produtos = new ArrayList<Produto>();
@@ -80,7 +82,7 @@ public class BuscaTodosProdutos extends HttpServlet {
             
             /*Faz a busca dos produtos*/
             produtosDAO = new ProdutosDAO();
-            produtos = produtosDAO.BuscaTodosProdutos();
+            produtos = produtosDAO.BuscaTodosProdutos(data);
 
             request.setAttribute("listaProdutos", produtos);
             

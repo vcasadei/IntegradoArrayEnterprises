@@ -75,14 +75,16 @@ public class BuscaClienteProdutoCNPJCod extends HttpServlet {
         ProdutosDAO produtosDAO;
         String codigo;
         codigo = "1";
+        String data = "";
 
         try {
 
             produtosDAO = new ProdutosDAO();
             
             codigo = request.getParameter("cod");
+            data = request.getParameter("dataVenda");
             if(!codigo.equals("")){
-                produto = produtosDAO.BuscaProdutoCod(Integer.parseInt(codigo));
+                produto = produtosDAO.BuscaProdutoCod(Integer.parseInt(codigo), data);
                 PrintWriter writer = response.getWriter();
             if (produto == null){
                 writer.print("null");

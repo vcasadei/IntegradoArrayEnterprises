@@ -79,7 +79,7 @@ public class BuscaProdutosEstoque extends HttpServlet {
             
             /*Faz a busca dos produtos*/
             produtosDAO = new ProdutosDAO();
-            produtos = produtosDAO.BuscaTodosProdutos();
+            produtos = produtosDAO.BuscaTodosProdutosEstoque();
 
             request.setAttribute("listaProdutos", produtos);
             

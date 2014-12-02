@@ -43,8 +43,12 @@
     <script>
         $(document).ready(function() {
 
+            
+
             $('#usuarioForm').bind("keyup keypress", function(e) {
                   var code = e.keyCode || e.which; 
+                  
+                  console.log("tentou validar")
                   if (code  == 13) {               
                     e.preventDefault();
                     return false;
@@ -138,10 +142,15 @@
                 submitHandler: function(validator, form, submitButton) {
                     
                 }
-            }).on('success.form.bv', function(e) {
-            // Prevent form submission
-            e.preventDefault();
+            })
+            
 
+            .on('success.form.bv', function(e) {
+            // Prevent form submission
+            
+            e.preventDefault();
+                
+                console.log("validou as coisa tudo")
                 var varUsername =  $('#nomeUsuario').val();
                 var varPassword = $('#senhaUser').val();
                 var varEmail = $('#emailUser').val();
@@ -385,7 +394,7 @@ $( document ).ready(function() {
                             <!-- Button Limpar Campos -->
                                 <button type="reset" id="resetCliente" class="btn btn-danger"><span class="glyphicon glyphicon-repeat" style="color:white;"></span>&nbsp; Limpar Campos</button>
 
-                                <button  type="button" id="enviarUser" name="enviarUser" class="btn btn-primary"><span class="glyphicon glyphicon-check" style="color:white;"></span>&nbsp; Cadastrar</button>
+                                <button  type="button" id="enviarUser" name="enviarUser" class="btn btn-primary" disabled><span class="glyphicon glyphicon-check" style="color:white;" ></span>&nbsp; Cadastrar</button>
                             </div>
                         </div>
                     </form>

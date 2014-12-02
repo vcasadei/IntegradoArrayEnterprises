@@ -28,7 +28,38 @@ public class ProdutosDAO {
         this.bdConn = ConnectionBanco.getConnection();
     }
 
-    public ArrayList<Produto> BuscaTodosProdutos() throws SQLException, BdDAOException {
+    public ArrayList<Produto> BuscaTodosProdutos(String dataVenda) throws SQLException, BdDAOException {
+
+        Statement stat = bdConn.createStatement();
+        ResultSet rs;
+        ArrayList<Produto> produtos = new ArrayList<Produto>();
+        Produto aux;
+
+//        rs = stat.executeQuery("SELECT codProd, nomeProd, descProd, ramo, diasLim_validade, valorUnitario FROM Produto;");
+        rs = stat.executeQuery("SELECT SUM(qntdatual) as qtdeEstoque, p.codProd, p.nomeProd, p.descProd, "
+                + "p.ramo, p.diasLim_validade, p.valorUnitario FROM Produto p, lote l WHERE l.codprod = "
+                + "p.codProd AND qntdatual > 0 AND ((to_date('" + dataVenda + "','DD/MM/YYYY') <= "
+                + "(l.validade - p.diaslim_validade))) GROUP BY p.codProd;");
+
+        
+        while (rs.next()) {
+
+            aux = new Produto();
+            aux.setCodProd(rs.getInt(2));
+            aux.setNome(rs.getString(3));
+            aux.setDescricao(rs.getString(4));
+            aux.setRamo(rs.getString(5));
+            aux.setDiasLim_venda(rs.getInt(6));
+            aux.setValorUnitario(rs.getFloat(7));
+
+            produtos.add(aux);
+        }
+
+        ConnectionBanco.close(bdConn, stat, rs);
+        return produtos;
+    }
+    
+    public ArrayList<Produto> BuscaTodosProdutosEstoque() throws SQLException, BdDAOException {
 
         Statement stat = bdConn.createStatement();
         ResultSet rs;
@@ -37,6 +68,7 @@ public class ProdutosDAO {
 
         rs = stat.executeQuery("SELECT codProd, nomeProd, descProd, ramo, diasLim_validade, valorUnitario FROM Produto;");
 
+        
         while (rs.next()) {
 
             aux = new Produto();
@@ -82,20 +114,24 @@ public class ProdutosDAO {
     }
 
     /*Busca um produto através do seu código*/
-    public Produto BuscaProdutoCod(int cod) throws SQLException, BdDAOException {
+    public Produto BuscaProdutoCod(int cod, String data) throws SQLException, BdDAOException {
 
         Statement stat = bdConn.createStatement();
         ResultSet rs;
         Produto retorno = null;
 
-        rs = stat.executeQuery("SELECT nomeProd, ramo, valorUnitario FROM Produto WHERE codProd = " + cod + ";");
-
+//        rs = stat.executeQuery("SELECT nomeProd, ramo, valorUnitario FROM Produto WHERE codProd = " + cod + ";");
+        rs = stat.executeQuery("SELECT SUM(qntdatual) as qtdeEstoque, p.nomeProd, p.ramo, p.valorUnitario "
+                + "FROM Produto p, lote l WHERE l.codprod = p.codProd AND qntdatual > 0 "
+                + "AND p.codProd = " + cod + " AND "
+                + "((to_date('" + data + "','DD/MM/YYYY') <= (l.validade - p.diaslim_validade))) "
+                + "GROUP BY p.codProd;");
         while (rs.next()) {
             retorno = new Produto();
             retorno.setCodProd(cod);
-            retorno.setNome(rs.getString(1));
-            retorno.setRamo(rs.getString(2));
-            retorno.setValorUnitario(rs.getFloat(3));
+            retorno.setNome(rs.getString(2));
+            retorno.setRamo(rs.getString(3));
+            retorno.setValorUnitario(rs.getFloat(4));
         }
 
         /*Fecha a conexão com o banco*/

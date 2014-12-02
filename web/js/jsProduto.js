@@ -47,6 +47,9 @@ $(document).ready(function () {
 
 
     $('#buttonSelectProduto').click(function () {
+        $('#formGroupQuantidadeProduto').removeClass('has-error');
+        $('.help-block').fadeOut(10);
+
         $('#selecionarProduto').modal('show');
         $loteTable.bootstrapTable('destroy');
         $('#groupUnidadesFalta').fadeOut('fast');
@@ -96,7 +99,7 @@ $(document).ready(function () {
 
     var table = $('#loadProduto').dataTable({
         language: {
-            url: 'localisation/Portuguese-Brasil.json'
+            url: 'localisation/produto.json'
         }
     });
 
@@ -471,39 +474,47 @@ $(document).ready(function () {
 
 
     $('#loteManual').click(function() {
-        $('#erroLotesManual').fadeOut('fast');
-        $('#groupUnidadesFalta').removeClass('has-error');
-        $('#addToCart').prop('disabled', true);
-        $('#unidadesFalta').val(0);
-        console.log('Já passou!!!')
-        var qtdEst = $('#qtdeEstoque').val().replace(/ /g, '');
-        qtdEst = parseInt(qtdEst);
-        var qtdSele = $('#quantidadeProduto').val().replace(/ /g, '');
-        qtdSele = parseInt(qtdSele);
-        if(qtdSele <= qtdEst){
-            $loteTable.bootstrapTable('destroy');
-            rows = [];
-            row = [];
-            rowsSelecionados.length = 0;
-            rowsSelecionados = [];
-            $('#groupUnidadesFalta').fadeOut('fast');
-            $('#unidadesFalta').val("");
-            $('.addedPanel').remove();
-            $('.addedRelatorio').remove();
-            $('.addedPrint').remove();
+        if($('#quantidadeProduto').val() != ""){
+            $('#erroLotesManual').fadeOut('fast');
+            $('#groupUnidadesFalta').removeClass('has-error');
             $('#addToCart').prop('disabled', true);
-            if(parseInt($('#quantidadeProduto').val()) <= 0){
-                $('#modalQuantidade0').modal('show');
-                $('#addToCart').attr("disabled", "true");
+            $('#unidadesFalta').val(0);
+            console.log('Já passou!!!')
+            var qtdEst = $('#qtdeEstoque').val().replace(/ /g, '');
+            qtdEst = parseInt(qtdEst);
+            var qtdSele = $('#quantidadeProduto').val().replace(/ /g, '');
+            qtdSele = parseInt(qtdSele);
+            if(qtdSele <= qtdEst){
+                $loteTable.bootstrapTable('destroy');
+                rows = [];
+                row = [];
+                rowsSelecionados.length = 0;
+                rowsSelecionados = [];
+                $('#groupUnidadesFalta').fadeOut('fast');
+                $('#unidadesFalta').val("");
+                $('.addedPanel').remove();
+                $('.addedRelatorio').remove();
+                $('.addedPrint').remove();
+                $('#addToCart').prop('disabled', true);
+                if(parseInt($('#quantidadeProduto').val()) <= 0){
+                    $('#modalQuantidade0').modal('show');
+                    $('#addToCart').attr("disabled", "true");
+                } else {
+                    pesquisarLotesManual();
+                }
+                //pesquisarLotesManual();
             } else {
-                pesquisarLotesManual();
-            }
-            //pesquisarLotesManual();
-        } else {
-            $('#erroLoteInsuficiente').modal('show');
-            $('#addToCart').attr("disabled", "true");
+                $('#erroLoteInsuficiente').modal('show');
+                $('#addToCart').attr("disabled", "true");
+                
 
+            }
+        } else {
+            $('#modalSemQuantidade').modal('show');
+            $('#addToCart').attr("disabled", "true");
+            
         }
+        
         
     });
 
@@ -886,7 +897,7 @@ $(document).ready(function () {
             $('.addedPrint').remove();
             $('#addToCart').attr("disabled", "true");
 
-            $('#erroLoteInsuficiente').modal('show');
+            $('#modalSemQuantidade').modal('show');
 
             
 
@@ -974,11 +985,16 @@ $(document).ready(function () {
     function pesquisarCodigo() {
 
         if($("#pesquisaNomeProduto").val() != ""){
+            var cod = $('#pesquisaNomeProduto').val();
+            var data = $('#fixDataVenda').val();
+             var dataString;
+            dataString = "cod=" + cod + "&dataVenda=" + data;
+
             $.ajax({
                 type: "GET",
                 url: "BuscaClienteProdutoCNPJCod",
-                dataType: "html",
-                data: {cod: $('#pesquisaNomeProduto').val()}
+                dataType: "text",
+                data: dataString
             }).done(function(data) {
 
                 if (data === "null") {

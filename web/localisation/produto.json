@@ -1,0 +1,23 @@
+{
+    "sEmptyTable": "Não existem produtos cadastrados que atendam a busca ou o item já foi adicionado à venda.",
+    "sInfo": "Exibindo todos os produtos",
+    "sInfoEmpty": "Nenhum produto a ser exibido",
+    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+    "sInfoPostFix": "",
+    "sInfoThousands": ".",
+    "sLengthMenu": "_MENU_ produtos por página",
+    "sLoadingRecords": "Carregando...",
+    "sProcessing": "Processando...",
+    "sZeroRecords": "Não existem produtos cadastrados que atendam a busca ou o item já foi adicionado à venda.",
+    "sSearch": "Pesquisar",
+    "oPaginate": {
+        "sNext": "Próximo",
+        "sPrevious": "Anterior",
+        "sFirst": "Primeiro",
+        "sLast": "Último"
+    },
+    "oAria": {
+        "sSortAscending": ": Ordenar colunas de forma ascendente",
+        "sSortDescending": ": Ordenar colunas de forma descendente"
+    }
+}

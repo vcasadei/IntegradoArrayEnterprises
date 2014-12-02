@@ -197,7 +197,7 @@
                                 <div class="panel panel-info" id="clientePanel" style="opacity:0.5;">
                                     <div class="panel-heading">
                                         <div class="row"  >
-                                            <div class="col-lg-12" >
+                                            <div class="col-lg-9" >
                                                 <div class="form-group input-group" >
                                                     <input type="text" class="form-control" id="pesquisaCNPJCliente" name="pesquisaCNPJCliente" data-mask="99.999.999/9999-99" placeholder="Digite o CNPJ do cliente e clique na lupa para inseri-lo" disabled>
                                                     <span class="input-group-btn" >
@@ -206,7 +206,12 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            
+                                            <div class="col-lg-1" style="margin-top: 8px; ">
+                                                <span><b style="color:black;"> OU </b>
+                                            </div>
+                                            <div class="col-lg-2" style="margin-left: -10px; ">
+                                                <button type="button" id="buttonSelectCliente" class="btn btn-primary" disabled>Ver Clientes</button>
+                                            </div>
                                         </div>
 
 

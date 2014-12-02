@@ -57,6 +57,7 @@ ToEndDate.setDate(ToEndDate.getDate()+365);
     //Quando um Cliente é Selecionado
     $('#buttonSelectCliente').click(function() {
         $('#selecionarCliente').modal('show');
+        
         $('#pesquisaCNPJCliente').val("");
         $('#erroPesquisaCNPJ').fadeOut("slow");
 
@@ -115,7 +116,7 @@ ToEndDate.setDate(ToEndDate.getDate()+365);
     //Inicia dataTable para clientes
     var table = $('#loadCliente').DataTable( {
         language: {
-            url: 'localisation/Portuguese-Brasil.json'
+            url: 'localisation/cliente.json'
         }
     } );
 
@@ -321,7 +322,8 @@ ToEndDate.setDate(ToEndDate.getDate()+365);
         console.log(vendaObj);
         console.log(sessionStorage.getItem( "dataCliente" ) );
         // original object
-        window.location.href = "/ArrayEnterprises/BuscaTodosProdutos";
+
+        window.location.href = "/ArrayEnterprises/BuscaTodosProdutos?dataVenda=" + dataVenda;
     });
     $('#cancelarVenda').click(function() {
         sessionStorage.removeItem('dataProduto');
